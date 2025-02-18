@@ -10,7 +10,12 @@ import { useApiRequest } from '../../hooks';
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
-  const { run: runLogin, data: loginResponse, error, requestStatus } = useApiRequest({});
+  const { 
+    // run: runLogin, 
+    data: loginResponse, 
+    error, 
+    requestStatus
+  } = useApiRequest({});
 
   const onSubmit = (data: {
     email: string;
