@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <!-- Background Circle -->
+  <circle cx="150" cy="150" r="140" fill="#f2f7ff" />
+  
+  <!-- Calendar Base -->
+  <rect x="75" y="90" width="150" height="140" rx="15" ry="15" fill="#4a90e2" />
+  <rect x="85" y="100" width="130" height="120" rx="10" ry="10" fill="white" />
+  
+  <!-- Calendar Top Bar -->
+  <rect x="75" y="90" width="150" height="30" rx="15" ry="15" fill="#3a70b2" />
+  
+  <!-- Calendar Date -->
+  <text x="150" y="172" font-family="Arial, sans-serif" font-size="65" font-weight="bold" text-anchor="middle" fill="#4a90e2">
+    25
+  </text>
+  
+  <!-- Party Hat -->
+  <path d="M120 90 L150 35 L180 90" fill="#ff6b6b" stroke="#e74c3c" stroke-width="2" />
+  <path d="M150 35 L150 90" stroke="#e74c3c" stroke-width="2" fill="none" />
+  <path d="M135 62 L165 62" stroke="#e74c3c" stroke-width="2" fill="none" />
+  <path d="M130 76 L170 76" stroke="#e74c3c" stroke-width="2" fill="none" />
+  
+  <!-- Confetti -->
+  <circle cx="80" cy="60" r="7" fill="#ffc107" />
+  <circle cx="220" cy="70" r="5" fill="#4caf50" />
+  <circle cx="200" cy="40" r="6" fill="#9c27b0" />
+  <circle cx="100" cy="40" r="4" fill="#2196f3" />
+  <rect x="90" y="70" width="8" height="3" rx="1.5" ry="1.5" fill="#ff9800" transform="rotate(30, 94, 71.5)" />
+  <rect x="210" cy="50" width="10" height="4" rx="2" ry="2" fill="#e91e63" transform="rotate(-20, 215, 52)" />
+  
+  <!-- Balloon -->
+  <path d="M225 160 Q240 120 220 100 Q200 80 200 110 Q200 140 225 160 Z" fill="#64d2ff" stroke="#5bb3db" stroke-width="2" />
+  <path d="M225 160 L230 200" stroke="#5bb3db" stroke-width="2" />
+  
+  <!-- Streamers -->
+  <path d="M40 130 Q60 140 50 160 Q40 180 60 190" stroke="#ff9800" stroke-width="3" fill="none" />
+  <path d="M45 120 Q70 135 55 155 Q45 175 70 185" stroke="#4caf50" stroke-width="3" fill="none" />
+  
+  <!-- Celebration Stars -->
+  <polygon points="260,130 265,145 280,145 270,155 275,170 260,160 245,170 250,155 240,145 255,145" fill="#ffd54f" />
+  <polygon points="45,230 48,240 58,240 50,245 53,255 45,250 37,255 40,245 32,240 42,240" fill="#ffeb3b" />
+</svg>
