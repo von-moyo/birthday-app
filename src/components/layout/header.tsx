@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { ChevronDownIcon, LogOut, MenuIcon, SettingsIcon, XIcon } from "lucide-react";
 import { Search } from "../search";
 import { BirthDayIcon } from "../../assets/icons";
 import { NoPfp } from "../../assets/images";
 import { useClickOutside } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 interface HeaderProps {
   className?: string;
   isMobileMenuOpen: boolean;
@@ -15,6 +16,7 @@ export const Header: React.FC<HeaderProps> = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
 }) => {
+  const navigate = useNavigate();
 
   const [dropdown, setDropdown] = useState(false);
   const dropdownButtonRef = useRef<HTMLDivElement | null>(null);
@@ -22,6 +24,18 @@ export const Header: React.FC<HeaderProps> = ({
   useClickOutside(dropdownPopupRef, dropdownButtonRef, () =>
     setDropdown(false)
   );
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
 
   return (
     <>
@@ -36,12 +50,12 @@ export const Header: React.FC<HeaderProps> = ({
           Birthday App
         </h2>
         <Search className="w-[425px] !rounded-full" placeholder={"Search"} />
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-8">
           <p>Welcome Admin</p>
           <div className="relative">
             <div
               onClick={() => setDropdown(!dropdown)}
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-4 cursor-pointer"
               ref={dropdownButtonRef}>
               <div className="h-[40px] w-[40px] rounded-[15px] border border-gray-300 overflow-hidden grid place-content-center">
                 <img src={NoPfp} alt="no-pfp" className="w-full h-full object-cover mt-1" />
@@ -96,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
                 <div
                   className='items-between my-1 flex h-fit cursor-pointer gap-2 rounded-[.3125rem] px-2 py-1'
-                  onClick={() => { }}
+                  onClick={handleLogout}
                 >
                   <LogOut size={20} color='#D74B42' />
                   <p className='text-sm font-light text-[#D74B42]'>Logout</p>
@@ -104,8 +118,6 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             )}
           </div>
-
-
           <button
             onClick={() => {
               setIsMobileMenuOpen(!isMobileMenuOpen);
