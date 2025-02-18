@@ -5,7 +5,7 @@ The **Birthday App** is a modern web application built with **React**, **TypeScr
 
 ## 📦 Tech Stack
 - **Frontend:** React 18, TypeScript, Vite
-- **State Management:** React Context API / Redux (if used)
+- **State Management:** React Context API
 - **UI Library:** Tailwind CSS
 - **Form Handling:** React Hook Form + Yup Validation
 - **Icons:** Lucide-react
@@ -25,7 +25,7 @@ The **Birthday App** is a modern web application built with **React**, **TypeScr
 
 ### Prerequisites
 - Node.js (Latest LTS recommended)
-- Yarn or npm
+- Yarn
 
 ### Installation
 
@@ -82,8 +82,6 @@ For production applications, enable type-aware lint rules:
 For production deployment:
 ```bash
 yarn build
-# or
-npm run build
 ```
 The build output will be in the `dist/` folder, ready to be deployed to Vercel, Netlify, or any hosting service.
 
