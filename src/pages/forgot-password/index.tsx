@@ -10,7 +10,12 @@ import { useNavigate } from 'react-router-dom';
 const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();
 
-  const { run: runForgotPassword, data: forgotPasswordResponse, error, requestStatus } = useApiRequest({});
+  const { 
+    // run: runForgotPassword, 
+    data: forgotPasswordResponse, 
+    error, 
+    requestStatus 
+  } = useApiRequest({});
 
   const onSubmit = (data: {
     email: string;
