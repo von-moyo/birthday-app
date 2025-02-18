@@ -17,9 +17,8 @@ The **Birthday App** is a modern web application built with **React**, **TypeScr
 ## 🛠️ Features
 - 🎉 Add and manage birthdays
 - 🎨 Beautiful, responsive UI
-- 🔔 Reminders & Notifications (if implemented)
+- 🔔 Reminders & Notifications
 - 🚀 Smooth animations with Framer Motion
-- 🌙 Dark Mode support (if implemented)
 
 ## 📖 Setup & Installation
 
