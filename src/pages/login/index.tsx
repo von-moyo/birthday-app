@@ -22,6 +22,7 @@ const Login: React.FC = () => {
     password: string;
   }) => {
     console.log(data);
+    localStorage.setItem('token', '1234567890');
     // runLogin(loginService(data));
     toast.success('Login successful');
     setTimeout(() => {

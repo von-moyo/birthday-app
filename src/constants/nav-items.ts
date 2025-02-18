@@ -7,18 +7,18 @@ export const navLinks = [
     icon: MenuIcon,
   },
   {
-    name: "Property Reviews",
-    href: "/reviews",
+    name: "Staff Management",
+    href: "/staff-management",
     icon: MenuIcon,
   },
   {
-    name: "Support",
-    href: "/support",
+    name: "Birthday Calendar",
+    href: "/birthday-calendar",
     icon: TicketIcon,
   },
   {
-    name: "KYC Verification",
-    href: "/kyc",
+    name: "Notification Settings",
+    href: "/notification-settings",
     icon: TicketIcon,
   },
 ];
