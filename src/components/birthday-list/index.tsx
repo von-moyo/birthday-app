@@ -33,7 +33,9 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
     <div className="grid">
 
       {todaysBirthdays.length > 0 ? (
-        todaysBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {todaysBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+        </div>
       ) : (
         <div className="col-span-full text-center py-12">
           <Cake className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -44,7 +46,9 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
       {monthlyBirthdays.length > 0 ? (
         <div>
           <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">🎂 Birthdays This Month</h2>
-          {monthlyBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {monthlyBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+          </div>
         </div>
       ) : (
         <div className="col-span-full text-center py-12">
@@ -56,7 +60,10 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
       {upcomingBirthdays.length > 0 ? (
         <div>
           <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">📅 Upcoming Birthdays</h2>
-          {upcomingBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} isUpcoming />)}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {upcomingBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} isUpcoming />)}
+          </div>
         </div>
       ) : (
         <div className="col-span-full text-center py-12">
