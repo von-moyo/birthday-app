@@ -3,13 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDownIcon, SettingsIcon, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useClickOutside } from '../../hooks';
-import { NoPfp } from '../../assets/images';
+import { Pfp } from '../../assets/images';
+import { getFirstName, getInitials } from '../../utils';
 
 const AnimatedDropdown = () => {
   const navigate = useNavigate();
   const [dropdown, setDropdown] = useState(false);
   const dropdownButtonRef = useRef(null);
   const dropdownPopupRef = useRef(null);
+  const name = 'Von Kloss';
+  const email = 'vonkloss@gmail.com';
   
   useClickOutside(dropdownPopupRef, dropdownButtonRef, () =>
     setDropdown(false)
@@ -36,9 +39,9 @@ const AnimatedDropdown = () => {
           whileHover={{ borderColor: '#000' }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
         >
-          <img src={NoPfp} alt="profile" className="w-full h-full object-cover mt-1" />
+          <img src={Pfp} alt="profile" className="w-full h-full object-cover rounded-[15px]" />
         </motion.div>
-        <p>Von</p>
+        <p>{getFirstName(name)}</p>
         <motion.div
           animate={{ rotate: dropdown ? 180 : 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -64,19 +67,23 @@ const AnimatedDropdown = () => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
               >
-                <img
-                  src={NoPfp}
-                  alt="Profile picture"
-                  loading="eager"
-                  className="h-[37px] w-[37px] object-cover mt-2"
-                />
+                  {Pfp ? (
+                    <img
+                      src={Pfp}
+                      alt="Profile picture"
+                      loading="eager"
+                      className="h-full w-full object-cover rounded-[15px]"
+                    />
+                  ) : (
+                    <p>{getInitials(name)}</p>
+                  )}
               </motion.div>
               <div>
                 <p className="line-clamp-1 max-w-[150px] font-medium text-[#1E272F]">
-                  Von Kloss
+                  {name}
                 </p>
                 <p className="line-clamp-1 max-w-[150px] text-xs font-light text-[#898989]">
-                  vonkloss@gmail.com
+                  {email}
                 </p>
               </div>
             </motion.div>
