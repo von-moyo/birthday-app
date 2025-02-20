@@ -1,6 +1,7 @@
-import { format, isSameMonth, isSameDay } from 'date-fns';
-import { Cake, Gift } from 'lucide-react';
+import { isSameMonth, isSameDay, addMonths, isWithinInterval, parseISO } from 'date-fns';
+import { Cake } from 'lucide-react';
 import { Employee } from '../../types';
+import { BirthdayCard } from './birthday-card';
 
 interface BirthdayListProps {
   employees: Employee[];
@@ -9,59 +10,62 @@ interface BirthdayListProps {
 
 const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth }) => {
   const today = new Date();
+  const nextFourMonths = addMonths(today, 4);
 
-  const filteredEmployees = employees.filter((employee) => {
-    const dob = new Date(employee.date_of_birth);
-    return isSameMonth(dob, selectedMonth);
+  const normalizeDate = (dateString: string) => {
+    const dob = parseISO(dateString);
+    return new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+  };
+
+  const todaysBirthdays = employees.filter((employee) => isSameDay(normalizeDate(employee.date_of_birth), today));
+
+  const monthlyBirthdays = employees.filter((employee) => {
+    const dob = normalizeDate(employee.date_of_birth);
+    return isSameMonth(dob, selectedMonth) && !isSameDay(dob, today);
+  });
+
+  const upcomingBirthdays = employees.filter((employee) => {
+    const dob = normalizeDate(employee.date_of_birth);
+    return isWithinInterval(dob, { start: today, end: nextFourMonths }) && !isSameMonth(dob, selectedMonth) && !todaysBirthdays.includes(employee);
   });
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {filteredEmployees.map((employee) => {
-        const dob = new Date(employee.date_of_birth);
-        const isBirthdayToday = isSameDay(new Date(employee.date_of_birth), today);
+    <div className="grid">
 
-        return (
-          <div
-            key={employee.id}
-            className={`card transition-all duration-200 hover:shadow-lg ${
-              isBirthdayToday ? 'ring-2 ring-primary-500 bg-primary-50' : ''
-            }`}
-          >
-            <div className="flex items-start justify-between">
-              <div className="flex items-center space-x-3">
-                {isBirthdayToday ? (
-                  <Gift className="w-8 h-8 text-primary-500" />
-                ) : (
-                  <Cake className="w-8 h-8 text-gray-400" />
-                )}
-                <div>
-                  <h3 className="font-semibold text-lg text-gray-900">{employee.name}</h3>
-                  <p className="text-gray-600">{employee.department}</p>
-                  <p className="text-sm text-gray-500">
-                    {format(dob, 'MMMM do')}
-                  </p>
-                </div>
-              </div>
-              {isBirthdayToday && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
-                  Today!
-                </span>
-              )}
-            </div>
-          </div>
-        );
-      })}
-      {filteredEmployees.length === 0 && (
+      {todaysBirthdays.length > 0 ? (
+        todaysBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)
+      ) : (
         <div className="col-span-full text-center py-12">
           <Cake className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-500 text-lg">
-            No birthdays this month
-          </p>
+          <p className="text-gray-500 text-lg">No birthdays today</p>
+        </div>
+      )}
+
+      {monthlyBirthdays.length > 0 ? (
+        <div>
+          <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">🎂 Birthdays This Month</h2>
+          {monthlyBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+        </div>
+      ) : (
+        <div className="col-span-full text-center py-12">
+          <Cake className="w-12 h-12 text-gray-400 mx-auto my-8" />
+          <p className="text-gray-500 text-lg">No birthdays this month</p>
+        </div>
+      )}
+
+      {upcomingBirthdays.length > 0 ? (
+        <div>
+          <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">📅 Upcoming Birthdays</h2>
+          {upcomingBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} isUpcoming />)}
+        </div>
+      ) : (
+        <div className="col-span-full text-center py-12">
+          <Cake className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <p className="text-gray-500 text-lg">No birthdays upcoming</p>
         </div>
       )}
     </div>
   );
-}
+};
 
-export { BirthdayList }
+export { BirthdayList };

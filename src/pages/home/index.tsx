@@ -1,35 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { BirthdayList, AddEmployeeForm } from '../../components'
+import { BirthdayList, AddEmployeeForm, MiniBirthdayList } from '../../components'
 import { Employee } from '../../types'
+import mockEmployees from '../../constants/mock-employee-data';
 
 const Home: React.FC = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>(mockEmployees);
+  console.log(employees);
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   useEffect(() => {
-    setEmployees([
-      {
-        id: '1',
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        department: 'Engineering',
-        date_of_birth: new Date().toISOString(),
-        created_at: new Date().toISOString(),
-      },
-    ]);
     setSelectedMonth(new Date());
   }, []);
   return (
     <div className='mt-5'>
+      <MiniBirthdayList employees={employees} selectedMonth={selectedMonth} />
+      <header className='md:text-3xl sm:text-2xl text-xl md:font-bold font-semibold my-10'>Today's Birthdays</header> 
       <BirthdayList employees={employees} selectedMonth={selectedMonth} />
-      <AddEmployeeForm onEmployeeAdded={() => {
-        setEmployees([...employees, {
-          id: employees.length.toString(),
-          name: 'John Doe',
-          email: 'john.doe@example.com',
-          department: 'Engineering',
-          date_of_birth: new Date().toISOString(),
-          created_at: new Date().toISOString(),
-        }]);
+      <AddEmployeeForm onEmployeeAdded={(employee) => {
+        setEmployees([...employees, employee]);
       }} />
     </div>
   )
