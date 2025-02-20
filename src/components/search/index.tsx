@@ -8,6 +8,7 @@ interface SearchProps {
   className?: string;
   placeholder: string;
   transparent?: boolean;
+  setIsSearchExpanded: (data: boolean) => void;
 }
 
 interface SearchPayload {
@@ -22,6 +23,7 @@ const Search: React.FC<SearchProps> = ({
   className,
   placeholder,
   transparent,
+  setIsSearchExpanded,
 }) => {
   const {
     formState: { errors },
@@ -48,6 +50,8 @@ const Search: React.FC<SearchProps> = ({
       <SearchIcon className="mr-2 h-4.5 w-4.5 min-w-[18px] text-gray-500" />
       <input
         onChange={(e) => handleChange(e.target.value)}
+        onFocus={() => setIsSearchExpanded(true)}
+        onBlur={() => setIsSearchExpanded(false)}
         value={watch("search")}
         placeholder={placeholder}
         type="search"

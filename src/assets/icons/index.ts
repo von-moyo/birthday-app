@@ -1,3 +1,4 @@
-import BirthDayIcon from "./birthday-icon.svg";
+import LogoIcon from "./app-logo.svg";
+import MobileLogoIcon from "./app-logo-mobile.svg";
 
-export { BirthDayIcon };
+export { LogoIcon, MobileLogoIcon };

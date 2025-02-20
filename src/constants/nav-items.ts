@@ -1,24 +1,24 @@
-import { MenuIcon, TicketIcon } from "lucide-react";
+import { LayoutDashboard, Users, Calendar, Bell } from "lucide-react";
 
 export const navLinks = [
   {
     name: "Dashboard",
-    href: "/dashboard",
-    icon: MenuIcon,
+    href: "/",
+    icon: LayoutDashboard, // A grid-like dashboard icon
   },
   {
     name: "Staff Management",
     href: "/staff-management",
-    icon: MenuIcon,
+    icon: Users, // Multiple user profiles icon
   },
   {
     name: "Birthday Calendar",
     href: "/birthday-calendar",
-    icon: TicketIcon,
+    icon: Calendar, // Calendar icon
   },
   {
     name: "Notification Settings",
     href: "/notification-settings",
-    icon: TicketIcon,
+    icon: Bell, // Bell/notification icon
   },
 ];
