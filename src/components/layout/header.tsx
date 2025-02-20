@@ -25,6 +25,7 @@ export const Header: React.FC<HeaderProps> = ({
     if (!token) {
       navigate('/login');
     }
+    setIsAdmin(false);
   }, []);
 
 
