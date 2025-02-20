@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 60">
+  <defs>
+    <style>
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+      }
+      @keyframes twinkle {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      @keyframes confettiFall {
+        0% { transform: translateY(0) rotate(0); }
+        100% { transform: translateY(10px) rotate(45deg); }
+      }
+      .star { animation: twinkle 1.5s ease-in-out infinite; }
+      .float { animation: float 2s ease-in-out infinite; }
+      .confetti { animation: confettiFall 1.2s ease-in-out infinite alternate; }
+      .text-shadow { filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2)); }
+    </style>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4162FF"/>
+      <stop offset="100%" style="stop-color:#3241B0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Calendar Icon with subtle shadow -->
+  <g class="float" transform="translate(5,5)">
+    <rect x="0" y="0" width="40" height="40" rx="8" fill="#4162FF" filter="drop-shadow(2px 2px 4px rgba(0,0,0,0.15))"/>
+    <rect x="4" y="4" width="32" height="12" rx="4" fill="#FFFFFF"/>
+    <text x="20" y="28" fill="#FFFFFF" font-size="18" font-weight="bold" text-anchor="middle" font-family="Arial">25</text>
+  </g>
+
+  <!-- Animated Stars -->
+  <g class="star" style="animation-delay: 0s">
+    <path d="M55,10 L57,14 L62,15 L58,18 L59,23 L55,21 L51,23 L52,18 L48,15 L53,14 Z" fill="#FFD700"/>
+  </g>
+  <g class="star" style="animation-delay: 0.5s">
+    <path d="M35,25 L37,29 L42,30 L38,33 L39,38 L35,36 L31,38 L32,33 L28,30 L33,29 Z" fill="#FFD700"/>
+  </g>
+
+  <!-- Animated Confetti -->
+  <g class="confetti" style="animation-delay: 0.2s">
+    <rect x="45" y="8" width="3" height="3" fill="#FF6B6B" transform="rotate(15)"/>
+    <circle cx="15" cy="20" r="1.5" fill="#4ECDC4"/>
+    <rect x="52" y="25" width="3" height="3" fill="#FFD93D" transform="rotate(45)"/>
+  </g>
+  <g class="confetti" style="animation-delay: 0.7s">
+    <rect x="12" y="12" width="3" height="3" fill="#95E1D3" transform="rotate(30)"/>
+    <circle cx="58" cy="18" r="1.5" fill="#FF6B6B"/>
+    <rect x="25" y="22" width="3" height="3" fill="#4ECDC4" transform="rotate(60)"/>
+  </g>
+</svg>

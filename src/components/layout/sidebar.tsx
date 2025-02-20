@@ -1,8 +1,9 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { LogOutIcon } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "../../constants";
+import { NoPfp } from "../../assets/images";
 
 interface SideBarProps {
   className?: string;
@@ -20,31 +21,31 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
   return (
     <>
       {/* Sidebar always visible on large screens */}
-      <div className={`hidden lg:flex flex-col bg-white px-4 py-4 md:px-7 md:py-6 fixed top-[94px] z-50 h-[calc(100vh-94px)] lg:px-7 shadow-[5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}>
+      <div className={`hidden lg:flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 fixed sm:top-[94px] top-[84px] z-50 sm:h-[calc(100vh-94px)] h-[calc(100vh-85px)] lg:px-7 shadow-[5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}>
         <ul className="flex-1 space-y-0 overflow-y-auto">
           {navLinks.map((n) => (
             <li key={n.name}>
               <NavLink
                 to={n.href}
                 className={({ isActive }) =>
-                  `inline-flex w-full items-center justify-between rounded-lg pl-4 pr-14 py-4.5 text-[#2E2E2E] outline-primary transition-colors ${isActive
-                    ? "bg-primary text-primary-foreground [&_.count-badge]:bg-primary-foreground [&_.count-badge]:text-primary"
-                    : "hover:bg-primary/10 focus:text-primary [&_.count-badge]:bg-primary [&_.count-badge]:text-primary-foreground"
+                  `inline-flex w-full items-center justify-between rounded-lg pl-4 pr-14 py-4.5 transition-colors ${isActive
+                    ? "bg-blue-50 [&_svg]:text-blue-600 [&_span]:text-blue-600"
+                    : "text-[#2E2E2E] hover:bg-blue-50 hover:[&_svg]:text-blue-600 hover:[&_span]:text-blue-600"
                   }`
                 }
-                end={n.href === "/app"}
+                end={n.href === "/"}
                 preventScrollReset={n.name === "Explore"}
               >
                 <span className="inline-flex items-center gap-3">
-                  {typeof n.icon === "function" ? <n.icon /> : null}
-                  <span className="whitespace-nowrap">{n.name}</span>
+                  <n.icon className="h-5 w-5 transition-colors" />
+                  <span className="whitespace-nowrap transition-colors">{n.name}</span>
                 </span>
               </NavLink>
             </li>
           ))}
         </ul>
-        <div className="flex gap-3 cursor-pointer" onClick={handleLogout}>
-          <LogOutIcon /> <span>Log out</span>
+        <div className="flex gap-3 cursor-pointer py-4" onClick={handleLogout}>
+          <LogOut size={20} color="#D74B42" /> <span className="font-light text-[#D74B42]">Logout</span>
         </div>
       </div>
 
@@ -52,41 +53,69 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ x: "-100%", opacity: 0 }}
+            initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
+            exit={{ x: "100%", opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className={`fixed z-50 flex flex-col bg-white px-4 py-4 md:px-7 md:py-6 h-screen lg:px-7 shadow-[5px_0_5px_-5px_rgba(0,0,0,0.1)] max-lg:block ${className}`}
+            className={`fixed right-0 left-auto z-50 lg:hidden flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 sm:top-[94px] top-[84px] sm:h-[calc(100vh-94px)] h-[calc(100vh-85px)] lg:px-7 shadow-[-5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}
           >
-            <ul className="flex-1 space-y-0">
-              {navLinks.map((n) => (
-                <li key={n.name}>
-                  <NavLink
-                    to={n.href}
-                    className={({ isActive }) =>
-                      `inline-flex w-full items-center justify-between rounded-lg pl-4 pr-14 py-4.5 text-[#2E2E2E] outline-primary transition-colors ${isActive
-                        ? "bg-primary text-primary-foreground [&_.count-badge]:bg-primary-foreground [&_.count-badge]:text-primary"
-                        : "hover:bg-primary/10 focus:text-primary [&_.count-badge]:bg-primary [&_.count-badge]:text-primary-foreground"
-                      }`
-                    }
-                    end={n.href === "/app"}
-                    preventScrollReset={n.name === "Explore"}
-                  >
-                    <span className="inline-flex items-center gap-3">
-                      {typeof n.icon === "function" ? <n.icon /> : null}
-                      <span className="whitespace-nowrap">{n.name}</span>
-                    </span>
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
+            <div>
+              <div className="flex items-center gap-3 mb-8 pl-4">
+                <motion.div
+                  className="my-2 grid h-[37px] w-[37px] place-content-center rounded-[15px] border border-gray-300 border-opacity-50 overflow-hidden"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                >
+                  <img
+                    src={NoPfp}
+                    alt="Profile picture"
+                    loading="eager"
+                    className="h-[37px] w-[37px] object-cover mt-2"
+                  />
+                </motion.div>
+                <div>
+                  <p className="line-clamp-1 max-w-[150px] font-medium text-[#1E272F]">
+                    Von Kloss
+                  </p>
+                  <p className="line-clamp-1 max-w-[150px] text-xs font-light text-[#898989]">
+                    vonkloss@gmail.com
+                  </p>
+                </div>
+              </div>
+              <ul className="flex-1">
+                <ul className="flex-1 overflow-y-auto">
+                  {navLinks.map((n) => (
+                    <li key={n.name}>
+                      <NavLink
+                        to={n.href}
+                        className={({ isActive }) =>
+                          `inline-flex w-full items-center justify-between rounded-lg pl-4 pr-14 py-4.5 transition-colors ${isActive
+                            ? "bg-blue-50 [&_svg]:text-blue-600 [&_span]:text-blue-600"
+                            : "text-[#2E2E2E] hover:bg-blue-50 hover:[&_svg]:text-blue-600 hover:[&_span]:text-blue-600"
+                          }`
+                        }
+                        end={n.href === "/"}
+                        preventScrollReset={n.name === "Explore"}
+                      >
+                        <span className="inline-flex items-center gap-3">
+                          <n.icon className="h-5 w-5 transition-colors" />
+                          <span className="whitespace-nowrap transition-colors">{n.name}</span>
+                        </span>
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </ul>
+            </div>
+
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex gap-3 cursor-pointer"
+              className="flex gap-3 cursor-pointer pl-4 py-4"
               onClick={handleLogout}
             >
-              <LogOutIcon /> <span>Log out</span>
+              <LogOut size={20} color="#D74B42" />
+              <span className="font-light text-[#D74B42]">Logout</span>
             </motion.div>
           </motion.div>
         )}

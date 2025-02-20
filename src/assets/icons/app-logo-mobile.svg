@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+  <!-- Background Stars -->
+  <g>
+    <path d="M10,5 L11,7 L13,7.5 L11.5,9 L12,11 L10,10 L8,11 L8.5,9 L7,7.5 L9,7 Z" fill="#FFD700"/>
+    <path d="M40,8 L41,10 L43,10.5 L41.5,12 L42,14 L40,13 L38,14 L38.5,12 L37,10.5 L39,10 Z" fill="#FFD700"/>
+    <path d="M5,35 L6,37 L8,37.5 L6.5,39 L7,41 L5,40 L3,41 L3.5,39 L2,37.5 L4,37 Z" fill="#FFD700"/>
+    <path d="M45,38 L46,40 L48,40.5 L46.5,42 L47,44 L45,43 L43,44 L43.5,42 L42,40.5 L44,40 Z" fill="#FFD700"/>
+  </g>
+
+  <!-- Centered Calendar Icon -->
+  <g transform="translate(5,10)">
+    <rect x="0" y="0" width="40" height="40" rx="8" fill="#4162FF"/>
+    <rect x="4" y="6" width="32" height="12" rx="4" fill="#FFFFFF"/>
+    <text x="20" y="30" fill="#FFFFFF" font-size="18" font-weight="bold" text-anchor="middle" font-family="Arial">25</text>
+  </g>
+</svg>
