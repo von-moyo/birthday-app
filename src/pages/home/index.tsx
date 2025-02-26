@@ -10,6 +10,7 @@ const Home: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   useEffect(() => {
     setSelectedMonth(new Date());
+    setEmployees(mockEmployees);
   }, []);
   return (
     <div className='my-5'>
