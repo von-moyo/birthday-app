@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MenuIcon, XIcon } from "lucide-react";
 import { Search } from "../search";
 import { LogoIcon } from "../../assets/icons";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AnimatedDropdown from "./animated-dropdown";
-
+import { useAuth } from "../../context/authContext";
 interface HeaderProps {
   className?: string;
   isMobileMenuOpen: boolean;
@@ -16,18 +16,8 @@ export const Header: React.FC<HeaderProps> = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
 }) => {
-  const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    }
-    setIsAdmin(false);
-  }, []);
-
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
@@ -49,8 +39,12 @@ export const Header: React.FC<HeaderProps> = ({
         </Link>
         <Search className="sm:w-[425px] w-full sm:h-[46px] h-[36px] !rounded-full" placeholder={"Search"} setIsSearchExpanded={setIsSearchExpanded} />
         <div className="flex items-center gap-8">
-          {isAdmin && <p className="text-[18px] font-medium text-[#1E272F]">Welcome Admin</p>}
-          <AnimatedDropdown />
+          {isAuthenticated && (
+            <>
+              <p className="text-[18px] font-medium text-[#1E272F]">Welcome Admin</p>
+              <AnimatedDropdown />
+            </>
+          )}
           <button
             onClick={() => {
               setIsMobileMenuOpen(!isMobileMenuOpen);

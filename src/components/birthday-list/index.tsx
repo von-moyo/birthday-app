@@ -33,7 +33,9 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
     <div className="grid">
 
       {todaysBirthdays.length > 0 ? (
-        todaysBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {todaysBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+        </div>
       ) : (
         <div className="col-span-full text-center py-12">
           <Cake className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -43,20 +45,25 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
 
       {monthlyBirthdays.length > 0 ? (
         <div>
-          <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">🎂 Birthdays This Month</h2>
-          {monthlyBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+          <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">🎂 Other Birthdays This Month</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {monthlyBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+          </div>
         </div>
       ) : (
         <div className="col-span-full text-center py-12">
           <Cake className="w-12 h-12 text-gray-400 mx-auto my-8" />
-          <p className="text-gray-500 text-lg">No birthdays this month</p>
+          <p className="text-gray-500 text-lg">No other birthdays this month</p>
         </div>
       )}
 
       {upcomingBirthdays.length > 0 ? (
         <div>
           <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">📅 Upcoming Birthdays</h2>
-          {upcomingBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} isUpcoming />)}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {upcomingBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} isUpcoming />)}
+          </div>
         </div>
       ) : (
         <div className="col-span-full text-center py-12">

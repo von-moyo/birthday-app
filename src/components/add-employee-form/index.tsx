@@ -36,12 +36,10 @@ const AddEmployeeForm: React.FC<AddEmployeeFormProps> = ({ onEmployeeAdded }) =>
       };
       toast.success('Employee added successfully!');
       onEmployeeAdded(employeeData);
-      console.log(employeeData);
       reset(); 
       setIsOpen(false); 
     } catch (error) {
       toast.error('Failed to add employee.');
-      console.error('Error adding employee:', error);
     } finally {
       setLoading(false);
     }

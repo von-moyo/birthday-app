@@ -2,8 +2,9 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { navLinks } from "../../constants";
+import { adminNavLinks, guestNavLinks } from "../../constants/nav-items";
 import { NoPfp } from "../../assets/images";
+import { useAuth } from "../../context/authContext";
 
 interface SideBarProps {
   className?: string;
@@ -12,18 +13,21 @@ interface SideBarProps {
 
 export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOpen }) => {
   const navigate = useNavigate();
-
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const handleLogout = () => {
     localStorage.removeItem('token');
+    setIsAuthenticated(false);
     navigate('/login');
   }
+
+  const userNavLinks = isAuthenticated ? adminNavLinks : guestNavLinks;
 
   return (
     <>
       {/* Sidebar always visible on large screens */}
-      <div className={`hidden lg:flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 fixed sm:top-[94px] top-[84px] z-50 sm:h-[calc(100vh-94px)] h-[calc(100vh-85px)] lg:px-7 shadow-[5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}>
+      <div className={`hidden lg:flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 fixed sm:top-[94px] top-[69px] z-50 sm:h-[calc(100vh-94px)] h-[calc(100vh-85px)] lg:px-7 shadow-[5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}>
         <ul className="flex-1 space-y-0 overflow-y-auto">
-          {navLinks.map((n) => (
+          {userNavLinks.map((n) => (
             <li key={n.name}>
               <NavLink
                 to={n.href}
@@ -44,9 +48,9 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
             </li>
           ))}
         </ul>
-        <div className="flex gap-3 cursor-pointer py-4" onClick={handleLogout}>
+        {isAuthenticated && <div className="flex gap-3 cursor-pointer py-4" onClick={handleLogout}>
           <LogOut size={20} color="#D74B42" /> <span className="font-light text-[#D74B42]">Logout</span>
-        </div>
+        </div>}
       </div>
 
       {/* Sidebar with animation for mobile */}
@@ -57,10 +61,10 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className={`fixed right-0 left-auto z-50 lg:hidden flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 sm:top-[94px] top-[84px] sm:h-[calc(100vh-94px)] h-[calc(100vh-85px)] lg:px-7 shadow-[-5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}
+            className={`fixed right-0 left-auto z-50 lg:hidden flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 sm:top-[94px] top-[69px] sm:h-[calc(100vh-94px)] h-[calc(100vh-69px)] lg:px-7 shadow-[-5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}
           >
             <div>
-              <div className="flex items-center gap-3 mb-8 pl-4">
+              {isAuthenticated && <div className="flex items-center gap-3 mb-8 pl-4">
                 <motion.div
                   className="my-2 grid h-[37px] w-[37px] place-content-center rounded-[15px] border border-gray-300 border-opacity-50 overflow-hidden"
                   whileHover={{ scale: 1.05 }}
@@ -81,10 +85,10 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
                     vonkloss@gmail.com
                   </p>
                 </div>
-              </div>
+              </div>}
               <ul className="flex-1">
                 <ul className="flex-1 overflow-y-auto">
-                  {navLinks.map((n) => (
+                  {userNavLinks.map((n) => (
                     <li key={n.name}>
                       <NavLink
                         to={n.href}
@@ -108,7 +112,7 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
               </ul>
             </div>
 
-            <motion.div
+            {isAuthenticated && <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="flex gap-3 cursor-pointer pl-4 py-4"
@@ -116,7 +120,7 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
             >
               <LogOut size={20} color="#D74B42" />
               <span className="font-light text-[#D74B42]">Logout</span>
-            </motion.div>
+            </motion.div>}
           </motion.div>
         )}
       </AnimatePresence>
