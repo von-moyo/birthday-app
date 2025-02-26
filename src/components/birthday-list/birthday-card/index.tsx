@@ -2,7 +2,7 @@ import { differenceInYears, format, isSameDay, parseISO } from "date-fns";
 import { Employee } from "../../../types";
 import { getInitials } from "../../../utils";
 import { motion } from "framer-motion";
-import { Cake, Gift, MessageCircleIcon } from "lucide-react";
+import { Gift, MessageCircleIcon } from "lucide-react";
 
 const BirthdayCard = ({ employee, isUpcoming }: { employee: Employee & { date_of_birth: string }; isUpcoming?: boolean }) => {
   const today = new Date();
@@ -36,7 +36,7 @@ const BirthdayCard = ({ employee, isUpcoming }: { employee: Employee & { date_of
           <div className='md:text-base text-sm'>
             <h3 className="font-semibold md:text-lg text-base text-gray-900">{employee.name}</h3>
             <p className="text-gray-600">{employee.department}</p>
-            <p className="text-sm text-[#8396f6] flex items-start gap-2 sm:mt-2">
+            <div className="text-sm text-[#8396f6] flex items-start gap-2 sm:mt-2">
               {isBirthdayToday ? (
                 <Gift className="w-5 h-5 text-primary-500" />
               ) : (
@@ -47,7 +47,7 @@ const BirthdayCard = ({ employee, isUpcoming }: { employee: Employee & { date_of
               ) : (
                 <div className="flex flex-wrap line-clamp-1">Turning {age} today! 🎉 <span className='text-sm sm:block hidden line-clamp-1'>({format(dob, 'MMMM do')})</span></div>
               )}
-            </p>
+            </div>
           </div>
         </div>
 

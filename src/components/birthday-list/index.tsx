@@ -45,7 +45,7 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
 
       {monthlyBirthdays.length > 0 ? (
         <div>
-          <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">🎂 Birthdays This Month</h2>
+          <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">🎂 Other Birthdays This Month</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {monthlyBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
           </div>
@@ -53,7 +53,7 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
       ) : (
         <div className="col-span-full text-center py-12">
           <Cake className="w-12 h-12 text-gray-400 mx-auto my-8" />
-          <p className="text-gray-500 text-lg">No birthdays this month</p>
+          <p className="text-gray-500 text-lg">No other birthdays this month</p>
         </div>
       )}
 
