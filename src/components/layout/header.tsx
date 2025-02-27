@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MenuIcon, XIcon } from "lucide-react";
+import { MenuIcon, XIcon, Lock } from "lucide-react";
 import { Search } from "../search";
 import { LogoIcon } from "../../assets/icons";
 import { Link } from "react-router-dom";
@@ -34,17 +34,23 @@ export const Header: React.FC<HeaderProps> = ({
               <h2 className="sm:text-[20px] text-[16px] font-semibold text-[#4162FF] leading-[0.5]">Birthday</h2>
               <p className="sm:text-[15px] text-[12px] font-medium text-[#8396f6]">Tracker</p>
             </div>
-            
+
           </div>
         </Link>
         <Search className="sm:w-[425px] w-full sm:h-[46px] h-[36px] !rounded-full" placeholder={"Search"} setIsSearchExpanded={setIsSearchExpanded} />
         <div className="flex items-center gap-8">
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <>
-              <p className="text-[18px] font-medium text-[#1E272F]">Welcome Admin</p>
+              <p className="lg:text-[18px] text-[16px] font-medium text-[#1E272F] hidden md:block">Welcome Admin</p>
               <AnimatedDropdown />
             </>
+          ) : (
+            <>
+              <p className="lg:text-[18px] text-[16px] font-medium text-[#1E272F] hidden md:block">Welcome Guest</p>
+              <Link to="/login" className="flex justify-center py-2 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"><Lock className="w-4 h-4 mr-2"/> Login as Admin</Link>
+            </>
           )}
+
           <button
             onClick={() => {
               setIsMobileMenuOpen(!isMobileMenuOpen);

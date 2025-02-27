@@ -37,7 +37,7 @@ const mockEmployees = [
     name: "Michael Adeyemi",
     email: "michael.adeyemi@example.com",
     department: "Physics",
-    date_of_birth: generateBirthdate(todayMonth, todayDay + 5),
+    date_of_birth: generateBirthdate(todayMonth, todayDay + 1),
     created_at: new Date().toISOString(),
     image: "",
   },

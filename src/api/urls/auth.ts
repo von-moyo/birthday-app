@@ -11,7 +11,7 @@ AUTH URLS
  *
  */
 
-export const loginURL = () => `/auth/login`;
+export const loginURL = () => `/auth/login/`;
 
 /**
  * Forgot Password URL

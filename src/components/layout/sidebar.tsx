@@ -1,10 +1,11 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { adminNavLinks, guestNavLinks } from "../../constants/nav-items";
 import { NoPfp } from "../../assets/images";
 import { useAuth } from "../../context/authContext";
+import { useLogout } from "../../hooks";
 
 interface SideBarProps {
   className?: string;
@@ -12,13 +13,9 @@ interface SideBarProps {
 }
 
 export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOpen }) => {
-  const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
-    navigate('/login');
-  }
+
+  const { isAuthenticated } = useAuth();
+  const logout = useLogout();
 
   const userNavLinks = isAuthenticated ? adminNavLinks : guestNavLinks;
 
@@ -48,7 +45,7 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
             </li>
           ))}
         </ul>
-        {isAuthenticated && <div className="flex gap-3 cursor-pointer py-4" onClick={handleLogout}>
+        {isAuthenticated && <div className="flex gap-3 cursor-pointer py-4" onClick={logout}>
           <LogOut size={20} color="#D74B42" /> <span className="font-light text-[#D74B42]">Logout</span>
         </div>}
       </div>
@@ -116,7 +113,7 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="flex gap-3 cursor-pointer pl-4 py-4"
-              onClick={handleLogout}
+              onClick={logout}
             >
               <LogOut size={20} color="#D74B42" />
               <span className="font-light text-[#D74B42]">Logout</span>
