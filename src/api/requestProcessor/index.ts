@@ -112,7 +112,7 @@ export async function deleteRequest(request: ApiRequestProps) {
 
 const Logout = async (): Promise<string> =>  {
     // make logout request
-    window.location.assign('/sign-in');
+    window.location.assign('/login');
     localStorage.clear();
     Cookies.remove('access_token');
     Cookies.remove('refresh_token');

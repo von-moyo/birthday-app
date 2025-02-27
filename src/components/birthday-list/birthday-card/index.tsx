@@ -9,9 +9,15 @@ const BirthdayCard = ({ employee, isUpcoming }: { employee: Employee & { date_of
   const dob = parseISO(employee.date_of_birth);
   const isBirthdayToday = isSameDay(dob, today);
   const age = differenceInYears(today, new Date(employee.date_of_birth));
-  const senderName = "Von Kloss";
+
+  const formatTitle = (str: string): string => {
+    return str
+      .split("_")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
   return (
-    <div key={employee.id} className="card transition-all duration-200 border border-gray-300 rounded-lg mb-6">
+    <div key={employee.id} className="card transition-all duration-200 border border-gray-100 rounded-lg mb-6">
       <div className="flex items-center justify-between xl:px-8 md:px-4 px-3 md:py-6 sm:py-4 py-3">
         <div className="flex items-center gap-6">
 
@@ -20,7 +26,7 @@ const BirthdayCard = ({ employee, isUpcoming }: { employee: Employee & { date_of
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
-            {employee.image ? (
+            {employee.image && employee.image !== "" && employee.image !== "string" ? (
               <img
                 src={employee.image}
                 alt={`${employee.name}'s profile picture`}
@@ -35,7 +41,7 @@ const BirthdayCard = ({ employee, isUpcoming }: { employee: Employee & { date_of
 
           <div className='md:text-base text-sm'>
             <h3 className="font-semibold md:text-lg text-base text-gray-900">{employee.name}</h3>
-            <p className="text-gray-600">{employee.department}</p>
+            <p className="text-gray-600">{formatTitle(employee.department)}</p>
             <div className="text-sm text-[#8396f6] flex items-start gap-2 sm:mt-2">
               {isBirthdayToday ? (
                 <Gift className="w-5 h-5 text-primary-500" />
@@ -52,7 +58,7 @@ const BirthdayCard = ({ employee, isUpcoming }: { employee: Employee & { date_of
         </div>
 
         <a
-          href={`mailto:${employee.email}?subject=🎉 Happy Birthday, ${employee.name}!&body=Dear%20${employee.name},%0D%0A%0D%0AWishing%20you%20a%20wonderful%20birthday!%0D%0A%0D%0ABest%20wishes,%0D%0A${senderName}`}
+          href={`mailto:${employee.email}?subject=🎉 Happy Birthday, ${employee.name}!&body=Dear%20${employee.name},%0D%0A%0D%0AWishing%20you%20a%20wonderful%20birthday!%0D%0A%0D%0ABest%20wishes,%0D%0A${'Replace with your name'}`}
         >
           <button className="bg-blue-500 text-white md:px-4 px-2 md:py-4 py-2 cursor-pointer rounded-full flex items-center justify-center">
             <MessageCircleIcon className="md:w-8 md:h-8 w-6 h-6 text-white fill-white" />

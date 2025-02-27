@@ -8,7 +8,7 @@ export const useLogout = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    // Redirect to sign-in page
+    // Redirect to login page
     navigate('/login');
     // Clear cookies
     Cookies.remove('access_token');

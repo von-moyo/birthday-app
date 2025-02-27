@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Calendar as BigCalendar, momentLocalizer, SlotInfo } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Employee } from '../../types/types';
+import { getInitials } from '../../utils/getInitials';
+import { useClickOutside } from '../../hooks';
 const localizer = momentLocalizer(moment);
 
 interface CalendarProps {
@@ -11,14 +13,36 @@ interface CalendarProps {
 }
 
 const CalendarComponent: React.FC<CalendarProps> = ({ month, employees }) => {
+  const [popUp, setPopUp] = useState(false);
+  const [selectedEmployees, setSelectedEmployees] = useState<Employee[] | null>(null);
+  const popUpRef = useRef<HTMLDivElement>(null);
+  useClickOutside(popUpRef, popUpRef, () => {
+    setPopUp(false)
+    setSelectedEmployees(null)
+  }
+
+  );
+
   const handleSelectDay = (slotInfo: SlotInfo) => {
+    const selectedDate = moment(slotInfo.start);
+    const employeesWithBirthday = employees.filter(employee => {
+      const birthDate = moment(employee.date_of_birth);
+      return birthDate.date() === selectedDate.date() && birthDate.month() === selectedDate.month();
+    });
+
+    if (slotInfo.bounds) {
+      setSelectedEmployees(employeesWithBirthday);
+    }
+    setPopUp(true);
+    setSelectedEmployees(employeesWithBirthday);
+    console.log(employeesWithBirthday);
+    console.log(slotInfo.bounds);
     console.log(slotInfo.start);
   };
 
   const defaultDate = moment().month(month ?? new Date().getMonth()).toDate();
   const CustomDateHeader = ({ label, date }: any) => {
     const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date);
-    const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
     const employeesWithBirthday = employees.filter((employee) => {
       const birthDate = moment(employee.date_of_birth);
       return birthDate.date() === date.getDate() && birthDate.month() === date.getMonth();
@@ -27,11 +51,14 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, employees }) => {
     const smallTextSize = window.innerWidth < 500 && 'text-[10px]';
     return (
       <div className={`flex flex-col text-[0.9rem] text-left`}>
-        <span className={`ml-[10px] mt-[10px] lg:text-sm text-xs lg:font-medium sm:font-normal font-light ${smallTextSize}`}>{dayOfWeek}</span> {/* Day of the week (e.g., Mon) */}
-        <span className={`ml-[10px] lg:text-lg sm:text-normal text-sm sm:font-bold font-semibold ${monthTextSize}`}>{month}{window.innerWidth < 460 && <br />}{' '}{label}</span>
+        <span className={`sm:ml-[10px] sm:mt-[10px] mt-[5px] ml-[5px] lg:text-sm text-xs lg:font-medium sm:font-normal font-light ${smallTextSize}`}>{dayOfWeek}</span> {/* Day of the week (e.g., Mon) */}
+        <span className={`mb-2 w-fit h-fit sm:ml-[10px] ml-[5px] lg:text-lg sm:text-normal text-sm sm:font-bold font-semibold ${monthTextSize}`}>
+          {/* <span className='sm:block hidden '>{month}</span> */}
+          {label}</span>
         {employeesWithBirthday.map((employee) => (
-          <span key={employee.name} className="ml-[10px] text-xs text-blue-500 font-medium break-words">
-            🎉{employee.name}
+          <span key={employee.name} className="sm:mx-[10px] mx-[5px] text-xs text-blue-500 font-medium break-words">
+            <span className='text-[10px] sm:hidden flex'>🎉 {getInitials(employee.name)}</span>
+            <span className='sm:flex hidden'>🎉 {employee.name}</span>
           </span>
         ))}
       </div>
@@ -46,15 +73,8 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, employees }) => {
         cursor: 'pointer',
         border: '0.5px solid #E7E7E7',
         margin: '0px 10px 10px 0px',
-        // padding: padding,
-        minHeight: 'auto', 
+        minHeight: 'auto',
         padding: '5px',
-        // display: 'flex',
-        // flexDirection: 'column',
-        // alignItems: 'flex-start',
-        // justifyContent: 'flex-start',
-        // minHeight: 'auto',  // Auto height based on content
-        // margin: '0px 10px 10px 0px',
       },
     };
   };
@@ -63,9 +83,18 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, employees }) => {
       dow: 1,
     },
   });
-  const height = window.innerWidth < 640 ? 350 : window.innerWidth < 1024 ? 500 : 750;
+  const height = window.innerWidth < 640 ? 500 : window.innerWidth < 750 ? 650 : window.innerWidth < 1024 ? 650 : 750;
   return (
     <>
+      {popUp && selectedEmployees && selectedEmployees.length > 0 &&
+        <div className='fixed inset-0 z-[99999] flex items-center justify-center bg-black/20 bg-opacity-50 '>
+          <div ref={popUpRef} className='w-fit rounded-lg bg-white p-3 max-h-[calc(100dvh-80px)] scrollbar-none overflow-scroll'>
+            {selectedEmployees.map((employee) => (
+              <p key={employee.name}> 🎉 {employee.name}</p>
+            ))}
+          </div>
+        </div>
+      }
       <BigCalendar
         localizer={localizer}
         events={[]}
