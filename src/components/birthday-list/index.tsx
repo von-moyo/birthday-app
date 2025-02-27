@@ -62,7 +62,7 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ staffs, selectedMonth }) =>
           <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">📅 Upcoming Birthdays</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {upcomingBirthdays.map((staff) => <BirthdayCard key={staff.id} staff={staff} isUpcoming />)}
+            {upcomingBirthdays.map((staff) => <BirthdayCard key={staff.id} staff={staff} />)}
           </div>
         </div>
       ) : (

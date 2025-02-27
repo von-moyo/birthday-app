@@ -42,7 +42,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, staffs }) => {
   const defaultDate = moment().month(month ?? new Date().getMonth()).toDate();
   const CustomDateHeader = ({ label, date }: { label: string, date: Date }) => {
     const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date);
-    const monthDisplay = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
+    // const monthDisplay = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
     const staffWithBirthday = staffs.filter((staff) => {
       const birthDate = moment(staff.date_of_birth, "YYYY-MM-DD");
       return birthDate.date() === date.getDate() && birthDate.month() === date.getMonth();

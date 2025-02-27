@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Gift, MessageCircleIcon } from "lucide-react";
 import { Staff } from "../../../types/types";
 
-const BirthdayCard = ({ staff, isUpcoming }: { staff: Staff & { date_of_birth: string }; isUpcoming?: boolean }) => {
+const BirthdayCard = ({ staff }: { staff: Staff & { date_of_birth: string };}) => {
   const today = new Date();
   const dob = parseISO(staff.date_of_birth);
   const isBirthdayToday = isSameDay(dob, today);
