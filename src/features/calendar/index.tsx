@@ -21,6 +21,7 @@ const CalendarUI: React.FC<CalendarUIProps> = ({ staffs, setBirthMonth, currentB
   };
   const [filteredDate, setFilteredDate] = useState(getFormattedDate(currentDateState));
 
+
   useEffect(() => {
     const newDate = new Date();
     newDate.setMonth(currentBirthMonth - 1);
@@ -88,7 +89,7 @@ const CalendarUI: React.FC<CalendarUIProps> = ({ staffs, setBirthMonth, currentB
         </div>
       </div>
 
-      <CalendarComponent month={currentBirthMonth} staffs={staffs} />
+      <CalendarComponent month={currentBirthMonth - 1} staffs={staffs} />
 
       <header className='sm:text-[21px] text-xl md:font-bold font-semibold mt-6 mb-6'>Birthdays for {filteredDate}</header>
 

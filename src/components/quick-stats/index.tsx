@@ -45,19 +45,19 @@ const MiniBirthdayList: React.FC<MiniBirthdayListProps> = ({ staffs, selectedMon
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       <div className="sm:p-4 p-2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.09)] rounded-lg text-center">
         <h3 className="text-gray-600 sm:text-base text-xs">Total Staff</h3>
-        <p className="sm:text-2xl text-xl font-bold">{totalStaff}</p>
+        <p className="sm:text-2xl text-lg font-bold">{totalStaff}</p>
       </div>
       <div className="sm:p-4 p-2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.09)] rounded-lg text-center">
         <h3 className="text-gray-600 sm:text-base text-xs">Birthdays This Month</h3>
-        <p className="sm:text-2xl text-xl font-bold">{birthdaysThisMonth}</p>
+        <p className="sm:text-2xl text-lg font-bold">{birthdaysThisMonth}</p>
       </div>
       <div className="sm:p-4 p-2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.09)] rounded-lg text-center">
         <h3 className="text-gray-600 sm:text-base text-xs">Next Birthday</h3>
-        <p className="sm:text-2xl text-xl font-bold">{nextBirthday}</p>
+        <p className="sm:text-2xl text-lg font-bold">{nextBirthday}</p>
       </div>
       <div className="sm:p-4 p-2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.09)] rounded-lg text-center">
         <h3 className="text-gray-600 sm:text-base text-xs">Birthdays This Month: X%</h3>
-        <p className="sm:text-2xl text-xl font-bold">{birthdaysThisMonth / totalStaff * 100}%</p>
+        <p className="sm:text-2xl text-lg font-bold">{birthdaysThisMonth / totalStaff * 100}%</p>
       </div>
     </div>
   );

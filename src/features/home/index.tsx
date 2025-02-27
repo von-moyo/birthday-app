@@ -14,7 +14,7 @@ const HomeUI: React.FC<HomeUIProps> = ({ staffs, selectedMonth }) => {
   return (
     <div className='my-5'>
       {isAuthenticated && <MiniBirthdayList staffs={staffs} selectedMonth={selectedMonth} />}
-      <header className='md:text-3xl sm:text-2xl text-xl md:font-bold font-semibold my-10'>Today's Birthdays</header> 
+      <header className='md:text-2xl sm:text-xl text-lg  md:font-bold font-semibold my-10'>Today's Birthdays</header> 
         <BirthdayList staffs={staffs} selectedMonth={selectedMonth} />
     </div>
   )

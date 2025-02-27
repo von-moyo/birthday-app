@@ -33,16 +33,16 @@ const BirthdayCard = ({ staff, isUpcoming }: { staff: Staff & { date_of_birth: s
           </motion.div>
 
 
-          <div className='md:text-base text-sm'>
-            <h3 className="font-semibold md:text-lg text-base text-gray-900">{staff.name}</h3>
+          <div className='md:text-base sm:text-sm text-xs'>
+            <h3 className="font-semibold md:text-lg sm:text-base text-sm text-gray-900">{staff.name}</h3>
             <p className="text-gray-600">{formatTitle(staff.department)}</p>
-            <div className="text-sm text-[#8396f6] flex items-start gap-2 sm:mt-2">
+            <div className="sm:text-sm text-xs text-[#8396f6] flex items-center gap-2 sm:mt-2">
               {isBirthdayToday ? (
-                <Gift className="w-5 h-5 text-primary-500" />
+                <Gift className="sm:w-5 sm:h-5 w-4 h-4 text-primary-500" />
               ) : (
                 <p>🎂</p>
               )}
-              {isUpcoming ? (
+              {!isBirthdayToday ? (
                 <div className="flex flex-wrap line-clamp-1">Turning {age} on {format(dob, 'MMMM do')} 🎉</div>
               ) : (
                 <div className="flex flex-wrap line-clamp-1">Turning {age} today! 🎉 <span className='text-sm sm:block hidden line-clamp-1'>({format(dob, 'MMMM do')})</span></div>
