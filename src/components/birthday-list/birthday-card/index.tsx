@@ -1,6 +1,6 @@
 import { differenceInYears, format, isSameDay, parseISO } from "date-fns";
 import { Employee } from "../../../types";
-import { getInitials } from "../../../utils";
+import { formatTitle, getInitials } from "../../../utils";
 import { motion } from "framer-motion";
 import { Gift, MessageCircleIcon } from "lucide-react";
 
@@ -10,12 +10,6 @@ const BirthdayCard = ({ employee, isUpcoming }: { employee: Employee & { date_of
   const isBirthdayToday = isSameDay(dob, today);
   const age = differenceInYears(today, new Date(employee.date_of_birth));
 
-  const formatTitle = (str: string): string => {
-    return str
-      .split("_")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  }
   return (
     <div key={employee.id} className="card transition-all duration-200 border border-gray-100 rounded-lg mb-6">
       <div className="flex items-center justify-between xl:px-8 md:px-4 px-3 md:py-6 sm:py-4 py-3">

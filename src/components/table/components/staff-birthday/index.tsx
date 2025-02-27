@@ -1,6 +1,6 @@
 import { differenceInYears, format, startOfDay } from "date-fns";
 import { Employee } from "../../../../types";
-
+import { formatTitle } from "../../../../utils";
 interface TableBodyProps {
   tableBodyItems: Employee[];
   tableBodyItemClassName?: string;
@@ -80,7 +80,7 @@ const StaffBirthdayTable: React.FC<TableBodyProps> = ({
                   <div
                     className="text-[#454545] flex gap-2 items-center"
                   >
-                    <p className="line-clamp-1">{item?.department}</p>
+                    <p className="line-clamp-1">{formatTitle(item?.department)}</p>
                   </div>
                 )}
                 {header.title === "Birthday" && (
