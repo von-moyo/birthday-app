@@ -11,8 +11,8 @@ const BirthdayCard = ({ staff, isUpcoming }: { staff: Staff & { date_of_birth: s
   const age = differenceInYears(today, new Date(staff.date_of_birth));
 
   return (
-    <div key={staff.id} className="card transition-all duration-200 border border-gray-100 rounded-lg mb-6">
-      <div className="flex items-center justify-between xl:px-8 md:px-4 px-3 md:py-6 sm:py-4 py-3">
+    <div key={staff.id} className="card transition-all duration-200 border border-gray-200 rounded-lg mb-6">
+      <div className="flex items-center justify-between xl:px-8 md:px-4 px-3 xl:py-6 md:py-3 py-2">
         <div className="flex items-center gap-6">
 
           <motion.div
@@ -54,8 +54,8 @@ const BirthdayCard = ({ staff, isUpcoming }: { staff: Staff & { date_of_birth: s
         <a
           href={`mailto:${staff.email}?subject=🎉 Happy Birthday, ${staff.name}!&body=Dear%20${staff.name},%0D%0A%0D%0AWishing%20you%20a%20wonderful%20birthday!%0D%0A%0D%0ABest%20wishes,%0D%0A${'Replace with your name'}`}
         >
-          <button className="bg-blue-500 text-white md:px-4 px-2 md:py-4 py-2 cursor-pointer rounded-full flex items-center justify-center">
-            <MessageCircleIcon className="md:w-8 md:h-8 w-6 h-6 text-white fill-white" />
+          <button className="bg-blue-500 text-white xl:p-4 md:p-3 p-2 cursor-pointer rounded-full flex items-center justify-center">
+            <MessageCircleIcon className="xl:w-8 md:w-6 w-5 xl:h-8 md:h-6 h-5 text-white fill-white" />
           </button>
         </a>
       </div>
