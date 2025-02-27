@@ -6,9 +6,11 @@ import { useApiRequest } from '../../hooks';
 import { loginService } from '../../api';
 import Cookies from 'js-cookie';
 import { LoginUI } from '../../features/login';
+import { useAuth } from '../../context/authContext';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { setIsAuthenticated } = useAuth();
 
   const {
     run: runLogin, 
@@ -29,6 +31,7 @@ const Login: React.FC = () => {
       toast.success('Login successful');
       Cookies.set('access_token', loginResponse.data.access);
       Cookies.set('refresh_token', loginResponse.data.refresh);
+      setIsAuthenticated(true);
       setTimeout(() => {
         navigate('/');
       }, 1000);
