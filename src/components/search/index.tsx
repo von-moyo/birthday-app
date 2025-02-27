@@ -15,6 +15,7 @@ interface SearchPayload {
   search: string;
 }
 
+
 const searchFormSchema = yup.object().shape({
   search: yup.string().required("Search is required"),
 }); 
