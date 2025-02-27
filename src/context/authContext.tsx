@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
-
+import Cookies from 'js-cookie';
 const AuthContext = createContext<{
   isAuthenticated: boolean;
   setIsAuthenticated: (authenticated: boolean) => void;
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('access_token');
     const changed = token ? true : false;
     setIsAuthenticated(changed);
   }, []);

@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import { toast } from "sonner";
 import { refreshTokenService } from "../services";
 
+console.log("Base URL:", import.meta.env.VITE_API_BASE_URL);
+
 // Create axios instances
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -17,16 +19,9 @@ axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // Get Access Token from cookies
     const access_token = Cookies.get('access_token');
-    // Add Api-key header if accessToken exists
-    if (access_token && config.headers) {
-      config.headers["X-API-KEY"] = `${access_token}`;
-    }
-    // config.withCredentials = true;
-
     // Add Bearer API Key
-    const apiKey = import.meta.env.VITE_API_KEY;
-    if (apiKey && config.headers) {
-      config.headers["Authorization"] = `Bearer ${apiKey}`;
+    if (access_token && config.headers) {
+      config.headers["Authorization"] = `Bearer ${access_token}`;
     }
 
     return config;
