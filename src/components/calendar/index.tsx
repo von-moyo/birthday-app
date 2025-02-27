@@ -19,9 +19,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, staffs }) => {
   useClickOutside(popUpRef, popUpRef, () => {
     setPopUp(false)
     setSelectedStaff(null)
-  }
-
-  );
+  });
 
   const handleSelectDay = (slotInfo: SlotInfo) => {
     const selectedDate = moment(slotInfo.start);
@@ -41,7 +39,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, staffs }) => {
   };
 
   const defaultDate = moment().month(month ?? new Date().getMonth()).toDate();
-  const CustomDateHeader = ({ label, date }: any) => {
+  const CustomDateHeader = ({ label, date }: { label: string, date: Date }) => {
     const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date);
     const staffWithBirthday = staffs.filter((staff) => {
       const birthDate = moment(staff.date_of_birth, "YYYY-MM-DD");
