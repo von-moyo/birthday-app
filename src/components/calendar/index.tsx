@@ -2,40 +2,40 @@ import React, { useState, useRef } from 'react';
 import { Calendar as BigCalendar, momentLocalizer, SlotInfo } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { Employee } from '../../types/types';
+import { Staff } from '../../types/types';
 import { getInitials } from '../../utils/getInitials';
 import { useClickOutside } from '../../hooks';
 const localizer = momentLocalizer(moment);
 
 interface CalendarProps {
   month: number;
-  employees: Employee[];
+  staffs: Staff[];
 }
 
-const CalendarComponent: React.FC<CalendarProps> = ({ month, employees }) => {
+const CalendarComponent: React.FC<CalendarProps> = ({ month, staffs }) => {
   const [popUp, setPopUp] = useState(false);
-  const [selectedEmployees, setSelectedEmployees] = useState<Employee[] | null>(null);
+  const [selectedstaff, setSelectedStaff] = useState<Staff[] | null>(null);
   const popUpRef = useRef<HTMLDivElement>(null);
   useClickOutside(popUpRef, popUpRef, () => {
     setPopUp(false)
-    setSelectedEmployees(null)
+    setSelectedStaff(null)
   }
 
   );
 
   const handleSelectDay = (slotInfo: SlotInfo) => {
     const selectedDate = moment(slotInfo.start);
-    const employeesWithBirthday = employees.filter(employee => {
-      const birthDate = moment(employee.date_of_birth);
+    const staffWithBirthday = staffs.filter(staff => {
+      const birthDate = moment(staff.date_of_birth, "YYYY-MM-DD");
       return birthDate.date() === selectedDate.date() && birthDate.month() === selectedDate.month();
     });
 
     if (slotInfo.bounds) {
-      setSelectedEmployees(employeesWithBirthday);
+      setSelectedStaff(staffWithBirthday);
     }
     setPopUp(true);
-    setSelectedEmployees(employeesWithBirthday);
-    console.log(employeesWithBirthday);
+    setSelectedStaff(staffWithBirthday);
+    console.log(staffWithBirthday);
     console.log(slotInfo.bounds);
     console.log(slotInfo.start);
   };
@@ -43,8 +43,8 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, employees }) => {
   const defaultDate = moment().month(month ?? new Date().getMonth()).toDate();
   const CustomDateHeader = ({ label, date }: any) => {
     const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date);
-    const employeesWithBirthday = employees.filter((employee) => {
-      const birthDate = moment(employee.date_of_birth);
+    const staffWithBirthday = staffs.filter((staff) => {
+      const birthDate = moment(staff.date_of_birth, "YYYY-MM-DD");
       return birthDate.date() === date.getDate() && birthDate.month() === date.getMonth();
     });
     const monthTextSize = window.innerWidth < 500 && 'text-xs';
@@ -55,10 +55,10 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, employees }) => {
         <span className={`mb-2 w-fit h-fit sm:ml-[10px] ml-[5px] lg:text-lg sm:text-normal text-sm sm:font-bold font-semibold ${monthTextSize}`}>
           {/* <span className='sm:block hidden '>{month}</span> */}
           {label}</span>
-        {employeesWithBirthday.map((employee) => (
-          <span key={employee.name} className="sm:mx-[10px] mx-[5px] text-xs text-blue-500 font-medium break-words">
-            <span className='text-[10px] sm:hidden flex'>🎉 {getInitials(employee.name)}</span>
-            <span className='sm:flex hidden'>🎉 {employee.name}</span>
+        {staffWithBirthday.map((staff) => (
+          <span key={staff.name} className="sm:mx-[10px] mx-[5px] text-xs text-blue-500 font-medium break-words">
+            <span className='text-[10px] sm:hidden flex'>🎉 {getInitials(staff.name)}</span>
+            <span className='sm:flex hidden'>🎉 {staff.name}</span>
           </span>
         ))}
       </div>
@@ -86,10 +86,10 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, employees }) => {
   const height = window.innerWidth < 640 ? 500 : window.innerWidth < 750 ? 650 : window.innerWidth < 1024 ? 650 : 750;
   return (
     <>
-      {popUp && selectedEmployees && selectedEmployees.length > 0 &&
+      {popUp && selectedstaff && selectedstaff.length > 0 &&
         <div className='fixed inset-0 z-[99999] flex items-center justify-center bg-black/20 bg-opacity-50 '>
           <div ref={popUpRef} className='w-fit rounded-lg bg-white p-3 max-h-[calc(100dvh-80px)] scrollbar-none overflow-scroll'>
-            {selectedEmployees.map((employee) => (
+            {selectedstaff.map((employee) => (
               <p key={employee.name}> 🎉 {employee.name}</p>
             ))}
           </div>

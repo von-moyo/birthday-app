@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Employee, Staff } from '../../types'
+import { Staff, StaffResponse } from '../../types/types';
 import { HomeUI } from '../../features/home';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
@@ -7,7 +7,7 @@ import { useApiRequest } from '../../hooks';
 import { staffsService } from '../../api';
 
 const Home: React.FC = () => {
-  const [staffs, setStaffs] = useState<Employee[]>([]);
+  const [staffs, setStaffs] = useState<Staff[]>([]);
   const selectedMonth = new Date();
 
   const {
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (staffsResponse?.status === 200) {
       const filteredStaffs = staffsResponse.data
-        .map((staff: Staff) => ({
+        .map((staff: StaffResponse) => ({
           id: staff.id,
           name: `${staff.first_name} ${staff.last_name}`,
           department: staff.department,
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <HomeUI employees={staffs} selectedMonth={selectedMonth} />
+      <HomeUI staffs={staffs} selectedMonth={selectedMonth} />
     </>
   )
 }

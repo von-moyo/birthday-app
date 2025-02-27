@@ -5,10 +5,9 @@ import { CalendarUI } from '../../features'
 import { useApiRequest } from '../../hooks';
 import { staffsService } from '../../api';
 import { Loader2 } from 'lucide-react';
-import { Employee } from '../../types';
-import { Staff } from '../../types/types';
+import { Staff, StaffResponse } from '../../types/types';
 const Calendar = () => {
-  const [staffs, setStaffs] = useState<Employee[]>([]);
+  const [staffs, setStaffs] = useState<Staff[]>([]);
   const getCurrentMonthIndex = () => {
     const currentDate = new Date();
     return currentDate.getMonth() + 1;
@@ -30,7 +29,7 @@ const Calendar = () => {
   useEffect(() => {
     if (staffsResponse?.status === 200) {
       const filteredStaffs = staffsResponse.data
-        .map((staff: Staff) => ({
+        .map((staff: StaffResponse) => ({
           id: staff.id,
           name: `${staff.first_name} ${staff.last_name}`,
           department: staff.department,
@@ -52,7 +51,7 @@ const Calendar = () => {
 
   return (
     <div>
-      <CalendarUI employees={staffs} setBirthMonth={setBirthMonth} currentBirthMonth={birthMonth}/>
+      <CalendarUI staffs={staffs} setBirthMonth={setBirthMonth} currentBirthMonth={birthMonth}/>
     </div>
   )
 }

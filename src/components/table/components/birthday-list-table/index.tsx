@@ -1,7 +1,7 @@
-import { Employee } from "../../../../types";
+import { Staff } from "../../../../types";
 
 interface TableBodyProps {
-  tableBodyItems: Employee[];
+  tableBodyItems: Staff[];
   tableBodyItemClassName?: string;
   tableBodyRowClassName?: string;
   tableBodyStatus?: string;

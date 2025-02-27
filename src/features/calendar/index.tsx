@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Employee } from '../../types/types'
+import { Staff } from '../../types/types'
 import { CalendarComponent } from '../../components/calendar'
 import { format, subMonths } from 'date-fns'
 import { addMonths } from 'date-fns'
@@ -7,12 +7,12 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Table } from '../../components'
 import { StaffBirthdayTable } from '../../components/table/components/staff-birthday'
 interface CalendarUIProps {
-  employees: Employee[]
+  staffs: Staff[]
   setBirthMonth: (month: number) => void
   currentBirthMonth: number;
 }
 
-const CalendarUI: React.FC<CalendarUIProps> = ({ employees, setBirthMonth, currentBirthMonth }) => {
+const CalendarUI: React.FC<CalendarUIProps> = ({ staffs, setBirthMonth, currentBirthMonth }) => {
   const initialDate = new Date();
   initialDate.setMonth(currentBirthMonth - 1);
   const [currentDateState, setCurrentDateState] = useState(initialDate);
@@ -63,12 +63,12 @@ const CalendarUI: React.FC<CalendarUIProps> = ({ employees, setBirthMonth, curre
     },
   ];
 
-  const filteredBirthdays = employees.filter((employee) => {
+  const filteredBirthdays = staffs.filter((staff) => {
     try {
-      const dob = new Date(employee.date_of_birth);
+      const dob = new Date(staff.date_of_birth);
       return dob.getMonth() === currentDateState.getMonth();
     } catch (error) {
-      console.error("Error parsing date:", employee.date_of_birth, error);
+      console.error("Error parsing date:", staff.date_of_birth, error);
       return false;
     }
   });
@@ -88,7 +88,7 @@ const CalendarUI: React.FC<CalendarUIProps> = ({ employees, setBirthMonth, curre
         </div>
       </div>
 
-      <CalendarComponent month={currentBirthMonth} employees={employees} />
+      <CalendarComponent month={currentBirthMonth} staffs={staffs} />
 
       <header className='sm:text-[21px] text-xl md:font-bold font-semibold mt-6 mb-6'>Birthdays for {filteredDate}</header>
 

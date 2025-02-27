@@ -1,14 +1,14 @@
 import { isSameMonth, isSameDay, addMonths, isWithinInterval, parseISO } from 'date-fns';
 import { Cake } from 'lucide-react';
-import { Employee } from '../../types';
+import { Staff } from '../../types/types';
 import { BirthdayCard } from './birthday-card';
 
 interface BirthdayListProps {
-  employees: Employee[];
+  staffs: Staff[];
   selectedMonth: Date;
 }
 
-const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth }) => {
+const BirthdayList: React.FC<BirthdayListProps> = ({ staffs, selectedMonth }) => {
   const today = new Date();
   const nextFourMonths = addMonths(today, 4);
 
@@ -17,16 +17,16 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
     return new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
   };
 
-  const todaysBirthdays = employees.filter((employee) => isSameDay(normalizeDate(employee.date_of_birth), today));
+  const todaysBirthdays = staffs.filter((staff) => isSameDay(normalizeDate(staff.date_of_birth), today));
 
-  const monthlyBirthdays = employees.filter((employee) => {
-    const dob = normalizeDate(employee.date_of_birth);
+  const monthlyBirthdays = staffs.filter((staff) => {
+    const dob = normalizeDate(staff.date_of_birth);
     return isSameMonth(dob, selectedMonth) && !isSameDay(dob, today);
   });
 
-  const upcomingBirthdays = employees.filter((employee) => {
-    const dob = normalizeDate(employee.date_of_birth);
-    return isWithinInterval(dob, { start: today, end: nextFourMonths }) && !isSameMonth(dob, selectedMonth) && !todaysBirthdays.includes(employee);
+  const upcomingBirthdays = staffs.filter((staff) => {
+    const dob = normalizeDate(staff.date_of_birth);
+    return isWithinInterval(dob, { start: today, end: nextFourMonths }) && !isSameMonth(dob, selectedMonth) && !todaysBirthdays.includes(staff);
   });
 
   return (
@@ -34,7 +34,7 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
 
       {todaysBirthdays.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {todaysBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+          {todaysBirthdays.map((staff) => <BirthdayCard key={staff.id} staff={staff} />)}
         </div>
       ) : (
         <div className="col-span-full text-center py-12">
@@ -47,7 +47,7 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
         <div>
           <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">🎂 Other Birthdays This Month</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {monthlyBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} />)}
+            {monthlyBirthdays.map((staff) => <BirthdayCard key={staff.id} staff={staff} />)}
           </div>
         </div>
       ) : (
@@ -62,7 +62,7 @@ const BirthdayList: React.FC<BirthdayListProps> = ({ employees, selectedMonth })
           <h2 className="sm:text-xl text-lg font-semibold text-gray-800 my-8">📅 Upcoming Birthdays</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {upcomingBirthdays.map((employee) => <BirthdayCard key={employee.id} employee={employee} isUpcoming />)}
+            {upcomingBirthdays.map((staff) => <BirthdayCard key={staff.id} staff={staff} isUpcoming />)}
           </div>
         </div>
       ) : (

@@ -1,8 +1,8 @@
 import { differenceInYears, format, startOfDay } from "date-fns";
-import { Employee } from "../../../../types";
 import { formatTitle } from "../../../../utils";
+import { Staff } from "../../../../types/types";
 interface TableBodyProps {
-  tableBodyItems: Employee[];
+  tableBodyItems: Staff[];
   tableBodyItemClassName?: string;
   tableBodyRowClassName?: string;
   tableBodyStatus?: string;
@@ -23,14 +23,9 @@ const StaffBirthdayTable: React.FC<TableBodyProps> = ({
   const today = startOfDay(new Date());
   
   const formatDateWithLabel = (dateValue: string | Date) => {
-    // Convert to Date object safely
     const dateObj = typeof dateValue === 'string' ? new Date(dateValue) : dateValue;
     const dateAtStartOfDay = startOfDay(dateObj);
-    
-    // Format for display
     const formattedDate = format(dateAtStartOfDay, 'MMM d');
-    
-    // Check if it's today or tomorrow based on month and day only
     const currentMonth = today.getMonth();
     const currentDay = today.getDate();
     const birthdayMonth = dateAtStartOfDay.getMonth();

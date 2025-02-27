@@ -1,21 +1,21 @@
 import React from 'react'
 import { BirthdayList, MiniBirthdayList } from '../../components'
-import { Employee } from '../../types'
 import { useAuth } from '../../context/authContext';
+import { Staff } from '../../types/types';
 
 interface HomeUIProps { 
-  employees: Employee[];
+  staffs: Staff[];
   selectedMonth: Date;
 }
 
-const HomeUI: React.FC<HomeUIProps> = ({ employees, selectedMonth }) => {
+const HomeUI: React.FC<HomeUIProps> = ({ staffs, selectedMonth }) => {
   const { isAuthenticated } = useAuth();
 
   return (
     <div className='my-5'>
-      {isAuthenticated && <MiniBirthdayList employees={employees} selectedMonth={selectedMonth} />}
+      {isAuthenticated && <MiniBirthdayList staffs={staffs} selectedMonth={selectedMonth} />}
       <header className='md:text-3xl sm:text-2xl text-xl md:font-bold font-semibold my-10'>Today's Birthdays</header> 
-      <BirthdayList employees={employees} selectedMonth={selectedMonth} />
+        <BirthdayList staffs={staffs} selectedMonth={selectedMonth} />
     </div>
   )
 }

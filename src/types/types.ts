@@ -1,4 +1,4 @@
-export interface Employee {
+export interface Staff {
   id?: string;
   name: string;
   department: string;
@@ -14,7 +14,7 @@ export interface User {
   is_admin: boolean;
 }
 
-export interface Staff {
+export interface StaffResponse {
   id: string; // UUID
   first_name: string;
   last_name: string;
