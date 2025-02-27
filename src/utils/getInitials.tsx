@@ -19,3 +19,10 @@ export const getFirstName = (name: string) => {
   return name
     .split(' ')[0]
 };
+
+export const formatTitle = (str: string): string => {
+  return str
+    .split("_")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}

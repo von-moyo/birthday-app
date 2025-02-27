@@ -13,7 +13,7 @@ export const adminNavLinks = [
   },
   {
     name: "Birthday Calendar",
-    href: "/birthday-calendar",
+    href: "/calendar",
     icon: Calendar,
   },
   {
@@ -31,7 +31,7 @@ export const guestNavLinks = [
   },
   {
     name: "Birthday Calendar",
-    href: "/birthday-calendar",
+    href: "/calendar",
     icon: Calendar,
   },
 ];

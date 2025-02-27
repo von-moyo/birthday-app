@@ -1,7 +1,7 @@
-import { Employee } from "../types"
 import { isSameDay, parseISO } from "date-fns";
+import { Staff } from "../types/types";
 
-export const getNextBirthday = (employeeList: Employee []): string => {
+export const getNextBirthday = (staffList: Staff[]): string => {
   const today = new Date();
 
   const normalizeDate = (dateString: string) => {
@@ -10,7 +10,7 @@ export const getNextBirthday = (employeeList: Employee []): string => {
   };
   
   // Sort all future birthdays (excluding today) by nearest date
-  const futureBirthdays = employeeList
+  const futureBirthdays = staffList
     .filter(emp => {
       const dob = normalizeDate(emp.date_of_birth);
       return !isSameDay(dob, today) && dob >= today;
@@ -23,7 +23,7 @@ export const getNextBirthday = (employeeList: Employee []): string => {
 
   // If no future birthdays this year, look at start of next year
   if (futureBirthdays.length === 0) {
-    const nextYearBirthdays = employeeList
+    const nextYearBirthdays = staffList
       .map(emp => {
         const dob = normalizeDate(emp.date_of_birth);
         return new Date(today.getFullYear() + 1, dob.getMonth(), dob.getDate());

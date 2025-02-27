@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
     <>
       <header
         className={`
-          sticky top-0 z-[60] flex items-center justify-between gap-4 bg-white sm:px-8 px-4 sm:py-[14.5px] py-[10px] border-b border-[#D9D9D9]
+          sticky top-0 z-[60] flex items-center justify-between gap-4 bg-white sm:px-8 px-4 sm:py-[14.5px] py-[10px]
           ${className}
         `}
       >
@@ -46,8 +46,8 @@ export const Header: React.FC<HeaderProps> = ({
             </>
           ) : (
             <>
-              <p className="lg:text-[18px] text-[16px] font-medium text-[#1E272F] hidden md:block">Welcome Guest</p>
-              <Link to="/login" className="flex justify-center py-2 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"><Lock className="w-4 h-4 mr-2"/> Login as Admin</Link>
+              <p className="lg:text-[18px] text-[16px] font-medium text-[#1E272F] hidden lg:block">Welcome Guest</p>
+              <Link to="/login" className="lg:flex hidden justify-center py-2 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"><Lock className="w-4 h-4 mr-2"/> Login as Admin</Link>
             </>
           )}
 
