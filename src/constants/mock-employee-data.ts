@@ -1,4 +1,4 @@
-import { NoPfp, Pfp } from "../assets/images";
+import { Pfp } from "../assets/images";
 
 // Define the function type
 const generateBirthdate = (month: number, day: number): string => {
@@ -28,7 +28,7 @@ const mockEmployees = [
     department: "Biochemistry",
     date_of_birth: generateBirthdate(todayMonth, todayDay),
     created_at: new Date().toISOString(),
-    image: NoPfp,
+    image: "",
   },
 
   // Birthdays this month (excluding today's)
@@ -59,7 +59,7 @@ const mockEmployees = [
     department: "Chemistry",
     date_of_birth: generateBirthdate(todayMonth + 1, 15),
     created_at: new Date().toISOString(),
-    image: NoPfp,
+    image: "",
   },
   {
     id: "6",
@@ -86,7 +86,7 @@ const mockEmployees = [
     department: "History",
     date_of_birth: generateBirthdate(todayMonth + 4, 5),
     created_at: new Date().toISOString(),
-    image: NoPfp,
+    image: "",
   },
 ];
 
