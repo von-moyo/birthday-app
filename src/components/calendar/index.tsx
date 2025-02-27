@@ -27,7 +27,6 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, staffs }) => {
       const birthDate = moment(staff.date_of_birth, "YYYY-MM-DD");
       return birthDate.date() === selectedDate.date() && birthDate.month() === selectedDate.month();
     });
-
     if (slotInfo.bounds) {
       setSelectedStaff(staffWithBirthday);
     }
