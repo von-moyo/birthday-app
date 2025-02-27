@@ -10,9 +10,10 @@ import { useLogout } from "../../hooks";
 interface SideBarProps {
   className?: string;
   isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (isMobileMenuOpen: boolean) => void;
 }
 
-export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOpen }) => {
+export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOpen, setIsMobileMenuOpen }) => {
 
   const { isAuthenticated } = useAuth();
   const logout = useLogout();
@@ -86,7 +87,7 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
               <ul className="flex-1">
                 <ul className="flex-1 overflow-y-auto">
                   {userNavLinks.map((n) => (
-                    <li key={n.name}>
+                    <li key={n.name} onClick={() => setIsMobileMenuOpen(false)}>
                       <NavLink
                         to={n.href}
                         className={({ isActive }) =>

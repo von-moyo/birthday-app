@@ -16,6 +16,7 @@ const MainLayout = () => {
       <div className="flex">
         <SideBar
           isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
         />
         <div
           ref={scrollRef}
