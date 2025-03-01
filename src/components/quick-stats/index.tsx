@@ -1,8 +1,9 @@
-import { isSameMonth, isSameDay, addMonths, isWithinInterval, parseISO } from 'date-fns';
-import { Employee } from '../../types';
-import { BirthdayListTable } from '../table/components';
+import { isSameMonth, isSameDay, addMonths, isWithinInterval, parseISO } from 'date-fns';   
+
 import { Table } from '../table';
 import { getNextBirthday } from '../../utils/getNextBirthday';
+import { Staff } from '../../types/types';
+import { BirthdayListTable } from '../table/components/birthday-list-table';
 
 type StatsProps = {
   totalStaff: number;
@@ -12,11 +13,11 @@ type StatsProps = {
 
 
 interface MiniBirthdayListProps {
-  employees: Employee[];
+  staffs: Staff[];
   selectedMonth: Date;
 }
 
-const MiniBirthdayList: React.FC<MiniBirthdayListProps> = ({ employees, selectedMonth }) => {
+const MiniBirthdayList: React.FC<MiniBirthdayListProps> = ({ staffs, selectedMonth }) => {
   const today = new Date();
   const nextFourMonths = addMonths(today, 4);
 
@@ -26,33 +27,37 @@ const MiniBirthdayList: React.FC<MiniBirthdayListProps> = ({ employees, selected
   };
 
   // Filter today's birthdays
-  const todaysBirthdays = employees.filter((employee) => isSameDay(normalizeDate(employee.date_of_birth), today));
+  const todaysBirthdays = staffs.filter((staff) => isSameDay(normalizeDate(staff.date_of_birth), today));
 
   // Filter birthdays this month (excluding today's birthdays)
-  const monthlyBirthdays = employees.filter((employee) => {
-    const dob = normalizeDate(employee.date_of_birth);
+  const monthlyBirthdays = staffs.filter((staff) => {
+    const dob = normalizeDate(staff.date_of_birth);
     return isSameMonth(dob, selectedMonth);
   });
 
   // Filter upcoming birthdays within the next 4 months
-  const upcomingBirthdays = employees.filter((employee) => {
-    const dob = normalizeDate(employee.date_of_birth);
-    return isWithinInterval(dob, { start: today, end: nextFourMonths }) && !isSameMonth(dob, selectedMonth) && !todaysBirthdays.includes(employee);
+  const upcomingBirthdays = staffs.filter((staff) => {
+    const dob = normalizeDate(staff.date_of_birth);
+    return isWithinInterval(dob, { start: today, end: nextFourMonths }) && !isSameMonth(dob, selectedMonth) && !todaysBirthdays.includes(staff);
   });
 
   const Stats: React.FC<StatsProps> = ({ totalStaff, birthdaysThisMonth, nextBirthday }) => (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <div className="p-4 bg-white shadow-[0_0_10px_rgba(0,0,0,0.2)] rounded-lg text-center">
-        <h3 className="text-gray-600 text-base">Total Staff</h3>
-        <p className="text-2xl font-bold">{totalStaff}</p>
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="sm:p-4 p-2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.09)] rounded-lg text-center">
+        <h3 className="text-gray-600 sm:text-base text-xs">Total Staff</h3>
+        <p className="sm:text-2xl text-lg font-bold">{totalStaff}</p>
       </div>
-      <div className="p-4 bg-white shadow-[0_0_10px_rgba(0,0,0,0.2)] rounded-lg text-center">
-        <h3 className="text-gray-600 text-base">Birthdays This Month</h3>
-        <p className="text-2xl font-bold">{birthdaysThisMonth}</p>
+      <div className="sm:p-4 p-2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.09)] rounded-lg text-center">
+        <h3 className="text-gray-600 sm:text-base text-xs">Birthdays This Month</h3>
+        <p className="sm:text-2xl text-lg font-bold">{birthdaysThisMonth}</p>
       </div>
-      <div className="p-4 bg-white shadow-[0_0_10px_rgba(0,0,0,0.2)] rounded-lg text-center">
-        <h3 className="text-gray-600 text-base">Next Birthday</h3>
-        <p className="text-2xl font-bold">{nextBirthday}</p>
+      <div className="sm:p-4 p-2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.09)] rounded-lg text-center">
+        <h3 className="text-gray-600 sm:text-base text-xs">Next Birthday</h3>
+        <p className="sm:text-2xl text-lg font-bold">{nextBirthday}</p>
+      </div>
+      <div className="sm:p-4 p-2 bg-white shadow-[0_0_8px_rgba(0,0,0,0.09)] rounded-lg text-center">
+        <h3 className="text-gray-600 sm:text-base text-xs">Birthdays This Month: X%</h3>
+        <p className="sm:text-2xl text-lg font-bold">{birthdaysThisMonth / totalStaff * 100}%</p>
       </div>
     </div>
   );
@@ -74,8 +79,8 @@ const MiniBirthdayList: React.FC<MiniBirthdayListProps> = ({ employees, selected
 
   return (
     <div className="grid gap-6">
-      <h1 className="sm:text-2xl text-xl font-bold text-gray-900 mt-6">Employee Dashboard</h1>
-      <Stats totalStaff={employees.length} birthdaysThisMonth={monthlyBirthdays.length} nextBirthday={getNextBirthday(employees)} />
+      <h1 className="md:text-2xl sm:text-xl text-lg font-bold text-gray-900 sm:mt-6 mt-2">Employee Dashboard</h1>
+      <Stats totalStaff={staffs.length} birthdaysThisMonth={monthlyBirthdays.length} nextBirthday={getNextBirthday(staffs)} />
       <Table
         tableHeaderTitles={shownHeaders}
         tableBody={

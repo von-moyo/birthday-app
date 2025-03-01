@@ -1,7 +1,8 @@
-import { Employee } from "../../../../types";
+import { Staff } from "../../../../types";
+import { formatTitle } from "../../../../utils";
 
 interface TableBodyProps {
-  tableBodyItems: Employee[];
+  tableBodyItems: Staff[];
   tableBodyItemClassName?: string;
   tableBodyRowClassName?: string;
   tableBodyStatus?: string;
@@ -33,8 +34,8 @@ const BirthdayListTable: React.FC<TableBodyProps> = ({
   return (
     <>{tableBodyItems.length === 0 ?
       <div className='flex gap-4 py-[60px] flex-col items-center justify-center'>
-        <p className='text-xs font-medium text-[#1E272F]'>No Referrals Yet</p>
-        <p className='text-xs font-light text-[#898989] w-[60%] text-center'>Share your referral code or referral link to enjoy rewards.</p>
+        <p className='text-xs font-medium text-[#1E272F]'>No Birthdays Yet</p>
+        <p className='text-xs font-light text-[#898989] w-[60%] text-center'>No birthdays found at this time.</p>
 
       </div>
       :
@@ -60,7 +61,7 @@ const BirthdayListTable: React.FC<TableBodyProps> = ({
                   <div
                     className="text-[#454545] flex gap-2 items-center"
                   >
-                    <p className="line-clamp-1">{item?.department}</p>
+                    <p className="line-clamp-1">{formatTitle(item?.department)}</p>
                   </div>
                 )}
                 {header.title === "Date" && (

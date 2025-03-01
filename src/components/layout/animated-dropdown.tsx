@@ -1,28 +1,21 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDownIcon, SettingsIcon, LogOut } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { useClickOutside } from '../../hooks';
 import { Pfp } from '../../assets/images';
 import { getFirstName, getInitials } from '../../utils';
+import { useLogout } from '../../hooks';
 
 const AnimatedDropdown = () => {
-  const navigate = useNavigate();
   const [dropdown, setDropdown] = useState(false);
   const dropdownButtonRef = useRef(null);
   const dropdownPopupRef = useRef(null);
   const name = 'Von Kloss';
   const email = 'vonkloss@gmail.com';
-  
+  const logout = useLogout();
   useClickOutside(dropdownPopupRef, dropdownButtonRef, () =>
     setDropdown(false)
   );
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-    setDropdown(false);
-  };
 
   return (
     <div className="relative lg:block hidden">
@@ -110,7 +103,7 @@ const AnimatedDropdown = () => {
 
             <motion.div
               className="items-between py-3 flex h-fit cursor-pointer gap-2 rounded-[.3125rem] px-6"
-              onClick={handleLogout}
+              onClick={logout}
               initial={{ backgroundColor: "transparent" }}
               whileHover={{ backgroundColor: '#fff1f1' }}
               transition={{ 

@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { Staff, StaffResponse } from '../../types/types';
-import { HomeUI } from '../../features/home';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
+import { CalendarUI } from '../../features'
 import { useApiRequest } from '../../hooks';
 import { staffsService } from '../../api';
-
-const Home: React.FC = () => {
+import { Loader2 } from 'lucide-react';
+import { Staff, StaffResponse } from '../../types/types';
+const Calendar = () => {
   const [staffs, setStaffs] = useState<Staff[]>([]);
-  const selectedMonth = new Date();
-
+  const getCurrentMonthIndex = () => {
+    const currentDate = new Date();
+    return currentDate.getMonth() + 1;
+  }
+  const [birthMonth, setBirthMonth] = useState<number>(getCurrentMonthIndex());
   const {
     run: runStaffs,
     data: staffsResponse,
@@ -18,8 +21,10 @@ const Home: React.FC = () => {
   } = useApiRequest({});
 
   useEffect(() => {
-    runStaffs(staffsService());
-  }, []);
+    runStaffs(staffsService({
+      birth_month: birthMonth
+    }));
+  }, [birthMonth]);
 
   useEffect(() => {
     if (staffsResponse?.status === 200) {
@@ -45,10 +50,10 @@ const Home: React.FC = () => {
   }
 
   return (
-    <>
-      <HomeUI staffs={staffs} selectedMonth={selectedMonth} />
-    </>
+    <div>
+      <CalendarUI staffs={staffs} setBirthMonth={setBirthMonth} currentBirthMonth={birthMonth}/>
+    </div>
   )
 }
 
-export { Home }
+export { Calendar }

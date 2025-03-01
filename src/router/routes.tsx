@@ -3,7 +3,7 @@ import {
   NotFound,
   Home,
   Login,
-  ForgotPassword,
+  ForgotPassword, Calendar,
   StaffManagement,
 } from "../pages";
 import { MainLayout } from "../components";
@@ -26,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/staff-management",
         element: <StaffManagement />,
+      },
+      {
+        path: "/calendar",
+        element: <Calendar />,
       },
       {
         path: "*",

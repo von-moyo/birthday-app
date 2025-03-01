@@ -4,10 +4,10 @@ import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Employee } from '../../types';
+import { Staff } from '../../types/types';
 
 interface AddEmployeeFormProps {
-  onEmployeeAdded: (data: Employee) => void;
+  onEmployeeAdded: (data: Staff) => void;
 }
 
 const schema = yup.object({
@@ -36,12 +36,10 @@ const AddEmployeeForm: React.FC<AddEmployeeFormProps> = ({ onEmployeeAdded }) =>
       };
       toast.success('Employee added successfully!');
       onEmployeeAdded(employeeData);
-      console.log(employeeData);
       reset(); 
       setIsOpen(false); 
     } catch (error) {
       toast.error('Failed to add employee.');
-      console.error('Error adding employee:', error);
     } finally {
       setLoading(false);
     }
