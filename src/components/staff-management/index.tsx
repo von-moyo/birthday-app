@@ -6,7 +6,6 @@ import { StaffDB, StaffFormValues } from "../../types";
 import { StaffTable, TableBodyItem } from "./staff-table";
 import { FilterSection } from "./filter-section";
 import { getGridColsClass } from "./utils";
-import { Toaster } from "@/components/ui/sonner";
 
 const API_BASE_URL = "https://hameedah.pythonanywhere.com/api/admin";
 const STAFF_ENDPOINT = `${API_BASE_URL}/staff/`;
@@ -133,51 +132,48 @@ const StaffManagementTable = () => {
   }
 
   return (
-    <>
-      <div className="grid gap-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mt-6">
-          Staff Management
-        </h1>
+    <div className="grid gap-6">
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mt-6">
+        Staff Management
+      </h1>
 
-        {requestStatus.isPending ? (
-          <div>Loading...</div>
-        ) : requestStatus.isRejected ? (
-          <div>Error: {error?.message || "Failed to fetch data"}</div>
-        ) : (
-          <>
-            <FilterSection
-              searchTerm={searchTerm}
-              selectedDepartment={selectedDepartment}
-              selectedStaffType={selectedStaffType}
-              departments={departments as string[]}
-              staffTypes={staffTypes as string[]}
-              onSearchChange={setSearchTerm}
-              onDepartmentChange={setSelectedDepartment}
-              onStaffTypeChange={setSelectedStaffType}
-              addNewStaffHandler={addNewStaffHandler}
-            />
+      {requestStatus.isPending ? (
+        <div>Loading...</div>
+      ) : requestStatus.isRejected ? (
+        <div>Error: {error?.message || "Failed to fetch data"}</div>
+      ) : (
+        <>
+          <FilterSection
+            searchTerm={searchTerm}
+            selectedDepartment={selectedDepartment}
+            selectedStaffType={selectedStaffType}
+            departments={departments as string[]}
+            staffTypes={staffTypes as string[]}
+            onSearchChange={setSearchTerm}
+            onDepartmentChange={setSelectedDepartment}
+            onStaffTypeChange={setSelectedStaffType}
+            addNewStaffHandler={addNewStaffHandler}
+          />
 
-            <Table
-              tableHeaderTitles={tableHeaders}
-              tableBody={
-                <StaffTable
-                  tableBodyItems={filteredStaff}
-                  shownHeaders={tableHeaders}
-                  isCheckedHandler={handleIsCheckedClick}
-                  tableBodyRowClassName="grid !gap-x-2 xl:!gap-x-4 text-xs border my-3 bg-[#FBFBFB] border-[#E7E7E7] border-opacity-50 rounded-[12px]"
-                />
-              }
-              customTableClasses={{
-                tableHeaderClassName: `${getGridColsClass(
-                  tableHeaders.length
-                )} text-[#454242] text-sm`,
-              }}
-            />
-          </>
-        )}
-      </div>
-      <Toaster />
-    </>
+          <Table
+            tableHeaderTitles={tableHeaders}
+            tableBody={
+              <StaffTable
+                tableBodyItems={filteredStaff}
+                shownHeaders={tableHeaders}
+                isCheckedHandler={handleIsCheckedClick}
+                tableBodyRowClassName="grid !gap-x-2 xl:!gap-x-4 text-xs border my-3 bg-[#FBFBFB] border-[#E7E7E7] border-opacity-50 rounded-[12px]"
+              />
+            }
+            customTableClasses={{
+              tableHeaderClassName: `${getGridColsClass(
+                tableHeaders.length
+              )} text-[#454242] text-sm`,
+            }}
+          />
+        </>
+      )}
+    </div>
   );
 };
 
