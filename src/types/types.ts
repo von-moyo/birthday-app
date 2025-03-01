@@ -47,7 +47,7 @@ export type StaffType = "academic" | "non_academic";
 
 export type NotificationType = "email" | "phone_number";
 
-export interface Staff {
+export interface StaffDB {
   id?: string;
   first_name: string;
   last_name: string;
@@ -63,4 +63,4 @@ export interface Staff {
   updated_at?: string;
 }
 
-export type StaffFormValues = Omit<Staff, "id" | "created_at" | "updated_at">;
+export type StaffFormValues = Omit<StaffDB, "id" | "created_at" | "updated_at">;

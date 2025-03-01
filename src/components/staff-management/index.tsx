@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { useApiRequest, APIRequestStatuses } from "../../hooks";
 import { Table } from "../table";
-import { Staff, StaffFormValues } from "../../types";
+import { StaffDB, StaffFormValues } from "../../types";
 import { StaffTable, TableBodyItem } from "./staff-table";
 import { FilterSection } from "./filter-section";
 import { getGridColsClass } from "./utils";
@@ -47,7 +47,7 @@ const StaffManagementTable = () => {
   ];
 
   const tableData: TableBodyItem[] = useMemo(() => {
-    return (data?.data || []).map((member: Staff) => ({
+    return (data?.data || []).map((member: StaffDB) => ({
       id: member.id,
       is_enabled: member.is_enabled,
       name: `${member.first_name} ${member.last_name}`,

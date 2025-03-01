@@ -1,6 +1,6 @@
 import React from "react";
 import { Cake, PenLine, Trash2, Pencil } from "lucide-react";
-import { Staff } from "../../types";
+import { StaffDB } from "../../types";
 import {
   formatDate,
   formatDepartment,
@@ -12,7 +12,7 @@ import {
 export type TableBodyItem = {
   name: string;
 } & Pick<
-  Staff,
+  StaffDB,
   "id" | "is_enabled" | "department" | "date_of_birth" | "email" | "staff_type"
 >;
 
