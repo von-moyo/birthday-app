@@ -5,3 +5,4 @@ export * from './search';
 export * from './birthday-list/birthday-card';
 export * from './quick-stats'
 export * from './table'
+export * from './staff-management'

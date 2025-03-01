@@ -1,7 +1,11 @@
+import { createBrowserRouter } from "react-router-dom";
 import {
-  createBrowserRouter,
-} from "react-router-dom";
-import { NotFound, Home, Login, ForgotPassword } from "../pages";
+  NotFound,
+  Home,
+  Login,
+  ForgotPassword,
+  StaffManagement,
+} from "../pages";
 import { MainLayout } from "../components";
 const router = createBrowserRouter([
   {
@@ -13,13 +17,15 @@ const router = createBrowserRouter([
     element: <ForgotPassword />,
   },
   {
-    element: (
-      <MainLayout />
-    ),
+    element: <MainLayout />,
     children: [
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/staff-management",
+        element: <StaffManagement />,
       },
       {
         path: "*",
