@@ -15,18 +15,18 @@ import {
   isBirthday,
   getGridColsClass,
 } from "./utils";
+import StaffDialog from "./staff-dialog";
 
 export type TableBodyItem = {
   name: string;
-} & Pick<
-  StaffDB,
-  "id" | "is_enabled" | "department" | "date_of_birth" | "email" | "staff_type"
->;
+} & StaffDB;
 
 type ActionButton = {
   title: string;
   icon: React.ElementType;
-  onClick: (id: string) => void;
+  idOnClick?: (id: string) => void;
+  dataOnClick?: (data: StaffDB) => void;
+  actionType: "data" | "id";
 };
 
 export interface StaffTableProps {
@@ -38,7 +38,7 @@ export interface StaffTableProps {
   isCheckedHandler: (id: string) => void;
   deleteStaffHandler: (id: string) => void;
   customizeMessageHandler: (id: string) => void;
-  editStaffHandler: (id: string) => void;
+  editStaffHandler: (data: StaffDB) => void;
 }
 
 export const StaffTable: React.FC<StaffTableProps> = ({
@@ -67,17 +67,20 @@ export const StaffTable: React.FC<StaffTableProps> = ({
     {
       title: "Edit",
       icon: Pencil,
-      onClick: editStaffHandler,
+      dataOnClick: editStaffHandler,
+      actionType: "data",
     },
     {
       title: "Delete",
       icon: Trash2,
-      onClick: deleteStaffHandler,
+      idOnClick: deleteStaffHandler,
+      actionType: "id",
     },
     {
       title: "Customize Message",
       icon: PenLine,
-      onClick: customizeMessageHandler,
+      idOnClick: customizeMessageHandler,
+      actionType: "id",
     },
   ];
 
@@ -104,43 +107,113 @@ export const StaffTable: React.FC<StaffTableProps> = ({
 
   const DesktopActionButton = ({
     button,
-    itemId,
+    data,
   }: {
     button: ActionButton;
-    itemId: string;
-  }) => (
-    <button
-      type="button"
-      className="flex items-center gap-x-1 cursor-pointer pointer-events-auto"
-      title={button.title}
-      onClick={() => button.onClick(itemId)}
-    >
-      <button.icon className="size-4 pointer-events-auto" />
-      <span className="hidden 2xl:block">{button.title}</span>
-    </button>
-  );
+    data?: StaffDB;
+  }) => {
+    if (button.title === "Edit" && data) {
+      return (
+        <StaffDialog
+          mode="update"
+          initialValues={data}
+          onSubmit={editStaffHandler}
+          trigger={
+            <button
+              type="button"
+              className="flex items-center gap-x-1 cursor-pointer pointer-events-auto"
+              title={button.title}
+            >
+              <button.icon className="size-4 pointer-events-auto" />
+              <span className="hidden 2xl:block">{button.title}</span>
+            </button>
+          }
+        />
+      );
+    }
+
+    return (
+      <button
+        type="button"
+        className="flex items-center gap-x-1 cursor-pointer pointer-events-auto"
+        title={button.title}
+        onClick={() => {
+          if (button.actionType === "id" && button.idOnClick && data?.id) {
+            button.idOnClick(data.id);
+          } else if (
+            button.actionType === "data" &&
+            button.dataOnClick &&
+            data
+          ) {
+            button.dataOnClick(data);
+          } else {
+            console.error("Missing handler or data for this action");
+          }
+        }}
+      >
+        <button.icon className="size-4 pointer-events-auto" />
+        <span className="hidden 2xl:block">{button.title}</span>
+      </button>
+    );
+  };
 
   const MobileActionMenuItem = ({
     button,
-    itemId,
+    data,
   }: {
     button: ActionButton;
-    itemId: string;
-  }) => (
-    <DropdownMenuItem className="cursor-pointer pointer-events-auto">
-      <button
-        type="button"
-        className="flex items-center gap-x-2 w-full cursor-[inherit] pointer-events-[inherit]"
-        title={button.title}
-        onClick={() => button.onClick(itemId)}
-      >
-        <button.icon className="size-4 pointer-events-auto" />
-        <span>{button.title}</span>
-      </button>
-    </DropdownMenuItem>
-  );
+    data?: StaffDB;
+  }) => {
+    if (button.title === "Edit" && data) {
+      return (
+        <DropdownMenuItem className="cursor-pointer pointer-events-auto">
+          <StaffDialog
+            mode="update"
+            initialValues={data}
+            onSubmit={editStaffHandler}
+            trigger={
+              <button
+                type="button"
+                className="flex items-center gap-x-2 w-full cursor-[inherit] pointer-events-[inherit]"
+                title={button.title}
+              >
+                <button.icon className="size-4 pointer-events-auto" />
+                <span>{button.title}</span>
+              </button>
+            }
+          />
+        </DropdownMenuItem>
+      );
+    }
 
-  const ActionCell = ({ itemId }: { itemId: string }) => (
+    return (
+      <DropdownMenuItem className="cursor-pointer pointer-events-auto">
+        <button
+          type="button"
+          className="flex items-center gap-x-2 w-full cursor-[inherit] pointer-events-[inherit]"
+          title={button.title}
+          onClick={() => {
+            if (button.actionType === "id" && button.idOnClick && data?.id) {
+              button.idOnClick(data.id);
+            } else if (
+              button.actionType === "data" &&
+              button.dataOnClick &&
+              data
+            ) {
+              button.dataOnClick(data);
+            } else {
+              console.error("Missing handler or data for this action");
+            }
+          }}
+        >
+          <button.icon className="size-4 pointer-events-auto" />
+          <span>{button.title}</span>
+        </button>
+      </DropdownMenuItem>
+    );
+  };
+
+  const ActionCell = ({ data }: { data: TableBodyItem }) => (
     <>
       <div className={cn("hidden sm:block", tableBodyItemClassName)}>
         <div className="text-[#454545] flex gap-4 items-center">
@@ -148,7 +221,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
             <DesktopActionButton
               key={`desktop-${button.title}`}
               button={button}
-              itemId={itemId}
+              data={data}
             />
           ))}
         </div>
@@ -164,7 +237,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
             <MobileActionMenuItem
               key={`mobile-${button.title}`}
               button={button}
-              itemId={itemId}
+              data={data}
             />
           ))}
         </DropdownMenuContent>
@@ -187,9 +260,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
           {shownHeaders.map((header) => {
             // Handle actions column
             if (header.key === "actions") {
-              return (
-                <ActionCell key={`cell-${header.key}`} itemId={item.id ?? ""} />
-              );
+              return <ActionCell key={`cell-${header.key}`} data={item} />;
             }
 
             const value = item[header.key as keyof typeof item] ?? "";
