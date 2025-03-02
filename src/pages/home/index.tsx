@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { Staff, StaffResponse } from '../../types/types';
-import { HomeUI } from '../../features/home';
-import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
-import { useApiRequest } from '../../hooks';
-import { staffsService } from '../../api';
+import React, { useState, useEffect } from "react";
+import { Staff, StaffResponse } from "../../types/types";
+import { HomeUI } from "../../features/home";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { useApiRequest } from "../../hooks";
+import { staffsService } from "../../api";
 
 const Home: React.FC = () => {
   const [staffs, setStaffs] = useState<Staff[]>([]);
@@ -14,17 +14,17 @@ const Home: React.FC = () => {
     run: runStaffs,
     data: staffsResponse,
     error,
-    requestStatus
+    requestStatus,
   } = useApiRequest({});
 
   useEffect(() => {
     runStaffs(staffsService());
-  }, []);
+  }, [runStaffs]);
 
   useEffect(() => {
     if (staffsResponse?.status === 200) {
-      const filteredStaffs = staffsResponse.data
-        .map((staff: StaffResponse) => ({
+      const filteredStaffs = staffsResponse.data.map(
+        (staff: StaffResponse) => ({
           id: staff.id,
           name: `${staff.first_name} ${staff.last_name}`,
           department: staff.department,
@@ -32,7 +32,8 @@ const Home: React.FC = () => {
           email: staff.email,
           created_at: staff.created_at,
           image: staff.profile_image_url || undefined,
-        }))
+        })
+      );
 
       setStaffs(filteredStaffs);
     } else if (error) {
@@ -41,14 +42,18 @@ const Home: React.FC = () => {
   }, [staffsResponse, error]);
 
   if (requestStatus.isPending) {
-    return <div className='flex justify-center items-center sm:h-[calc(100vh-94px)] h-[calc(100vh-69px)] w-full'><Loader2 className="animate-spin h-12 w-12 text-gray-500" /></div>
+    return (
+      <div className="flex justify-center items-center sm:h-[calc(100vh-94px)] h-[calc(100vh-69px)] w-full">
+        <Loader2 className="animate-spin h-12 w-12 text-gray-500" />
+      </div>
+    );
   }
 
   return (
     <>
       <HomeUI staffs={staffs} selectedMonth={selectedMonth} />
     </>
-  )
-}
+  );
+};
 
-export { Home }
+export { Home };
