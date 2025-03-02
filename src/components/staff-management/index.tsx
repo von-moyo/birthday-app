@@ -1,11 +1,17 @@
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
-import { useApiRequest, APIRequestStatuses } from "../../hooks";
+import { useApiRequest } from "../../hooks";
 import { Table } from "../table";
 import { StaffDB, StaffFormValues } from "../../types";
 import { StaffTable, TableBodyItem } from "./staff-table";
 import { FilterSection } from "./filter-section";
 import { getGridColsClass } from "./utils";
+import {
+  patchRequest,
+  getRequest,
+  deleteRequest,
+} from "@/api/requestProcessor";
+import { toast } from "sonner";
 
 const API_BASE_URL = "https://hameedah.pythonanywhere.com/api/admin";
 const STAFF_ENDPOINT = `${API_BASE_URL}/staff/`;
@@ -16,26 +22,6 @@ const StaffManagementTable = () => {
   const [selectedStaffType, setSelectedStaffType] = useState<string>("");
   const [filteredStaff, setFilteredStaff] = useState<TableBodyItem[]>([]);
 
-  const { data, error, run, requestStatus } = useApiRequest({
-    status: APIRequestStatuses.idle,
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const promise = axios.get(`${STAFF_ENDPOINT}?format=json`);
-        run(promise);
-      } catch (error) {
-        console.error("CORS error:", error);
-      }
-    };
-
-    fetchData();
-
-    // TODO: Remove?
-    return () => {};
-  }, [run]);
-
   const tableHeaders = [
     { index: 0, title: "🔔", key: "is_enabled" },
     { index: 1, title: "Name", key: "name" },
@@ -45,16 +31,44 @@ const StaffManagementTable = () => {
     { index: 5, title: "Actions", key: "actions" },
   ];
 
+  const { data, error, run, requestStatus } = useApiRequest({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      run(
+        getRequest({
+          url: `${STAFF_ENDPOINT}?format=json`,
+        })
+      );
+    };
+
+    fetchData();
+  }, [run]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
   const tableData: TableBodyItem[] = useMemo(() => {
-    return (data?.data || []).map((member: StaffDB) => ({
-      id: member.id,
-      is_enabled: member.is_enabled,
-      name: `${member.first_name} ${member.last_name}`,
-      department: member.department,
-      date_of_birth: member.date_of_birth,
-      email: member.email,
-      staff_type: member.staff_type,
-    }));
+    if (!Array.isArray(data?.data)) {
+      console.warn("Expected an array but got:", data?.data, "\n");
+      return [];
+    }
+
+    if (data?.status === 200) {
+      return (data?.data || []).map((member: StaffDB) => ({
+        id: member.id,
+        is_enabled: member.is_enabled,
+        name: `${member.first_name} ${member.last_name}`,
+        department: member.department,
+        date_of_birth: member.date_of_birth,
+        email: member.email,
+        staff_type: member.staff_type,
+      }));
+    }
+    return [];
   }, [data]);
 
   const departments = useMemo(() => {
@@ -108,18 +122,59 @@ const StaffManagementTable = () => {
 
     const updateStaffStatus = async () => {
       try {
-        const promise = axios.patch(`${STAFF_ENDPOINT}${id}/`, item, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        run(promise);
+        await run(
+          patchRequest({
+            url: `${STAFF_ENDPOINT}${id}/`,
+            data: item,
+          })
+        );
+
+        await run(
+          getRequest({
+            url: `${STAFF_ENDPOINT}?format=json`,
+          })
+        );
       } catch (error) {
         console.error("handleIsCheckedClick error: ", error);
+        toast.error("Failed to update staff status");
       }
     };
 
     updateStaffStatus();
+  }
+
+  function editStaffHandler(id: string) {
+    toast.warning("Work in progress ⚠️");
+    console.log(`Edit staff triggered for user with id: ${id}`);
+  }
+
+  function deleteStaffHandler(id: string) {
+    const deleteStaffStatus = async () => {
+      try {
+        await run(
+          deleteRequest({
+            url: `${STAFF_ENDPOINT}${id}/`,
+          })
+        );
+
+        await run(
+          getRequest({
+            url: `${STAFF_ENDPOINT}?format=json`,
+          })
+        );
+        toast.success("Deleted successfully!");
+      } catch (error) {
+        console.error("delete staff error: ", error);
+        toast.error("Failed to delete staff");
+      }
+    };
+
+    deleteStaffStatus();
+  }
+
+  function customizeMessageHandler(id: string) {
+    toast.info("Hi! This doesn't work yet!");
+    console.log(`Customize message triggered for user with id: ${id}`);
   }
 
   async function addNewStaffHandler(data: StaffFormValues) {
@@ -162,6 +217,9 @@ const StaffManagementTable = () => {
                 tableBodyItems={filteredStaff}
                 shownHeaders={tableHeaders}
                 isCheckedHandler={handleIsCheckedClick}
+                editStaffHandler={editStaffHandler}
+                deleteStaffHandler={deleteStaffHandler}
+                customizeMessageHandler={customizeMessageHandler}
                 tableBodyRowClassName="grid !gap-x-2 xl:!gap-x-4 text-xs border my-3 bg-[#FBFBFB] border-[#E7E7E7] border-opacity-50 rounded-[12px]"
               />
             }
