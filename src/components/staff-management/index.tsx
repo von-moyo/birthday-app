@@ -13,8 +13,7 @@ import {
 } from "@/api/requestProcessor";
 import { toast } from "sonner";
 
-const API_BASE_URL = "https://hameedah.pythonanywhere.com/api/admin";
-const STAFF_ENDPOINT = `${API_BASE_URL}/staff/`;
+const STAFF_ENDPOINT = "https://hameedah.pythonanywhere.com/api/admin/staff/";
 
 const StaffManagementTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,13 +58,8 @@ const StaffManagementTable = () => {
 
     if (data?.status === 200) {
       return (data?.data || []).map((member: StaffDB) => ({
-        id: member.id,
-        is_enabled: member.is_enabled,
+        ...member,
         name: `${member.first_name} ${member.last_name}`,
-        department: member.department,
-        date_of_birth: member.date_of_birth,
-        email: member.email,
-        staff_type: member.staff_type,
       }));
     }
     return [];
@@ -143,9 +137,34 @@ const StaffManagementTable = () => {
     updateStaffStatus();
   }
 
-  function editStaffHandler(id: string) {
-    toast.warning("Work in progress ⚠️");
-    console.log(`Edit staff triggered for user with id: ${id}`);
+  function editStaffHandler(data: Partial<StaffDB>) {
+    const id = data.id;
+    if (!id) {
+      toast.error("Staff doesn't exist!");
+    }
+
+    const editStaff = async () => {
+      try {
+        await run(
+          patchRequest({
+            url: `${STAFF_ENDPOINT}${id}/`,
+            data,
+          })
+        );
+
+        await run(
+          getRequest({
+            url: `${STAFF_ENDPOINT}?format=json`,
+          })
+        );
+        toast.success("Edited successfully!");
+      } catch (error) {
+        console.error("Edited staff error: ", error);
+        toast.error("Failed to edit staff data");
+      }
+    };
+
+    editStaff();
   }
 
   function deleteStaffHandler(id: string) {
