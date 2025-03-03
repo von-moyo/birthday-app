@@ -191,11 +191,6 @@ const StaffManagementTable = () => {
     deleteStaffStatus();
   }
 
-  function customizeMessageHandler(id: string) {
-    toast.info("Hi! This doesn't work yet!");
-    console.log(`Customize message triggered for user with id: ${id}`);
-  }
-
   async function addNewStaffHandler(data: StaffFormValues) {
     try {
       await run(axios.post(STAFF_ENDPOINT, data));
@@ -238,7 +233,6 @@ const StaffManagementTable = () => {
                 isCheckedHandler={handleIsCheckedClick}
                 editStaffHandler={editStaffHandler}
                 deleteStaffHandler={deleteStaffHandler}
-                customizeMessageHandler={customizeMessageHandler}
                 tableBodyRowClassName="grid !gap-x-2 xl:!gap-x-4 text-xs border my-3 bg-[#FBFBFB] border-[#E7E7E7] border-opacity-50 rounded-[12px]"
               />
             }
