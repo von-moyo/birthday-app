@@ -15,19 +15,13 @@ import {
   isBirthday,
   getGridColsClass,
 } from "./utils";
+import { Dialog, DialogContent } from "../ui/dialog";
 import StaffDialog from "./staff-dialog";
+import MessageDialog from "./message-dialog";
 
 export type TableBodyItem = {
   name: string;
 } & StaffDB;
-
-type ActionButton = {
-  title: string;
-  icon: React.ElementType;
-  idOnClick?: (id: string) => void;
-  dataOnClick?: (data: StaffDB) => void;
-  actionType: "data" | "id";
-};
 
 export interface StaffTableProps {
   tableBodyItems: TableBodyItem[];
@@ -37,7 +31,6 @@ export interface StaffTableProps {
   tableBodyRowClassName?: string;
   isCheckedHandler: (id: string) => void;
   deleteStaffHandler: (id: string) => void;
-  customizeMessageHandler: (id: string) => void;
   editStaffHandler: (data: StaffDB) => void;
 }
 
@@ -49,7 +42,6 @@ export const StaffTable: React.FC<StaffTableProps> = ({
   tableBodyRowClassName,
   isCheckedHandler,
   deleteStaffHandler,
-  customizeMessageHandler,
   editStaffHandler,
 }) => {
   if (tableBodyItems.length === 0) {
@@ -62,27 +54,6 @@ export const StaffTable: React.FC<StaffTableProps> = ({
       </div>
     );
   }
-
-  const actionButtons: ActionButton[] = [
-    {
-      title: "Edit",
-      icon: Pencil,
-      dataOnClick: editStaffHandler,
-      actionType: "data",
-    },
-    {
-      title: "Delete",
-      icon: Trash2,
-      idOnClick: deleteStaffHandler,
-      actionType: "id",
-    },
-    {
-      title: "Customize Message",
-      icon: PenLine,
-      idOnClick: customizeMessageHandler,
-      actionType: "id",
-    },
-  ];
 
   const formatCellContent = (
     header: { title: string; key: string },
@@ -105,145 +76,106 @@ export const StaffTable: React.FC<StaffTableProps> = ({
     return value;
   };
 
-  const DesktopActionButton = ({
-    button,
-    data,
-  }: {
-    button: ActionButton;
-    data?: StaffDB;
-  }) => {
-    if (button.title === "Edit" && data) {
-      return (
-        <StaffDialog
-          mode="update"
-          initialValues={data}
-          onSubmit={editStaffHandler}
-          trigger={
-            <button
-              type="button"
-              className="flex items-center gap-x-1 cursor-pointer pointer-events-auto"
-              title={button.title}
-            >
-              <button.icon className="size-4 pointer-events-auto" />
-              <span className="hidden 2xl:block">{button.title}</span>
-            </button>
-          }
-        />
-      );
-    }
+  const ActionCell = ({ data }: { data: TableBodyItem }) => {
+    const [editDialogOpen, setEditDialogOpen] = React.useState(false);
+    const [messageDialogOpen, setMessageDialogOpen] = React.useState(false);
+    const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
     return (
-      <button
-        type="button"
-        className="flex items-center gap-x-1 cursor-pointer pointer-events-auto"
-        title={button.title}
-        onClick={() => {
-          if (button.actionType === "id" && button.idOnClick && data?.id) {
-            button.idOnClick(data.id);
-          } else if (
-            button.actionType === "data" &&
-            button.dataOnClick &&
-            data
-          ) {
-            button.dataOnClick(data);
-          } else {
-            console.error("Missing handler or data for this action");
-          }
-        }}
-      >
-        <button.icon className="size-4 pointer-events-auto" />
-        <span className="hidden 2xl:block">{button.title}</span>
-      </button>
-    );
-  };
-
-  const MobileActionMenuItem = ({
-    button,
-    data,
-  }: {
-    button: ActionButton;
-    data?: StaffDB;
-  }) => {
-    if (button.title === "Edit" && data) {
-      return (
-        <DropdownMenuItem className="cursor-pointer pointer-events-auto">
-          <StaffDialog
-            mode="update"
-            initialValues={data}
-            onSubmit={editStaffHandler}
-            trigger={
-              <button
-                type="button"
-                className="flex items-center gap-x-2 w-full cursor-[inherit] pointer-events-[inherit]"
-                title={button.title}
-              >
-                <button.icon className="size-4 pointer-events-auto" />
-                <span>{button.title}</span>
-              </button>
-            }
-          />
-        </DropdownMenuItem>
-      );
-    }
-
-    return (
-      <DropdownMenuItem className="cursor-pointer pointer-events-auto">
-        <button
-          type="button"
-          className="flex items-center gap-x-2 w-full cursor-[inherit] pointer-events-[inherit]"
-          title={button.title}
-          onClick={() => {
-            if (button.actionType === "id" && button.idOnClick && data?.id) {
-              button.idOnClick(data.id);
-            } else if (
-              button.actionType === "data" &&
-              button.dataOnClick &&
-              data
-            ) {
-              button.dataOnClick(data);
-            } else {
-              console.error("Missing handler or data for this action");
-            }
-          }}
-        >
-          <button.icon className="size-4 pointer-events-auto" />
-          <span>{button.title}</span>
-        </button>
-      </DropdownMenuItem>
-    );
-  };
-
-  const ActionCell = ({ data }: { data: TableBodyItem }) => (
-    <>
-      <div className={cn("hidden sm:block", tableBodyItemClassName)}>
-        <div className="text-[#454545] flex gap-4 items-center">
-          {actionButtons.map((button) => (
-            <DesktopActionButton
-              key={`desktop-${button.title}`}
-              button={button}
-              data={data}
+      <>
+        {/* Desktop Actions */}
+        <div className={cn("hidden sm:block", tableBodyItemClassName)}>
+          <div className="text-[#454545] flex gap-4 items-center">
+            <StaffDialog
+              mode="update"
+              initialValues={data}
+              onSubmit={(updatedData) => {
+                editStaffHandler(updatedData);
+                setEditDialogOpen(false);
+              }}
+              trigger={
+                <button
+                  type="button"
+                  className="flex items-center gap-x-1 cursor-pointer pointer-events-auto"
+                  title="Edit"
+                >
+                  <Pencil className="size-4 pointer-events-auto" />
+                  <span className="hidden 2xl:block">Edit</span>
+                </button>
+              }
             />
-          ))}
+            <MessageDialog
+              initialValues={{ staff: data, message: "" }}
+              mode="desktop"
+              trigger={
+                <button
+                  type="button"
+                  className="flex items-center gap-x-1 cursor-pointer pointer-events-auto"
+                  title="Customize Message"
+                >
+                  <PenLine className="size-4 pointer-events-auto" />
+                  <span className="hidden 2xl:block">Customize Message</span>
+                </button>
+              }
+            />
+          </div>
         </div>
-      </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="sm:hidden size-4 outline-none border-none cursor-pointer bg-transparent">
-            <Ellipsis className="text-inherit size-4" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="text-[#454545]">
-          {actionButtons.map((button) => (
-            <MobileActionMenuItem
-              key={`mobile-${button.title}`}
-              button={button}
-              data={data}
-            />
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
-  );
+
+        {/* Mobile Actions */}
+        <div className="sm:hidden">
+          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+            <DropdownMenuTrigger asChild>
+              <button className="size-4 outline-none border-none cursor-pointer bg-transparent">
+                <Ellipsis className="text-inherit size-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onSelect={() => setEditDialogOpen(true)}>
+                <Pencil className="mr-2 h-4 w-4" />
+                <span>Edit</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onSelect={() => deleteStaffHandler(data.id || "")}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                <span>Delete</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setMessageDialogOpen(true)}>
+                <PenLine className="mr-2 h-4 w-4" />
+                <span>Customize Message</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Edit Dialog */}
+          <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+            <DialogContent>
+              <StaffDialog
+                mode="update"
+                initialValues={data}
+                onSubmit={(updatedData) => {
+                  editStaffHandler(updatedData);
+                  setEditDialogOpen(false);
+                }}
+                trigger={null}
+              />
+            </DialogContent>
+          </Dialog>
+
+          {/* Message Dialog */}
+          <Dialog open={messageDialogOpen} onOpenChange={setMessageDialogOpen}>
+            <DialogContent>
+              <MessageDialog
+                initialValues={{ staff: data, message: "" }}
+                mode="mobile"
+                trigger={null}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
+      </>
+    );
+  };
 
   return (
     <div className={`table-body ${tableBodyClassName || ""}`}>
