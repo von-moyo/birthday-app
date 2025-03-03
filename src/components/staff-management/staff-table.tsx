@@ -79,13 +79,13 @@ export const StaffTable: React.FC<StaffTableProps> = ({
   const ActionCell = ({ data }: { data: TableBodyItem }) => {
     const [editDialogOpen, setEditDialogOpen] = React.useState(false);
     const [messageDialogOpen, setMessageDialogOpen] = React.useState(false);
-    const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
     return (
       <>
         {/* Desktop Actions */}
         <div className={cn("hidden sm:block", tableBodyItemClassName)}>
           <div className="text-[#454545] flex gap-4 items-center">
+            {/* Edit Button */}
             <StaffDialog
               mode="update"
               initialValues={data}
@@ -104,6 +104,8 @@ export const StaffTable: React.FC<StaffTableProps> = ({
                 </button>
               }
             />
+
+            {/* Customize Message Button */}
             <MessageDialog
               initialValues={{ staff: data, message: "" }}
               mode="desktop"
@@ -123,33 +125,9 @@ export const StaffTable: React.FC<StaffTableProps> = ({
 
         {/* Mobile Actions */}
         <div className="sm:hidden">
-          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-            <DropdownMenuTrigger asChild>
-              <button className="size-4 outline-none border-none cursor-pointer bg-transparent">
-                <Ellipsis className="text-inherit size-4" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onSelect={() => setEditDialogOpen(true)}>
-                <Pencil className="mr-2 h-4 w-4" />
-                <span>Edit</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onSelect={() => deleteStaffHandler(data.id || "")}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                <span>Delete</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setMessageDialogOpen(true)}>
-                <PenLine className="mr-2 h-4 w-4" />
-                <span>Customize Message</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
           {/* Edit Dialog */}
           <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-            <DialogContent>
+            <DialogContent className="sm:max-w-[640px] bg-white">
               <StaffDialog
                 mode="update"
                 initialValues={data}
@@ -157,21 +135,59 @@ export const StaffTable: React.FC<StaffTableProps> = ({
                   editStaffHandler(updatedData);
                   setEditDialogOpen(false);
                 }}
-                trigger={null}
+                trigger={null} // No trigger needed here
               />
             </DialogContent>
           </Dialog>
 
           {/* Message Dialog */}
           <Dialog open={messageDialogOpen} onOpenChange={setMessageDialogOpen}>
-            <DialogContent>
+            <DialogContent className="sm:max-w-[640px] bg-white">
               <MessageDialog
                 initialValues={{ staff: data, message: "" }}
                 mode="mobile"
-                trigger={null}
+                open={messageDialogOpen} // Pass the open state
+                onOpenChange={setMessageDialogOpen} // Pass the onOpenChange handler
+                trigger={null} // No trigger needed here
               />
             </DialogContent>
           </Dialog>
+
+          {/* Dropdown Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="size-4 outline-none border-none cursor-pointer bg-transparent">
+                <Ellipsis className="text-inherit size-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="text-[#454545]">
+              {/* Edit Option */}
+              <DropdownMenuItem onClick={() => setEditDialogOpen(true)}>
+                <div className="flex items-center gap-x-2">
+                  <Pencil className="size-4" />
+                  <span>Edit</span>
+                </div>
+              </DropdownMenuItem>
+
+              {/* Delete Option */}
+              <DropdownMenuItem
+                onClick={() => deleteStaffHandler(data.id || "")}
+              >
+                <div className="flex items-center gap-x-2">
+                  <Trash2 className="size-4" />
+                  <span>Delete</span>
+                </div>
+              </DropdownMenuItem>
+
+              {/* Customize Message Option */}
+              <DropdownMenuItem onClick={() => setMessageDialogOpen(true)}>
+                <div className="flex items-center gap-x-2">
+                  <PenLine className="size-4" />
+                  <span>Customize Message</span>
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </>
     );
