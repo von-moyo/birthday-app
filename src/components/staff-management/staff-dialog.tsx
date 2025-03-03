@@ -187,8 +187,6 @@ export default function StaffDialog({
     [initialValues]
   );
 
-  console.log(initialValues);
-
   const form = useForm<StaffFormValues>({
     resolver: yupResolver(schema),
     defaultValues,
@@ -264,383 +262,791 @@ export default function StaffDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-[640px] bg-white">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form className="z-50 grid gap-4 p-4 max-h-[60vh] overflow-y-auto">
-            {/* Personal Information */}
-            <FormField
-              control={form.control}
-              name="first_name"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel htmlFor="first_name" className="pt-2 text-right">
-                    <span>First Name</span>
-                    <sup className="text-red-700">*</sup>
-                  </FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Input id="first_name" placeholder="John" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+    <>
+      {trigger ? (
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>{trigger}</DialogTrigger>
+          <DialogContent className="sm:max-w-[640px] bg-white">
+            <DialogHeader>
+              <DialogTitle>{title}</DialogTitle>
+              <DialogDescription>{description}</DialogDescription>
+            </DialogHeader>
+            <Form {...form}>
+              <form className="z-50 grid gap-4 p-4 max-h-[60vh] overflow-y-auto">
+                {/* Personal Information */}
+                <FormField
+                  control={form.control}
+                  name="first_name"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel
+                        htmlFor="first_name"
+                        className="pt-2 text-right"
+                      >
+                        <span>First Name</span>
+                        <sup className="text-red-700">*</sup>
+                      </FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Input
+                            id="first_name"
+                            placeholder="John"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="last_name"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel htmlFor="last_name" className="pt-2 text-right">
-                    <span>Last Name</span>
-                    <sup className="text-red-700">*</sup>
-                  </FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Input id="last_name" placeholder="Doe" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="last_name"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel
+                        htmlFor="last_name"
+                        className="pt-2 text-right"
+                      >
+                        <span>Last Name</span>
+                        <sup className="text-red-700">*</sup>
+                      </FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Input id="last_name" placeholder="Doe" {...field} />
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel htmlFor="email" className="pt-2 text-right">
-                    <span>Email</span>
-                    <sup className="text-red-700">*</sup>
-                  </FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="john.doe@example.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel htmlFor="email" className="pt-2 text-right">
+                        <span>Email</span>
+                        <sup className="text-red-700">*</sup>
+                      </FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Input
+                            id="email"
+                            type="email"
+                            placeholder="john.doe@example.com"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="phone_number"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel htmlFor="phone_number" className="pt-2 text-right">
-                    <span>Phone</span>
-                    <sup className="text-red-700">*</sup>
-                  </FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Input
-                        id="phone_number"
-                        placeholder="08034536923"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="phone_number"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel
+                        htmlFor="phone_number"
+                        className="pt-2 text-right"
+                      >
+                        <span>Phone</span>
+                        <sup className="text-red-700">*</sup>
+                      </FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Input
+                            id="phone_number"
+                            placeholder="08034536923"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="date_of_birth"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel
-                    htmlFor="date_of_birth"
-                    className="pt-2 text-right"
-                  >
-                    <span>Date of Birth</span>
-                    <sup className="text-red-700">*</sup>
-                  </FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Input
-                        id="date_of_birth"
-                        type="date"
-                        placeholder="YYYY-MM-DD"
-                        pattern="\d{4}-\d{2}-\d{2}"
-                        {...field}
-                        value={field.value || ""}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="date_of_birth"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel
+                        htmlFor="date_of_birth"
+                        className="pt-2 text-right"
+                      >
+                        <span>Date of Birth</span>
+                        <sup className="text-red-700">*</sup>
+                      </FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Input
+                            id="date_of_birth"
+                            type="date"
+                            placeholder="YYYY-MM-DD"
+                            pattern="\d{4}-\d{2}-\d{2}"
+                            {...field}
+                            value={field.value || ""}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            {/* Department Combobox */}
-            <FormField
-              control={form.control}
-              name="department"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel className="text-right">Department</FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className="w-full justify-between"
-                          >
-                            {field.value
-                              ? departmentOptions.find(
-                                  (dept) => dept.value === field.value
-                                )?.label
-                              : "Select department..."}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="bg-white z-[1000] w-full p-0">
-                          <Command>
-                            <CommandInput placeholder="Search department..." />
-                            <CommandList>
-                              <CommandEmpty>No department found.</CommandEmpty>
-                              <CommandGroup>
-                                {departmentOptions.map((dept) => (
-                                  <CommandItem
-                                    key={dept.value}
-                                    value={dept.value}
-                                    onSelect={() => {
-                                      field.onChange(dept.value);
-                                    }}
-                                  >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        field.value === dept.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {dept.label}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+                {/* Department Combobox */}
+                <FormField
+                  control={form.control}
+                  name="department"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel className="text-right">Department</FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className="w-full justify-between"
+                              >
+                                {field.value
+                                  ? departmentOptions.find(
+                                      (dept) => dept.value === field.value
+                                    )?.label
+                                  : "Select department..."}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="bg-white z-[1000] w-full p-0">
+                              <Command>
+                                <CommandInput placeholder="Search department..." />
+                                <CommandList>
+                                  <CommandEmpty>
+                                    No department found.
+                                  </CommandEmpty>
+                                  <CommandGroup>
+                                    {departmentOptions.map((dept) => (
+                                      <CommandItem
+                                        key={dept.value}
+                                        value={dept.value}
+                                        onSelect={() => {
+                                          field.onChange(dept.value);
+                                        }}
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            field.value === dept.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {dept.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            {/* Staff Type Combobox */}
-            <FormField
-              control={form.control}
-              name="staff_type"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel className="text-right">Staff Type</FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className="w-full justify-between"
-                          >
-                            {field.value
-                              ? staffTypeOptions.find(
-                                  (type) => type.value === field.value
-                                )?.label
-                              : "Select staff type..."}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="bg-white z-[1000] w-full p-0">
-                          <Command>
-                            <CommandInput placeholder="Search staff type..." />
-                            <CommandList>
-                              <CommandEmpty>No staff type found.</CommandEmpty>
-                              <CommandGroup>
-                                {staffTypeOptions.map((type) => (
-                                  <CommandItem
-                                    key={type.value}
-                                    value={type.value}
-                                    onSelect={() => field.onChange(type.value)}
-                                  >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        field.value === type.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {type.label}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+                {/* Staff Type Combobox */}
+                <FormField
+                  control={form.control}
+                  name="staff_type"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel className="text-right">Staff Type</FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className="w-full justify-between"
+                              >
+                                {field.value
+                                  ? staffTypeOptions.find(
+                                      (type) => type.value === field.value
+                                    )?.label
+                                  : "Select staff type..."}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="bg-white z-[1000] w-full p-0">
+                              <Command>
+                                <CommandInput placeholder="Search staff type..." />
+                                <CommandList>
+                                  <CommandEmpty>
+                                    No staff type found.
+                                  </CommandEmpty>
+                                  <CommandGroup>
+                                    {staffTypeOptions.map((type) => (
+                                      <CommandItem
+                                        key={type.value}
+                                        value={type.value}
+                                        onSelect={() =>
+                                          field.onChange(type.value)
+                                        }
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            field.value === type.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {type.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            {/* Notification Type Combobox */}
-            <FormField
-              name="notification_type"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel className="text-right">Notification</FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className="w-full justify-between"
-                          >
-                            {field.value
-                              ? notificationOptions.find(
-                                  (option) => option.value === field.value
-                                )?.label
-                              : "Select notification type..."}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="bg-white z-[1000] w-full p-0">
-                          <Command>
-                            <CommandInput placeholder="Search notification type..." />
-                            <CommandList>
-                              <CommandEmpty>
-                                No notification type found.
-                              </CommandEmpty>
-                              <CommandGroup>
-                                {notificationOptions.map((option) => (
-                                  <CommandItem
-                                    key={option.value}
-                                    value={option.value}
-                                    onSelect={() => {
-                                      field.onChange(option.value);
-                                    }}
-                                  >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        field.value === option.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {option.label}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+                {/* Notification Type Combobox */}
+                <FormField
+                  name="notification_type"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel className="text-right">Notification</FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className="w-full justify-between"
+                              >
+                                {field.value
+                                  ? notificationOptions.find(
+                                      (option) => option.value === field.value
+                                    )?.label
+                                  : "Select notification type..."}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="bg-white z-[1000] w-full p-0">
+                              <Command>
+                                <CommandInput placeholder="Search notification type..." />
+                                <CommandList>
+                                  <CommandEmpty>
+                                    No notification type found.
+                                  </CommandEmpty>
+                                  <CommandGroup>
+                                    {notificationOptions.map((option) => (
+                                      <CommandItem
+                                        key={option.value}
+                                        value={option.value}
+                                        onSelect={() => {
+                                          field.onChange(option.value);
+                                        }}
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            field.value === option.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {option.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="profile_image_url"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel
-                    htmlFor="profile_image"
-                    className="pt-2 text-right"
-                  >
-                    Profile Image
-                  </FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Input
-                        {...field}
-                        id="profile_image"
-                        type="file"
-                        accept="image/*"
-                        capture="user"
-                        onChange={handleImageUpload}
-                        value={undefined}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="profile_image_url"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel
+                        htmlFor="profile_image"
+                        className="pt-2 text-right"
+                      >
+                        Profile Image
+                      </FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Input
+                            {...field}
+                            id="profile_image"
+                            type="file"
+                            accept="image/*"
+                            capture="user"
+                            onChange={handleImageUpload}
+                            value={undefined}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="is_enabled"
-              render={({ field }) => (
-                <FormItem className="grid-cols-4 items-start !gap-4">
-                  <FormLabel htmlFor="is_enabled">
-                    Enable notifications?
-                  </FormLabel>
-                  <div className="col-span-3">
-                    <FormControl>
-                      <Checkbox
-                        id="is_enabled"
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-700 mt-1" />
-                  </div>
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-        <DialogFooter className="flex items-center gap-x-4">
-          <Button
-            type="button"
-            className="bg-red-700 text-white hover:cursor-pointer"
-            onClick={handleCancel}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            variant="outline"
-            className="hover:cursor-pointer"
-            onClick={form.handleSubmit(handleFormSubmit)}
-          >
-            {mode === "create" ? "Add Staff" : "Update Staff"}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+                <FormField
+                  control={form.control}
+                  name="is_enabled"
+                  render={({ field }) => (
+                    <FormItem className="grid-cols-4 items-start !gap-4">
+                      <FormLabel htmlFor="is_enabled">
+                        Enable notifications?
+                      </FormLabel>
+                      <div className="col-span-3">
+                        <FormControl>
+                          <Checkbox
+                            id="is_enabled"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-700 mt-1" />
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </form>
+            </Form>
+            <DialogFooter className="flex items-center gap-x-4">
+              <Button
+                type="button"
+                className="bg-red-700 text-white hover:cursor-pointer"
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="outline"
+                className="hover:cursor-pointer"
+                onClick={form.handleSubmit(handleFormSubmit)}
+              >
+                {mode === "create" ? "Add Staff" : "Update Staff"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      ) : (
+        <>
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
+          </DialogHeader>
+          <Form {...form}>
+            <form className="z-50 grid gap-4 p-4 max-h-[60vh] overflow-y-auto">
+              {/* Personal Information */}
+              <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel htmlFor="first_name" className="pt-2 text-right">
+                      <span>First Name</span>
+                      <sup className="text-red-700">*</sup>
+                    </FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Input id="first_name" placeholder="John" {...field} />
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="last_name"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel htmlFor="last_name" className="pt-2 text-right">
+                      <span>Last Name</span>
+                      <sup className="text-red-700">*</sup>
+                    </FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Input id="last_name" placeholder="Doe" {...field} />
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel htmlFor="email" className="pt-2 text-right">
+                      <span>Email</span>
+                      <sup className="text-red-700">*</sup>
+                    </FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="john.doe@example.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="phone_number"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel
+                      htmlFor="phone_number"
+                      className="pt-2 text-right"
+                    >
+                      <span>Phone</span>
+                      <sup className="text-red-700">*</sup>
+                    </FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Input
+                          id="phone_number"
+                          placeholder="08034536923"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="date_of_birth"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel
+                      htmlFor="date_of_birth"
+                      className="pt-2 text-right"
+                    >
+                      <span>Date of Birth</span>
+                      <sup className="text-red-700">*</sup>
+                    </FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Input
+                          id="date_of_birth"
+                          type="date"
+                          placeholder="YYYY-MM-DD"
+                          pattern="\d{4}-\d{2}-\d{2}"
+                          {...field}
+                          value={field.value || ""}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              {/* Department Combobox */}
+              <FormField
+                control={form.control}
+                name="department"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel className="text-right">Department</FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className="w-full justify-between"
+                            >
+                              {field.value
+                                ? departmentOptions.find(
+                                    (dept) => dept.value === field.value
+                                  )?.label
+                                : "Select department..."}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="bg-white z-[1000] w-full p-0">
+                            <Command>
+                              <CommandInput placeholder="Search department..." />
+                              <CommandList>
+                                <CommandEmpty>
+                                  No department found.
+                                </CommandEmpty>
+                                <CommandGroup>
+                                  {departmentOptions.map((dept) => (
+                                    <CommandItem
+                                      key={dept.value}
+                                      value={dept.value}
+                                      onSelect={() => {
+                                        field.onChange(dept.value);
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          field.value === dept.value
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                        )}
+                                      />
+                                      {dept.label}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              {/* Staff Type Combobox */}
+              <FormField
+                control={form.control}
+                name="staff_type"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel className="text-right">Staff Type</FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className="w-full justify-between"
+                            >
+                              {field.value
+                                ? staffTypeOptions.find(
+                                    (type) => type.value === field.value
+                                  )?.label
+                                : "Select staff type..."}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="bg-white z-[1000] w-full p-0">
+                            <Command>
+                              <CommandInput placeholder="Search staff type..." />
+                              <CommandList>
+                                <CommandEmpty>
+                                  No staff type found.
+                                </CommandEmpty>
+                                <CommandGroup>
+                                  {staffTypeOptions.map((type) => (
+                                    <CommandItem
+                                      key={type.value}
+                                      value={type.value}
+                                      onSelect={() =>
+                                        field.onChange(type.value)
+                                      }
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          field.value === type.value
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                        )}
+                                      />
+                                      {type.label}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              {/* Notification Type Combobox */}
+              <FormField
+                name="notification_type"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel className="text-right">Notification</FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className="w-full justify-between"
+                            >
+                              {field.value
+                                ? notificationOptions.find(
+                                    (option) => option.value === field.value
+                                  )?.label
+                                : "Select notification type..."}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="bg-white z-[1000] w-full p-0">
+                            <Command>
+                              <CommandInput placeholder="Search notification type..." />
+                              <CommandList>
+                                <CommandEmpty>
+                                  No notification type found.
+                                </CommandEmpty>
+                                <CommandGroup>
+                                  {notificationOptions.map((option) => (
+                                    <CommandItem
+                                      key={option.value}
+                                      value={option.value}
+                                      onSelect={() => {
+                                        field.onChange(option.value);
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          field.value === option.value
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                        )}
+                                      />
+                                      {option.label}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="profile_image_url"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel
+                      htmlFor="profile_image"
+                      className="pt-2 text-right"
+                    >
+                      Profile Image
+                    </FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id="profile_image"
+                          type="file"
+                          accept="image/*"
+                          capture="user"
+                          onChange={handleImageUpload}
+                          value={undefined}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="is_enabled"
+                render={({ field }) => (
+                  <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormLabel htmlFor="is_enabled">
+                      Enable notifications?
+                    </FormLabel>
+                    <div className="col-span-3">
+                      <FormControl>
+                        <Checkbox
+                          id="is_enabled"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-700 mt-1" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+          <DialogFooter className="flex items-center gap-x-4">
+            <Button
+              type="button"
+              className="bg-red-700 text-white hover:cursor-pointer"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="outline"
+              className="hover:cursor-pointer"
+              onClick={form.handleSubmit(handleFormSubmit)}
+            >
+              {mode === "create" ? "Add Staff" : "Update Staff"}
+            </Button>
+          </DialogFooter>
+        </>
+      )}
+    </>
   );
 }
