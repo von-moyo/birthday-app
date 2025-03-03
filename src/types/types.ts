@@ -30,7 +30,6 @@ export interface StaffResponse {
   updated_at?: string; // Read-only timestamp
 }
 
-
 export type DepartmentType =
   | "botany"
   | "computer_science"
@@ -64,3 +63,16 @@ export interface StaffDB {
 }
 
 export type StaffFormValues = Omit<StaffDB, "id" | "created_at" | "updated_at">;
+
+export type NotificationTemplateDB = {
+  id: string;
+  staff: StaffDB;
+  message: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type NotificationTemplate = Pick<
+  NotificationTemplateDB,
+  "message" | "staff"
+>;
