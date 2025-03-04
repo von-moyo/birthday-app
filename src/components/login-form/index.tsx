@@ -24,7 +24,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading }) => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm<LoginPayload>({
     resolver: yupResolver(loginFormSchema),
   });
@@ -44,7 +43,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading }) => {
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md md:text-sm text-xs shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 placeholder:font-extralight placeholder:text-sm"
             placeholder="Enter your email adddress"
-            value={watch('email')}
             {...register('email')}
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
@@ -58,7 +56,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading }) => {
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md md:text-sm text-xs shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 placeholder:font-extralight placeholder:text-sm"
             placeholder="Enter your password"
-            value={watch('password')}
             {...register('password')}
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
