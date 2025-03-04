@@ -105,6 +105,17 @@ export const StaffTable: React.FC<StaffTableProps> = ({
               }
             />
 
+            {/* Delete Button */}
+            <button
+              type="button"
+              className="flex items-center gap-x-1 cursor-pointer pointer-events-auto"
+              title="Delete"
+              onClick={() => deleteStaffHandler(data.id || "")}
+            >
+              <Trash2 className="size-4 pointer-events-auto" />
+              <span className="hidden 2xl:block">Delete</span>
+            </button>
+
             {/* Customize Message Button */}
             <MessageDialog
               initialValues={{ staff: data, message: "" }}
