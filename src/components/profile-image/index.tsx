@@ -15,8 +15,6 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ onImageUpload, showCam 
     profile_image: string;
   } | null>(null);
 
-  const [pfp, SetPfp] = useState('');
-
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -41,7 +39,6 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ onImageUpload, showCam 
     if (file) {
       const rawBase64 = await fileToRawBase64(file);
       onImageUpload(rawBase64);
-      SetPfp(rawBase64);
     }
   };
 

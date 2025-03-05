@@ -34,6 +34,7 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
 
   const handleImageUpload = (file: any) => {
     // updateUserDetails(userDetails?.id, { image_1920: file });
+    console.log(file);
   };
 
   return (
