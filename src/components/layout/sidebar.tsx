@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Lock, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { adminNavLinks, guestNavLinks } from "../../constants/nav-items";
-import { NoPfp } from "../../assets/images";
 import { useAuth } from "../../context/authContext";
 import { useLogout } from "../../hooks";
+import ProfilePicture from "../profile-image";
 
 interface SideBarProps {
   className?: string;
@@ -14,16 +14,32 @@ interface SideBarProps {
 }
 
 export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOpen, setIsMobileMenuOpen }) => {
-
   const { isAuthenticated } = useAuth();
   const logout = useLogout();
+    const [user, setUser] = useState<{
+      first_name: string;
+      last_name: string;
+      email: string;
+      profile_url: string;
+    } | null>(null);
+  
+    useEffect(() => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }, []);
 
   const userNavLinks = isAuthenticated ? adminNavLinks : guestNavLinks;
+
+  const handleImageUpload = (file: any) => {
+    // updateUserDetails(userDetails?.id, { image_1920: file });
+  };
 
   return (
     <>
       {/* Sidebar always visible on large screens */}
-      <div className={`hidden lg:flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 fixed sm:top-[90px] top-[69px] z-50 sm:h-[calc(100vh-88px)] h-[calc(100vh-85px)] lg:px-7 shadow-[5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}>
+      <div className={`hidden lg:flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 fixed sm:top-[90px] top-[69px] z-50 sm:h-[calc(100vh-88px)] h-[calc(100vh-85px)] lg:px-7 ${className}`}>
         <ul className="flex-1 space-y-0 overflow-y-auto">
           {userNavLinks.map((n) => (
             <li key={n.name}>
@@ -62,28 +78,18 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
             className={`fixed right-0 left-auto z-50 lg:hidden flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 sm:top-[90px] top-[66px] sm:h-[calc(100vh-90px)] h-[calc(100vh-66px)] lg:px-7 shadow-[-5px_0_5px_-5px_rgba(0,0,0,0.1)] ${className}`}
           >
             <div>
-              {isAuthenticated ? <div className="flex items-center gap-3 mb-8 pl-4">
-                <motion.div
-                  className="my-2 grid h-[37px] w-[37px] place-content-center rounded-[15px] border border-gray-300 border-opacity-50 overflow-hidden"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.2, ease: "easeInOut" }}
-                >
-                  <img
-                    src={NoPfp}
-                    alt="Profile picture"
-                    loading="eager"
-                    className="h-[37px] w-[37px] object-cover mt-2"
-                  />
-                </motion.div>
-                <div>
-                  <p className="line-clamp-1 max-w-[150px] font-medium text-[#1E272F]">
-                    Von Kloss
-                  </p>
-                  <p className="line-clamp-1 max-w-[150px] text-xs font-light text-[#898989]">
-                    vonkloss@gmail.com
-                  </p>
-                </div>
-              </div> :
+              {isAuthenticated ?
+                <motion.div className="mb-2 my-4 flex items-center gap-3 px-4">
+                  <ProfilePicture onImageUpload={handleImageUpload} showCam={true} />
+                  <div>
+                    <p className="line-clamp-1 max-w-[150px] font-medium text-[#1E272F] capitalize">
+                      {user?.first_name}
+                    </p>
+                    <p className="line-clamp-1 max-w-[150px] text-xs font-light text-[#898989]">
+                      {user?.email}
+                    </p>
+                  </div>
+                </motion.div> :
                 <div className="flex flex-col items-start gap-3 mb-4">
                   <Link to="/login" className="flex justify-center py-2 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"><Lock className="w-4 h-4 mr-2" /> Login as Admin</Link>
                 </div>

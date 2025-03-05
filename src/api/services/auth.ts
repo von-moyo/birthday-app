@@ -5,7 +5,7 @@ AUTH SERVICES
 */
 
 import { axiosInstanceUnauth, postRequest } from "../requestProcessor";
-import { loginURL, forgotPasswordURL, refreshTokenURL } from "../urls";
+import { loginURL, forgotPasswordURL, refreshTokenURL, ResetPasswordURL } from "../urls";
 
 /**
  * login service
@@ -37,6 +37,25 @@ export interface forgotPasswordData {
 export const forgotPasswordService = (data: forgotPasswordData) => {
   const request = {
     url: forgotPasswordURL(),
+    data
+  };
+  return postRequest(request);
+};
+
+/**
+ * reset password service
+ * @returns axios promise
+ */
+
+export interface resetPasswordData {
+  uid: string;
+  token: string;
+  new_password: string;
+}
+
+export const resetPasswordService = (data: resetPasswordData) => {
+  const request = {
+    url: ResetPasswordURL(),
     data
   };
   return postRequest(request);

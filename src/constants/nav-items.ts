@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Calendar, Bell } from "lucide-react";
+import { LayoutDashboard, Users, Calendar } from "lucide-react";
 
 export const adminNavLinks = [
   {
@@ -15,11 +15,6 @@ export const adminNavLinks = [
     name: "Birthday Calendar",
     href: "/calendar",
     icon: Calendar,
-  },
-  {
-    name: "Notification Settings",
-    href: "/notification-settings",
-    icon: Bell,
   },
 ];
 

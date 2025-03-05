@@ -31,6 +31,7 @@ const Login: React.FC = () => {
       toast.success('Login successful');
       Cookies.set('access_token', loginResponse.data.access);
       Cookies.set('refresh_token', loginResponse.data.refresh);
+      localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
       setIsAuthenticated(true);
       setTimeout(() => {
         navigate('/');

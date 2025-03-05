@@ -77,7 +77,6 @@ export default function MessageDialog({
         setMessage(response.data.message);
         form.reset({ message: response.data.message });
       } catch (error) {
-        console.error("Failed to fetch message:", error);
       }
     };
 
@@ -117,7 +116,6 @@ export default function MessageDialog({
       form.reset();
       setOpen(false);
     } catch (error) {
-      console.error("Customize Message error: ", error);
       toast.error("Failed to customize message data");
     }
   };

@@ -3,8 +3,6 @@ import Cookies from 'js-cookie';
 import { toast } from "sonner";
 import { refreshTokenService } from "../services";
 
-console.log("Base URL:", import.meta.env.VITE_API_BASE_URL);
-
 // Create axios instances
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,

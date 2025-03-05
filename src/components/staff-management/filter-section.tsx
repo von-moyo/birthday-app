@@ -42,7 +42,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
   addNewStaffHandler,
 }) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex flex-wrap gap-y-4 justify-between items-center">
       <div className="flex gap-4">
         {/* Search by name */}
         <div className="relative">

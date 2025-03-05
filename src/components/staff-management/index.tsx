@@ -1,17 +1,18 @@
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
-import { useApiRequest } from "../../hooks";
+import { useApiRequest, usePagination } from "../../hooks";
 import { Table } from "../table";
 import { StaffDB, StaffFormValues } from "../../types";
 import { StaffTable, TableBodyItem } from "./staff-table";
 import { FilterSection } from "./filter-section";
-import { getGridColsClass } from "./utils";
 import {
   patchRequest,
   getRequest,
   deleteRequest,
 } from "@/api/requestProcessor";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { Pagination } from "../pagination";
 
 const STAFF_ENDPOINT = "https://hameedah.pythonanywhere.com/api/admin/staff/";
 
@@ -20,6 +21,15 @@ const StaffManagementTable = () => {
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [selectedStaffType, setSelectedStaffType] = useState<string>("");
   const [filteredStaff, setFilteredStaff] = useState<TableBodyItem[]>([]);
+
+  const {
+    paginatedList,
+    handleNextPage,
+    handlePrevPage,
+    handleGoToPage,
+    currentPage,
+    totalPages,
+  } = usePagination(filteredStaff, 7)
 
   const tableHeaders = [
     { index: 0, title: "🔔", key: "is_enabled" },
@@ -52,7 +62,6 @@ const StaffManagementTable = () => {
 
   const tableData: TableBodyItem[] = useMemo(() => {
     if (!Array.isArray(data?.data)) {
-      console.warn("Expected an array but got:", data?.data, "\n");
       return [];
     }
 
@@ -106,7 +115,6 @@ const StaffManagementTable = () => {
     const datum = tableData.find((datum) => datum.id === id);
 
     if (!datum) {
-      console.error("Item not found");
       return;
     }
 
@@ -129,7 +137,6 @@ const StaffManagementTable = () => {
           })
         );
       } catch (error) {
-        console.error("handleIsCheckedClick error: ", error);
         toast.error("Failed to update staff status");
       }
     };
@@ -159,7 +166,6 @@ const StaffManagementTable = () => {
         );
         toast.success("Edited successfully!");
       } catch (error) {
-        console.error("Edited staff error: ", error);
         toast.error("Failed to edit staff data");
       }
     };
@@ -183,7 +189,6 @@ const StaffManagementTable = () => {
         );
         toast.success("Deleted successfully!");
       } catch (error) {
-        console.error("delete staff error: ", error);
         toast.error("Failed to delete staff");
       }
     };
@@ -195,9 +200,12 @@ const StaffManagementTable = () => {
     try {
       await run(axios.post(STAFF_ENDPOINT, data));
     } catch (err) {
-      console.error("Failed to add staff:", err);
       throw err;
     }
+  }
+
+  if (requestStatus.isPending) {
+    return <div className='flex justify-center items-center sm:h-[calc(100vh-94px)] h-[calc(100vh-69px)] w-full'><Loader2 className="animate-spin h-12 w-12 text-gray-500" /></div>
   }
 
   return (
@@ -206,44 +214,45 @@ const StaffManagementTable = () => {
         Staff Management
       </h1>
 
-      {requestStatus.isPending ? (
-        <div>Loading...</div>
-      ) : requestStatus.isRejected ? (
-        <div>Error: {error?.message || "Failed to fetch data"}</div>
-      ) : (
-        <>
-          <FilterSection
-            searchTerm={searchTerm}
-            selectedDepartment={selectedDepartment}
-            selectedStaffType={selectedStaffType}
-            departments={departments as string[]}
-            staffTypes={staffTypes as string[]}
-            onSearchChange={setSearchTerm}
-            onDepartmentChange={setSelectedDepartment}
-            onStaffTypeChange={setSelectedStaffType}
-            addNewStaffHandler={addNewStaffHandler}
-          />
+      <>
+        <FilterSection
+          searchTerm={searchTerm}
+          selectedDepartment={selectedDepartment}
+          selectedStaffType={selectedStaffType}
+          departments={departments as string[]}
+          staffTypes={staffTypes as string[]}
+          onSearchChange={setSearchTerm}
+          onDepartmentChange={setSelectedDepartment}
+          onStaffTypeChange={setSelectedStaffType}
+          addNewStaffHandler={addNewStaffHandler}
+        />
 
-          <Table
-            tableHeaderTitles={tableHeaders}
-            tableBody={
-              <StaffTable
-                tableBodyItems={filteredStaff}
-                shownHeaders={tableHeaders}
-                isCheckedHandler={handleIsCheckedClick}
-                editStaffHandler={editStaffHandler}
-                deleteStaffHandler={deleteStaffHandler}
-                tableBodyRowClassName="grid !gap-x-2 xl:!gap-x-4 text-xs border my-3 bg-[#FBFBFB] border-[#E7E7E7] border-opacity-50 rounded-[12px]"
-              />
-            }
-            customTableClasses={{
-              tableHeaderClassName: `${getGridColsClass(
-                tableHeaders.length
-              )} text-[#454242] text-sm`,
-            }}
-          />
-        </>
-      )}
+        <Table
+          tableHeaderTitles={tableHeaders}
+          tableBody={
+            <StaffTable
+              tableBodyItems={paginatedList}
+              shownHeaders={tableHeaders}
+              isCheckedHandler={handleIsCheckedClick}
+              editStaffHandler={editStaffHandler}
+              deleteStaffHandler={deleteStaffHandler}
+              tableBodyRowClassName="grid text-xs border my-3 bg-[#FBFBFB] border-[#E7E7E7] border-opacity-50 rounded-[12px] gap-2 pl-3"
+            />
+          }
+          customTableClasses={{
+            tableHeaderClassName: `grid grid-cols-[0.2fr_1fr_1fr_1fr_1fr_1fr] text-[#454242] text-sm !px-0 !sm:px-0 !gap-2 !pl-3`,
+            headerStyle: '!first:text-center first:justify-center'
+          }}
+        />
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handleNextPage={handleNextPage}
+          handlePrevPage={handlePrevPage}
+          handleGoToPage={handleGoToPage}
+        />
+      </>
     </div>
   );
 };

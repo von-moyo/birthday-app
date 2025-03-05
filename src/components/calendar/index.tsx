@@ -21,8 +21,6 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, staffs }) => {
     setSelectedStaff(null)
   });
 
-  console.log(staffs);
-
   const handleSelectDay = (slotInfo: SlotInfo) => {
     const selectedDate = moment(slotInfo.start);
     const staffWithBirthday = staffs.filter(staff => {
@@ -34,9 +32,6 @@ const CalendarComponent: React.FC<CalendarProps> = ({ month, staffs }) => {
     }
     setPopUp(true);
     setSelectedStaff(staffWithBirthday);
-    console.log(staffWithBirthday);
-    console.log(slotInfo.bounds);
-    console.log(slotInfo.start);
   };
 
   const defaultDate = moment().month(month ?? new Date().getMonth()).toDate();

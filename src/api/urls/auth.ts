@@ -20,7 +20,16 @@ export const loginURL = () => `/auth/login/`;
  *
  */
 
-export const forgotPasswordURL = () => `/auth/forgot-password`;
+export const forgotPasswordURL = () => `/auth/forgot-password/`;
+
+/**
+ * Reset Password URL
+ *
+ * @returns url string
+ *
+ */
+
+export const ResetPasswordURL = () => `/auth/reset-password/`;
 
 /**
  * Refresh Token URL

@@ -13,7 +13,6 @@ import {
   formatDepartment,
   formatName,
   isBirthday,
-  getGridColsClass,
 } from "./utils";
 import { Dialog, DialogContent } from "../ui/dialog";
 import StaffDialog from "./staff-dialog";
@@ -138,7 +137,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
         <div className="sm:hidden">
           {/* Edit Dialog */}
           <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-            <DialogContent className="sm:max-w-[640px] bg-white">
+            <DialogContent className="bg-white">
               <StaffDialog
                 mode="update"
                 initialValues={data}
@@ -153,7 +152,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
 
           {/* Message Dialog */}
           <Dialog open={messageDialogOpen} onOpenChange={setMessageDialogOpen}>
-            <DialogContent className="sm:max-w-[640px] bg-white">
+            <DialogContent className="bg-white">
               <MessageDialog
                 initialValues={{ staff: data, message: "" }}
                 mode="mobile"
@@ -209,12 +208,9 @@ export const StaffTable: React.FC<StaffTableProps> = ({
       {tableBodyItems.map((item, index) => (
         <div
           key={`staff-row-${item.id ?? index}`}
-          className={`grid items-center ${getGridColsClass(
-            shownHeaders.length
-          )} 
-            ${
-              tableBodyRowClassName || ""
-            } sm:py-3 sm:px-4 px-2 py-2 sm:text-sm gap-2 sm:gap-0 text-xs`}
+          className={`grid grid-cols-[0.2fr_1fr_1fr_1fr_1fr_1fr] 
+            ${tableBodyRowClassName || ""
+            } sm:py-3 py-2 sm:text-sm text-xs`}
         >
           {shownHeaders.map((header) => {
             // Handle actions column
@@ -234,7 +230,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
                   id={item.name}
                   checked={item.is_enabled || false}
                   onChange={() => isCheckedHandler(item.id ?? "")}
-                  className="cursor-pointer"
+                  className="cursor-pointer size-3 my-auto md:size-5 lg:size-6"
                   title="Enable Notifications?"
                 />
               );
@@ -248,7 +244,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
                 className={tableBodyItemClassName}
               >
                 <div className="text-[#454545] flex gap-2 items-center">
-                  <span className="line-clamp-1">{content}</span>
+                  <span className="!line-clamp-1">{content}</span>
                   {header.key === "name" && isBirthday(item.date_of_birth) && (
                     <Cake size={16} className="text-pink-500" />
                   )}

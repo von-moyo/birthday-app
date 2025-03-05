@@ -213,11 +213,6 @@ export default function StaffDialog({
       form.reset();
       setOpen(false);
     } catch (error) {
-      console.error(
-        `Error ${mode === "create" ? "adding" : "updating"} staff:`,
-        error
-      );
-
       const errorMessage =
         mode === "create"
           ? "Failed to add staff. Please try again."
@@ -253,7 +248,6 @@ export default function StaffDialog({
       } else if (typeof reader.result === "string") {
         form.setValue("profile_image_url", reader.result);
       } else {
-        console.error("Unexpected FileReader result", reader.result);
         alert("Something went wrong, please pick another image");
         form.setValue("profile_image_url", "");
       }
@@ -272,25 +266,25 @@ export default function StaffDialog({
               <DialogDescription>{description}</DialogDescription>
             </DialogHeader>
             <Form {...form}>
-              <form className="z-50 grid gap-4 p-4 max-h-[60vh] overflow-y-auto">
+              <form className="z-50 grid gap-4 sm:p-4 max-h-[60vh] overflow-y-auto">
                 {/* Personal Information */}
                 <FormField
                   control={form.control}
                   name="first_name"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormItem className=" items-start sm:!gap-4">
                       <FormLabel
                         htmlFor="first_name"
                         className="pt-2 text-right"
                       >
-                        <span>First Name</span>
+                        <span className="text-nowrap sm:text-base text-sm">First Name</span>
                         <sup className="text-red-700">*</sup>
                       </FormLabel>
                       <div className="col-span-3">
                         <FormControl>
                           <Input
                             id="first_name"
-                            placeholder="John"
+                            className="sm:text-base text-sm" placeholder="John"
                             {...field}
                           />
                         </FormControl>
@@ -304,17 +298,17 @@ export default function StaffDialog({
                   control={form.control}
                   name="last_name"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormItem className=" items-start sm:!gap-4">
                       <FormLabel
                         htmlFor="last_name"
                         className="pt-2 text-right"
                       >
-                        <span>Last Name</span>
+                        <span className="text-nowrap sm:text-base text-sm">Last Name</span>
                         <sup className="text-red-700">*</sup>
                       </FormLabel>
                       <div className="col-span-3">
                         <FormControl>
-                          <Input id="last_name" placeholder="Doe" {...field} />
+                          <Input id="last_name" className="sm:text-base text-sm" placeholder="Doe" {...field} />
                         </FormControl>
                         <FormMessage className="text-red-700 mt-1" />
                       </div>
@@ -326,9 +320,9 @@ export default function StaffDialog({
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormItem className=" items-start sm:!gap-4">
                       <FormLabel htmlFor="email" className="pt-2 text-right">
-                        <span>Email</span>
+                        <span className="text-nowrap sm:text-base text-sm">Email</span>
                         <sup className="text-red-700">*</sup>
                       </FormLabel>
                       <div className="col-span-3">
@@ -336,7 +330,7 @@ export default function StaffDialog({
                           <Input
                             id="email"
                             type="email"
-                            placeholder="john.doe@example.com"
+                            className="sm:text-base text-sm" placeholder="john.doe@example.com"
                             {...field}
                           />
                         </FormControl>
@@ -350,19 +344,19 @@ export default function StaffDialog({
                   control={form.control}
                   name="phone_number"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormItem className=" items-start sm:!gap-4">
                       <FormLabel
                         htmlFor="phone_number"
                         className="pt-2 text-right"
                       >
-                        <span>Phone</span>
+                        <span className="text-nowrap sm:text-base text-sm">Phone</span>
                         <sup className="text-red-700">*</sup>
                       </FormLabel>
                       <div className="col-span-3">
                         <FormControl>
                           <Input
                             id="phone_number"
-                            placeholder="08034536923"
+                            className="sm:text-base text-sm" placeholder="08034536923"
                             {...field}
                           />
                         </FormControl>
@@ -376,12 +370,12 @@ export default function StaffDialog({
                   control={form.control}
                   name="date_of_birth"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormItem className=" items-start sm:!gap-4">
                       <FormLabel
                         htmlFor="date_of_birth"
                         className="pt-2 text-right"
                       >
-                        <span>Date of Birth</span>
+                        <span className="text-nowrap sm:text-base text-sm">Date of Birth</span>
                         <sup className="text-red-700">*</sup>
                       </FormLabel>
                       <div className="col-span-3">
@@ -389,7 +383,7 @@ export default function StaffDialog({
                           <Input
                             id="date_of_birth"
                             type="date"
-                            placeholder="YYYY-MM-DD"
+                            className="sm:text-base text-sm" placeholder="YYYY-MM-DD"
                             pattern="\d{4}-\d{2}-\d{2}"
                             {...field}
                             value={field.value || ""}
@@ -406,9 +400,9 @@ export default function StaffDialog({
                   control={form.control}
                   name="department"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
-                      <FormLabel className="text-right">Department</FormLabel>
-                      <div className="col-span-3">
+                    <FormItem className=" items-start sm:!gap-4">
+                      <FormLabel className="text-right pt-2 sm:text-base text-sm">Department</FormLabel>
+                      <div className="col-span-3 cursor-pointer">
                         <FormControl>
                           <Popover>
                             <PopoverTrigger asChild>
@@ -427,7 +421,7 @@ export default function StaffDialog({
                             </PopoverTrigger>
                             <PopoverContent className="bg-white z-[1000] w-full p-0">
                               <Command>
-                                <CommandInput placeholder="Search department..." />
+                                <CommandInput className="sm:text-base text-sm" placeholder="Search department..." />
                                 <CommandList>
                                   <CommandEmpty>
                                     No department found.
@@ -469,8 +463,8 @@ export default function StaffDialog({
                   control={form.control}
                   name="staff_type"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
-                      <FormLabel className="text-right">Staff Type</FormLabel>
+                    <FormItem className=" items-start sm:!gap-4">
+                      <FormLabel className="text-right pt-2 sm:text-base text-sm">Staff Type</FormLabel>
                       <div className="col-span-3">
                         <FormControl>
                           <Popover>
@@ -490,7 +484,7 @@ export default function StaffDialog({
                             </PopoverTrigger>
                             <PopoverContent className="bg-white z-[1000] w-full p-0">
                               <Command>
-                                <CommandInput placeholder="Search staff type..." />
+                                <CommandInput className="sm:text-base text-sm" placeholder="Search staff type..." />
                                 <CommandList>
                                   <CommandEmpty>
                                     No staff type found.
@@ -532,8 +526,8 @@ export default function StaffDialog({
                   name="notification_type"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
-                      <FormLabel className="text-right">Notification</FormLabel>
+                    <FormItem className=" items-start sm:!gap-4">
+                      <FormLabel className="text-right pt-2 sm:text-base text-sm">Notification</FormLabel>
                       <div className="col-span-3">
                         <FormControl>
                           <Popover>
@@ -553,7 +547,7 @@ export default function StaffDialog({
                             </PopoverTrigger>
                             <PopoverContent className="bg-white z-[1000] w-full p-0">
                               <Command>
-                                <CommandInput placeholder="Search notification type..." />
+                                <CommandInput className="sm:text-base text-sm" placeholder="Search notification type..." />
                                 <CommandList>
                                   <CommandEmpty>
                                     No notification type found.
@@ -594,10 +588,10 @@ export default function StaffDialog({
                   control={form.control}
                   name="profile_image_url"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormItem className=" items-start sm:!gap-4">
                       <FormLabel
                         htmlFor="profile_image"
-                        className="pt-2 text-right"
+                        className="pt-2 text-right sm:text-base text-sm"
                       >
                         Profile Image
                       </FormLabel>
@@ -623,7 +617,7 @@ export default function StaffDialog({
                   control={form.control}
                   name="is_enabled"
                   render={({ field }) => (
-                    <FormItem className="grid-cols-4 items-start !gap-4">
+                    <FormItem className="flex flex-row-reverse justify-end items-center mt-4 sm:!gap-3">
                       <FormLabel htmlFor="is_enabled">
                         Enable notifications?
                       </FormLabel>
@@ -633,6 +627,7 @@ export default function StaffDialog({
                             id="is_enabled"
                             checked={field.value}
                             onCheckedChange={field.onChange}
+                            className="cursor-pointer"
                           />
                         </FormControl>
                         <FormMessage className="text-red-700 mt-1" />
@@ -668,20 +663,20 @@ export default function StaffDialog({
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           <Form {...form}>
-            <form className="z-50 grid gap-4 p-4 max-h-[60vh] overflow-y-auto">
+            <form className="z-50 grid sm:gap-4 gap-2 sm:p-4 max-h-[60vh] overflow-y-auto scrollbar-none">
               {/* Personal Information */}
               <FormField
                 control={form.control}
                 name="first_name"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
+                  <FormItem className=" items-start sm:!gap-4">
                     <FormLabel htmlFor="first_name" className="pt-2 text-right">
-                      <span>First Name</span>
+                      <span className="text-nowrap sm:text-base text-sm">First Name</span>
                       <sup className="text-red-700">*</sup>
                     </FormLabel>
                     <div className="col-span-3">
                       <FormControl>
-                        <Input id="first_name" placeholder="John" {...field} />
+                        <Input id="first_name" className="sm:text-base text-sm" placeholder="John" {...field} />
                       </FormControl>
                       <FormMessage className="text-red-700 mt-1" />
                     </div>
@@ -693,14 +688,14 @@ export default function StaffDialog({
                 control={form.control}
                 name="last_name"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
+                  <FormItem className=" items-start sm:!gap-4">
                     <FormLabel htmlFor="last_name" className="pt-2 text-right">
-                      <span>Last Name</span>
+                      <span className="text-nowrap sm:text-base text-sm">Last Name</span>
                       <sup className="text-red-700">*</sup>
                     </FormLabel>
                     <div className="col-span-3">
                       <FormControl>
-                        <Input id="last_name" placeholder="Doe" {...field} />
+                        <Input id="last_name" className="sm:text-base text-sm" placeholder="Doe" {...field} />
                       </FormControl>
                       <FormMessage className="text-red-700 mt-1" />
                     </div>
@@ -712,9 +707,9 @@ export default function StaffDialog({
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
+                  <FormItem className=" items-start sm:!gap-4">
                     <FormLabel htmlFor="email" className="pt-2 text-right">
-                      <span>Email</span>
+                      <span className="text-nowrap sm:text-base text-sm">Email</span>
                       <sup className="text-red-700">*</sup>
                     </FormLabel>
                     <div className="col-span-3">
@@ -722,7 +717,7 @@ export default function StaffDialog({
                         <Input
                           id="email"
                           type="email"
-                          placeholder="john.doe@example.com"
+                          className="sm:text-base text-sm" placeholder="john.doe@example.com"
                           {...field}
                         />
                       </FormControl>
@@ -736,19 +731,19 @@ export default function StaffDialog({
                 control={form.control}
                 name="phone_number"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
+                  <FormItem className=" items-start sm:!gap-4">
                     <FormLabel
                       htmlFor="phone_number"
                       className="pt-2 text-right"
                     >
-                      <span>Phone</span>
+                      <span className="text-nowrap sm:text-base text-sm">Phone</span>
                       <sup className="text-red-700">*</sup>
                     </FormLabel>
                     <div className="col-span-3">
                       <FormControl>
                         <Input
                           id="phone_number"
-                          placeholder="08034536923"
+                          className="sm:text-base text-sm" placeholder="08034536923"
                           {...field}
                         />
                       </FormControl>
@@ -762,12 +757,12 @@ export default function StaffDialog({
                 control={form.control}
                 name="date_of_birth"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
+                  <FormItem className=" items-start sm:!gap-4">
                     <FormLabel
                       htmlFor="date_of_birth"
                       className="pt-2 text-right"
                     >
-                      <span>Date of Birth</span>
+                      <span className="text-nowrap sm:text-base text-sm">Date of Birth</span>
                       <sup className="text-red-700">*</sup>
                     </FormLabel>
                     <div className="col-span-3">
@@ -775,7 +770,7 @@ export default function StaffDialog({
                         <Input
                           id="date_of_birth"
                           type="date"
-                          placeholder="YYYY-MM-DD"
+                          className="sm:text-base text-sm" placeholder="YYYY-MM-DD"
                           pattern="\d{4}-\d{2}-\d{2}"
                           {...field}
                           value={field.value || ""}
@@ -792,8 +787,8 @@ export default function StaffDialog({
                 control={form.control}
                 name="department"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
-                    <FormLabel className="text-right">Department</FormLabel>
+                  <FormItem className=" items-start sm:!gap-4">
+                    <FormLabel className="text-right pt-2">Department</FormLabel>
                     <div className="col-span-3">
                       <FormControl>
                         <Popover>
@@ -801,7 +796,7 @@ export default function StaffDialog({
                             <Button
                               variant="outline"
                               role="combobox"
-                              className="w-full justify-between"
+                              className="w-full justify-between cursor-pointer"
                             >
                               {field.value
                                 ? departmentOptions.find(
@@ -813,7 +808,7 @@ export default function StaffDialog({
                           </PopoverTrigger>
                           <PopoverContent className="bg-white z-[1000] w-full p-0">
                             <Command>
-                              <CommandInput placeholder="Search department..." />
+                              <CommandInput className="sm:text-base text-sm" placeholder="Search department..." />
                               <CommandList>
                                 <CommandEmpty>
                                   No department found.
@@ -855,8 +850,8 @@ export default function StaffDialog({
                 control={form.control}
                 name="staff_type"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
-                    <FormLabel className="text-right">Staff Type</FormLabel>
+                  <FormItem className=" items-start sm:!gap-4">
+                    <FormLabel className="text-right pt-2">Staff Type</FormLabel>
                     <div className="col-span-3">
                       <FormControl>
                         <Popover>
@@ -876,7 +871,7 @@ export default function StaffDialog({
                           </PopoverTrigger>
                           <PopoverContent className="bg-white z-[1000] w-full p-0">
                             <Command>
-                              <CommandInput placeholder="Search staff type..." />
+                              <CommandInput className="sm:text-base text-sm" placeholder="Search staff type..." />
                               <CommandList>
                                 <CommandEmpty>
                                   No staff type found.
@@ -918,8 +913,8 @@ export default function StaffDialog({
                 name="notification_type"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
-                    <FormLabel className="text-right">Notification</FormLabel>
+                  <FormItem className=" items-start sm:!gap-4">
+                    <FormLabel className="text-right pt-2">Notification</FormLabel>
                     <div className="col-span-3">
                       <FormControl>
                         <Popover>
@@ -939,7 +934,7 @@ export default function StaffDialog({
                           </PopoverTrigger>
                           <PopoverContent className="bg-white z-[1000] w-full p-0">
                             <Command>
-                              <CommandInput placeholder="Search notification type..." />
+                              <CommandInput className="sm:text-base text-sm" placeholder="Search notification type..." />
                               <CommandList>
                                 <CommandEmpty>
                                   No notification type found.
@@ -980,7 +975,7 @@ export default function StaffDialog({
                 control={form.control}
                 name="profile_image_url"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
+                  <FormItem className=" items-start sm:!gap-4">
                     <FormLabel
                       htmlFor="profile_image"
                       className="pt-2 text-right"
@@ -1009,7 +1004,7 @@ export default function StaffDialog({
                 control={form.control}
                 name="is_enabled"
                 render={({ field }) => (
-                  <FormItem className="grid-cols-4 items-start !gap-4">
+                  <FormItem className="flex items-center flex-row-reverse justify-end mt-4 sm:!gap-3">
                     <FormLabel htmlFor="is_enabled">
                       Enable notifications?
                     </FormLabel>
@@ -1019,6 +1014,7 @@ export default function StaffDialog({
                           id="is_enabled"
                           checked={field.value}
                           onCheckedChange={field.onChange}
+                          className=" cursor-pointer"
                         />
                       </FormControl>
                       <FormMessage className="text-red-700 mt-1" />

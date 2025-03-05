@@ -69,7 +69,6 @@ const CalendarUI: React.FC<CalendarUIProps> = ({ staffs, setBirthMonth, currentB
       const dob = new Date(staff.date_of_birth);
       return dob.getMonth() === currentDateState.getMonth();
     } catch (error) {
-      console.error("Error parsing date:", staff.date_of_birth, error);
       return false;
     }
   });

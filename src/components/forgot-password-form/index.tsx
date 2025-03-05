@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Loader2 } from 'lucide-react';
 
 
 interface ForgotPasswordPayload {
@@ -48,15 +49,15 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ onSubmit, isLoa
           {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
         </div>
 
-        <div>
+        <a href='/reset-password'>
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
             disabled={isLoading}
           >
-            {isLoading ? 'Resetting password...' : 'Reset Password'}
+            {isLoading ? <Loader2 className="animate-spin h-5 w-5 text-gray-500"/> : 'Reset Password'}
           </button>
-        </div>
+        </a>
 
         <div className="text-center">
           <a href="/login" className="text-sm text-blue-600 hover:text-blue-500">

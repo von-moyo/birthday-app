@@ -3,8 +3,10 @@ import {
   NotFound,
   Home,
   Login,
-  ForgotPassword, Calendar,
+  ForgotPassword, 
+  Calendar,
   StaffManagement,
+  ResetPassword
 } from "../pages";
 import { MainLayout } from "../components";
 const router = createBrowserRouter([
@@ -15,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
   {
     element: <MainLayout />,
