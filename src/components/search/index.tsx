@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SearchModal } from "../search-modal";
+import { useDebounce } from "@/hooks";
 
 interface SearchProps {
   className?: string;
@@ -34,6 +35,7 @@ const Search: React.FC<SearchProps> = ({
   });
   const [searchValue, setSearchValue] = useState<string>('');
   const [isSearchModal, setIsSearchModal] = useState(false);
+    const debouncedSearch = useDebounce(searchValue, 500);
 
   const handleClose = () => {
     setIsSearchModal(false)
@@ -41,6 +43,7 @@ const Search: React.FC<SearchProps> = ({
 
   const handleChange = (val: string) => {
     setSearchValue(val);
+
     if (val !== '') {
       setIsSearchModal(true);
     } else {
@@ -69,14 +72,14 @@ const Search: React.FC<SearchProps> = ({
           type="search"
           className="
           w-full h-full border-none bg-transparent text-gray-600 font-light text-sm
-          focus:outline-none placeholder-gray-500
+          focus:outline-none placeholder-gray-500 placeholder:text-xs sm:placeholder:text-xs
         "
         />
         {errors.search && <p className="text-red-500 text-sm">{errors.search.message}</p>}
       </div>
       {isSearchModal && (
         <SearchModal
-          searchText={searchValue}
+          searchText={debouncedSearch}
           isOpen={isSearchModal}
           onClose={handleClose}
         />

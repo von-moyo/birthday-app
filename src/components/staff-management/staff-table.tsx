@@ -17,6 +17,7 @@ import {
 import { Dialog, DialogContent } from "../ui/dialog";
 import StaffDialog from "./staff-dialog";
 import MessageDialog from "./message-dialog";
+import { getInitials } from "@/utils";
 
 export type TableBodyItem = {
   name: string;
@@ -43,12 +44,13 @@ export const StaffTable: React.FC<StaffTableProps> = ({
   deleteStaffHandler,
   editStaffHandler,
 }) => {
+  const [editDialogOpen, setEditDialogOpen] = React.useState(false);
   if (tableBodyItems.length === 0) {
     return (
       <div className="flex gap-4 py-[60px] flex-col items-center justify-center">
-        <p className="text-xs font-medium text-[#1E272F]">No Data</p>
+        <p className="text-xs font-medium text-[#1E272F]">Oops!</p>
         <p className="text-xs font-light text-[#898989] w-[60%] text-center">
-          There's no data.
+          No Staffs have been added yet.
         </p>
       </div>
     );
@@ -75,14 +77,13 @@ export const StaffTable: React.FC<StaffTableProps> = ({
     return value;
   };
 
-  const ActionCell = ({ data }: { data: TableBodyItem }) => {
-    const [editDialogOpen, setEditDialogOpen] = React.useState(false);
+  const ActionCell = ({ data, editDialogOpen, setEditDialogOpen }: { data: TableBodyItem, editDialogOpen: boolean, setEditDialogOpen: (data: boolean)=> void }) => {
     const [messageDialogOpen, setMessageDialogOpen] = React.useState(false);
 
     return (
       <>
         {/* Desktop Actions */}
-        <div className={cn("hidden sm:block", tableBodyItemClassName)}>
+        <div className={cn("hidden sm:block my-auto", tableBodyItemClassName)}>
           <div className="text-[#454545] flex gap-4 items-center">
             {/* Edit Button */}
             <StaffDialog
@@ -134,7 +135,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
         </div>
 
         {/* Mobile Actions */}
-        <div className="sm:hidden">
+        <div className="sm:hidden my-auto">
           {/* Edit Dialog */}
           <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
             <DialogContent className="bg-white">
@@ -215,7 +216,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
           {shownHeaders.map((header) => {
             // Handle actions column
             if (header.key === "actions") {
-              return <ActionCell key={`cell-${header.key}`} data={item} />;
+              return <ActionCell key={`cell-${header.key}`} data={item} editDialogOpen={editDialogOpen} setEditDialogOpen={setEditDialogOpen} />;
             }
 
             const value = item[header.key as keyof typeof item] ?? "";
@@ -230,10 +231,33 @@ export const StaffTable: React.FC<StaffTableProps> = ({
                   id={item.name}
                   checked={item.is_enabled || false}
                   onChange={() => isCheckedHandler(item.id ?? "")}
-                  className="cursor-pointer size-3 my-auto md:size-5 lg:size-6"
+                  className="cursor-pointer size-3 my-auto md:size-4 mx-auto"
                   title="Enable Notifications?"
                 />
               );
+            }
+
+            const noPfp = !item?.profile_image_url || item?.profile_image_url === "string"
+
+            // Handle actions column
+            if (header.key === "name") {
+              return (
+                <div className="flex items-center gap-2">
+                  <div className={`grid h-[27px] w-[27px] place-content-center rounded-[15px] ${noPfp && 'border'} border border-gray-300 border-opacity-50 overflow-hidden`}>
+                    {!noPfp ? (
+                      <img
+                        src={`${item?.profile_image_url}`}
+                        alt="Profile picture"
+                        loading="eager"
+                        className="h-full w-full object-cover rounded-[15px]"
+                      />
+                    ) : (
+                      <p>{getInitials(`${item.first_name} ${item.last_name}`)}</p>
+                    )}
+                  </div>
+                  <p className="line-clamp-1">{`${item?.first_name} ${item?.last_name}`}</p>
+                </div>
+              )
             }
 
             // Handle content cells
@@ -241,10 +265,10 @@ export const StaffTable: React.FC<StaffTableProps> = ({
             return (
               <div
                 key={`cell-${header.key}-${header.index}`}
-                className={tableBodyItemClassName}
+                className={`${tableBodyItemClassName} !line-clamp-1 my-auto`}
               >
-                <div className="text-[#454545] flex gap-2 items-center">
-                  <span className="!line-clamp-1">{content}</span>
+                <div className="text-[#454545] flex gap-2 items-center !line-clamp-1">
+                  <span>{content}</span>
                   {header.key === "name" && isBirthday(item.date_of_birth) && (
                     <Cake size={16} className="text-pink-500" />
                   )}

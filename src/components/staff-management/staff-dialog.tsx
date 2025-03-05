@@ -266,7 +266,7 @@ export default function StaffDialog({
               <DialogDescription>{description}</DialogDescription>
             </DialogHeader>
             <Form {...form}>
-              <form className="z-50 grid gap-4 sm:p-4 max-h-[60vh] overflow-y-auto">
+              <form className="z-50 grid gap-4 sm:p-4 max-h-[60vh] overflow-y-auto scrollbar-none">
                 {/* Personal Information */}
                 <FormField
                   control={form.control}

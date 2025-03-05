@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           </div>
         </Link>
-        <Search className="sm:w-[425px] w-full sm:h-[46px] h-[36px] !rounded-full" placeholder={"Search"} setIsSearchExpanded={setIsSearchExpanded} />
+        <Search className="sm:w-[425px] w-full sm:h-[46px] h-[36px] !rounded-full" placeholder={"Search by name and department..."} setIsSearchExpanded={setIsSearchExpanded} />
         <div className="flex items-center gap-8">
           {isAuthenticated ? (
             <>

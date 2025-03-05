@@ -197,11 +197,7 @@ const StaffManagementTable = () => {
   }
 
   async function addNewStaffHandler(data: StaffFormValues) {
-    try {
-      await run(axios.post(STAFF_ENDPOINT, data));
-    } catch (err) {
-      throw err;
-    }
+    await run(axios.post(STAFF_ENDPOINT, data));
   }
 
   if (requestStatus.isPending) {
