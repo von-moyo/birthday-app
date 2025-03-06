@@ -67,13 +67,11 @@ export const refreshToken = async (): Promise<string> => {
         return token;
       })
       .catch(() => {
-        // logout service
         Logout();
       });
 
   } else {
-    // logout service
-    Logout();
+    // Logout();
   }
   return token;
 };
