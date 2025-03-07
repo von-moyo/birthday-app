@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MenuIcon, XIcon, Lock } from "lucide-react";
 import { Search } from "../search";
 import { LogoIcon } from "../../assets/icons";
 import { Link } from "react-router-dom";
 import AnimatedDropdown from "./animated-dropdown";
 import { useAuth } from "../../context/authContext";
+import { useFetchAdminDetails } from "@/hooks";
 interface HeaderProps {
   className?: string;
   isMobileMenuOpen: boolean;
@@ -18,6 +19,11 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const { isAuthenticated } = useAuth();
+  const { fetchAdminDetails } = useFetchAdminDetails();
+  
+  useEffect(() =>{
+    fetchAdminDetails(localStorage.getItem("staffID") || '');
+  }, [])
 
   return (
     <>

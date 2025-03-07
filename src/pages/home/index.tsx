@@ -41,17 +41,15 @@ const Home: React.FC = () => {
     }
   }, [staffsResponse, error]);
 
-  if (requestStatus.isPending) {
-    return (
-      <div className="flex justify-center items-center sm:h-[calc(100vh-94px)] h-[calc(100vh-69px)] w-full">
-        <Loader2 className="animate-spin h-12 w-12 text-gray-500" />
-      </div>
-    );
-  }
-
   return (
     <>
-      <HomeUI staffs={staffs} selectedMonth={selectedMonth} />
+      {requestStatus.isPending ?
+        <div className="flex justify-center items-center sm:h-[calc(100vh-94px)] h-[calc(100vh-69px)] w-full">
+          <Loader2 className="animate-spin h-12 w-12 text-gray-500" />
+        </div>
+        :
+        <HomeUI staffs={staffs} selectedMonth={selectedMonth} />
+      }
     </>
   );
 };

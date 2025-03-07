@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Lock, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -6,6 +6,7 @@ import { adminNavLinks, guestNavLinks } from "../../constants/nav-items";
 import { useAuth } from "../../context/authContext";
 import { useLogout } from "../../hooks";
 import ProfilePicture from "../profile-image";
+import { useAdminDetails } from "@/context";
 
 interface SideBarProps {
   className?: string;
@@ -16,20 +17,7 @@ interface SideBarProps {
 export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const { isAuthenticated } = useAuth();
   const logout = useLogout();
-    const [user, setUser] = useState<{
-      first_name: string;
-      last_name: string;
-      email: string;
-      profile_url: string;
-    } | null>(null);
-  
-    useEffect(() => {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-    }, []);
-
+  const { adminDetails } = useAdminDetails();
   const userNavLinks = isAuthenticated ? adminNavLinks : guestNavLinks;
 
   const handleImageUpload = (file: any) => {
@@ -39,7 +27,6 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
 
   return (
     <>
-      {/* Sidebar always visible on large screens */}
       <div className={`hidden lg:flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 fixed sm:top-[90px] top-[69px] z-50 sm:h-[calc(100vh-88px)] h-[calc(100vh-85px)] lg:px-7 ${className}`}>
         <ul className="flex-1 space-y-0 overflow-y-auto">
           {userNavLinks.map((n) => (
@@ -84,10 +71,11 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
                   <ProfilePicture onImageUpload={handleImageUpload} showCam={true} />
                   <div>
                     <p className="line-clamp-1 max-w-[150px] font-medium text-[#1E272F] capitalize">
-                      {user?.first_name}
+                      <span className='capitalize'>{adminDetails?.first_name}</span>
+                      <span className='capitalize'>{adminDetails?.last_name}</span>
                     </p>
                     <p className="line-clamp-1 max-w-[150px] text-xs font-light text-[#898989]">
-                      {user?.email}
+                      {adminDetails?.email}
                     </p>
                   </div>
                 </motion.div> :

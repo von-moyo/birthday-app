@@ -13,7 +13,7 @@ const Login: React.FC = () => {
   const { setIsAuthenticated } = useAuth();
 
   const {
-    run: runLogin, 
+    run: runLogin,
     data: loginResponse,
     error,
     requestStatus
@@ -31,7 +31,7 @@ const Login: React.FC = () => {
       toast.success('Login successful');
       Cookies.set('access_token', loginResponse.data.access);
       Cookies.set('refresh_token', loginResponse.data.refresh);
-      localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
+      localStorage.setItem("staffID", loginResponse.data?.user?.staff_id);
       setIsAuthenticated(true);
       setTimeout(() => {
         navigate('/');
