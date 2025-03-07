@@ -243,7 +243,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
             if (header.key === "name") {
               return (
                 <div className="flex items-center gap-2">
-                  <div className={`grid h-[27px] w-[27px] place-content-center rounded-[15px] ${noPfp && 'border'} border border-gray-300 border-opacity-50 overflow-hidden`}>
+                  <div className={`grid h-[27px] w-[27px] place-content-center rounded-[15px] ${noPfp && 'border'} border-gray-300 border-opacity-50 overflow-hidden`}>
                     {!noPfp ? (
                       <img
                         src={`${item?.profile_image_url}`}
@@ -252,7 +252,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
                         className="h-full w-full object-cover rounded-[15px]"
                       />
                     ) : (
-                      <p>{getInitials(`${item.first_name} ${item.last_name}`)}</p>
+                      <p className="text-[12px]">{getInitials(`${item.first_name} ${item.last_name}`)}</p>
                     )}
                   </div>
                   <p className="line-clamp-1">{`${item?.first_name} ${item?.last_name}`}</p>
