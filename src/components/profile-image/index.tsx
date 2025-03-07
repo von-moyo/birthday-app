@@ -49,7 +49,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ onImageUpload, showCam 
         htmlFor="upload-image"
         className="absolute bottom-[2px] left-1/2 -translate-x-1/2 rounded-full h-fit grid place-content-center cursor-pointer z-[99]"
       >
-        <CameraIcon className={`w-3 h-3 ${adminDetails?.profile_image ? 'text-white' : 'text-[#1E272F]'}`}/>
+        <CameraIcon className={`w-3 h-3 ${adminDetails?.profile_image_url ? 'text-white' : 'text-[#1E272F]'}`}/>
       </label>}
       <input
         type="file"
