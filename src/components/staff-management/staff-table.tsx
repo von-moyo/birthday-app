@@ -8,12 +8,7 @@ import {
 import { Cake, PenLine, Trash2, Pencil, Ellipsis } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StaffDB } from "../../types";
-import {
-  formatDate,
-  formatDepartment,
-  formatName,
-  isBirthday,
-} from "./utils";
+import { formatDate, formatDepartment, formatName, isBirthday } from "./utils";
 import { Dialog, DialogContent } from "../ui/dialog";
 import StaffDialog from "./staff-dialog";
 import MessageDialog from "./message-dialog";
@@ -77,7 +72,15 @@ export const StaffTable: React.FC<StaffTableProps> = ({
     return value;
   };
 
-  const ActionCell = ({ data, editDialogOpen, setEditDialogOpen }: { data: TableBodyItem, editDialogOpen: boolean, setEditDialogOpen: (data: boolean)=> void }) => {
+  const ActionCell = ({
+    data,
+    editDialogOpen,
+    setEditDialogOpen,
+  }: {
+    data: TableBodyItem;
+    editDialogOpen: boolean;
+    setEditDialogOpen: (data: boolean) => void;
+  }) => {
     const [messageDialogOpen, setMessageDialogOpen] = React.useState(false);
 
     return (
@@ -209,14 +212,20 @@ export const StaffTable: React.FC<StaffTableProps> = ({
       {tableBodyItems.map((item, index) => (
         <div
           key={`staff-row-${item.id ?? index}`}
-          className={`grid grid-cols-[0.2fr_1fr_1fr_1fr_1fr_1fr] 
-            ${tableBodyRowClassName || ""
-            } sm:py-3 py-2 sm:text-sm text-xs`}
+          className={`grid grid-cols-[0.2fr_1fr_1fr_1fr_1fr_0.5fr]  sm:grid-cols-[0.2fr_1fr_1fr_1fr_1fr_1fr] 
+            ${tableBodyRowClassName || ""} sm:py-3 py-2 sm:text-sm text-xs`}
         >
           {shownHeaders.map((header) => {
             // Handle actions column
             if (header.key === "actions") {
-              return <ActionCell key={`cell-${header.key}`} data={item} editDialogOpen={editDialogOpen} setEditDialogOpen={setEditDialogOpen} />;
+              return (
+                <ActionCell
+                  key={`cell-${header.key}`}
+                  data={item}
+                  editDialogOpen={editDialogOpen}
+                  setEditDialogOpen={setEditDialogOpen}
+                />
+              );
             }
 
             const value = item[header.key as keyof typeof item] ?? "";
@@ -237,13 +246,18 @@ export const StaffTable: React.FC<StaffTableProps> = ({
               );
             }
 
-            const noPfp = !item?.profile_image_url || item?.profile_image_url === "string"
+            const noPfp =
+              !item?.profile_image_url || item?.profile_image_url === "string";
 
             // Handle actions column
             if (header.key === "name") {
               return (
                 <div className="flex items-center gap-2">
-                  <div className={`grid h-[27px] w-[27px] place-content-center rounded-[15px] ${noPfp && 'border'} border-gray-300 border-opacity-50 overflow-hidden`}>
+                  <div
+                    className={`grid h-[27px] w-[27px] place-content-center rounded-[15px] ${
+                      noPfp && "border"
+                    } border-gray-300 border-opacity-50 overflow-hidden`}
+                  >
                     {!noPfp ? (
                       <img
                         src={`${item?.profile_image_url}`}
@@ -252,12 +266,14 @@ export const StaffTable: React.FC<StaffTableProps> = ({
                         className="h-full w-full object-cover rounded-[15px]"
                       />
                     ) : (
-                      <p className="text-[12px]">{getInitials(`${item.first_name} ${item.last_name}`)}</p>
+                      <p className="text-[12px]">
+                        {getInitials(`${item.first_name} ${item.last_name}`)}
+                      </p>
                     )}
                   </div>
                   <p className="line-clamp-1">{`${item?.first_name} ${item?.last_name}`}</p>
                 </div>
-              )
+              );
             }
 
             // Handle content cells
