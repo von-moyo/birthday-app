@@ -136,7 +136,7 @@ const StaffManagementTable = () => {
             url: `${STAFF_ENDPOINT}?format=json`,
           })
         );
-      } catch (error) {
+      } catch {
         toast.error("Failed to update staff status");
       }
     };
@@ -165,7 +165,7 @@ const StaffManagementTable = () => {
           })
         );
         toast.success("Edited successfully!");
-      } catch (error) {
+      } catch {
         toast.error("Failed to edit staff data");
       }
     };
@@ -188,7 +188,7 @@ const StaffManagementTable = () => {
           })
         );
         toast.success("Deleted successfully!");
-      } catch (error) {
+      } catch {
         toast.error("Failed to delete staff");
       }
     };
