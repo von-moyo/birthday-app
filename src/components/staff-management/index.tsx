@@ -29,7 +29,7 @@ const StaffManagementTable = () => {
     handleGoToPage,
     currentPage,
     totalPages,
-  } = usePagination(filteredStaff, 7)
+  } = usePagination(filteredStaff, 7);
 
   const tableHeaders = [
     { index: 0, title: "🔔", key: "is_enabled" },
@@ -201,7 +201,11 @@ const StaffManagementTable = () => {
   }
 
   if (requestStatus.isPending) {
-    return <div className='flex justify-center items-center sm:h-[calc(100vh-94px)] h-[calc(100vh-69px)] w-full'><Loader2 className="animate-spin h-12 w-12 text-gray-500" /></div>
+    return (
+      <div className="flex justify-center items-center sm:h-[calc(100vh-94px)] h-[calc(100vh-69px)] w-full">
+        <Loader2 className="animate-spin h-12 w-12 text-gray-500" />
+      </div>
+    );
   }
 
   return (
@@ -223,24 +227,28 @@ const StaffManagementTable = () => {
           addNewStaffHandler={addNewStaffHandler}
         />
 
-        <Table
-          tableHeaderTitles={tableHeaders}
-          tableBody={
-            <StaffTable
-              tableBodyItems={paginatedList}
-              shownHeaders={tableHeaders}
-              isCheckedHandler={handleIsCheckedClick}
-              editStaffHandler={editStaffHandler}
-              deleteStaffHandler={deleteStaffHandler}
-              tableBodyRowClassName="grid text-xs border my-3 bg-[#FBFBFB] border-[#E7E7E7] border-opacity-50 rounded-[12px] gap-2 pl-3"
+        <div className="overflow-x-auto">
+          <div className="min-w-xl">
+            <Table
+              tableHeaderTitles={tableHeaders}
+              tableBody={
+                <StaffTable
+                  tableBodyItems={paginatedList}
+                  shownHeaders={tableHeaders}
+                  isCheckedHandler={handleIsCheckedClick}
+                  editStaffHandler={editStaffHandler}
+                  deleteStaffHandler={deleteStaffHandler}
+                  tableBodyRowClassName="grid text-xs border my-3 bg-[#FBFBFB] border-[#E7E7E7] border-opacity-50 rounded-[12px] gap-2 pl-3"
+                />
+              }
+              customTableClasses={{
+                tableContainerClassName: "",
+                tableHeaderClassName: `!grid-cols-[0.2fr_1fr_1fr_1fr_1fr_0.5fr] sm:!grid-cols-[0.2fr_1fr_1fr_1fr_1fr_1fr] text-[#454242] text-sm !px-0 !sm:px-0 !pl-3`,
+                headerStyle: "!first:text-center first:justify-center",
+              }}
             />
-          }
-          customTableClasses={{
-            tableHeaderClassName: `grid grid-cols-[0.2fr_1fr_1fr_1fr_1fr_1fr] text-[#454242] text-sm !px-0 !sm:px-0 !gap-2 !pl-3`,
-            headerStyle: '!first:text-center first:justify-center'
-          }}
-        />
-
+          </div>
+        </div>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
