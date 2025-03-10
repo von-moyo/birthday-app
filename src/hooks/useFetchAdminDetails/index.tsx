@@ -22,8 +22,9 @@ export const useFetchAdminDetails = () => {
       setAdminDetails(Admin);
       setIsLoading(false);
     } else if (error) {
-      toast.error('Error fetching Admin details ');
+      toast.error(error?.response?.data?.detail);
       setIsLoading(false);
+      
     }
   }, [AdminDetailsResponse, error]);
 

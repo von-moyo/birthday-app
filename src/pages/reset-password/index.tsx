@@ -32,6 +32,9 @@ const ResetPassword: React.FC = () => {
     if (ResetPasswordResponse?.status === 200) {
       toast.success('Password reset successfully');
       navigate('/login')
+    } else if (error) {
+      toast.error(error?.response?.data?.non_field_errors[0]);
+      
     }
   }, [ResetPasswordResponse, error]);
 

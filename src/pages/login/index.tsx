@@ -37,7 +37,7 @@ const Login: React.FC = () => {
         navigate('/');
       }, 1000);
     } else if (error) {
-      toast.error('Login failed');
+      toast.error(error?.response?.data?.message);
     }
   }, [loginResponse, error]);
 

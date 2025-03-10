@@ -37,7 +37,8 @@ const Home: React.FC = () => {
 
       setStaffs(filteredStaffs);
     } else if (error) {
-      toast.error("Error Fetching Staffs");
+      toast.error(error?.response?.data?.message);
+      
     }
   }, [staffsResponse, error]);
 

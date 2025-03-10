@@ -24,7 +24,8 @@ export const useUpdateStaffDetails = () => {
         fetchAdminDetails(adminDetails.id);
       }
     } else if (error) {
-      toast.error('Error Updating Staff details');
+      toast.error(error?.response?.data?.detail);
+      
     }
   }, [updateStaffDetailsResponse, error]);
 

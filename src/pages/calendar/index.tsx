@@ -41,7 +41,7 @@ const Calendar = () => {
 
       setStaffs(filteredStaffs);
     } else if (error) {
-      toast.error("Login failed");
+      toast.error(error?.response?.data?.message);
     }
   }, [staffsResponse, error]);
 
