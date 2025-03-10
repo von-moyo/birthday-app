@@ -24,8 +24,8 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
   const handleImageUpload = (file: any) => {
     if (adminDetails) {
       updateStaffDetails({
-       id: adminDetails?.id,
-       profile_image_url: file,
+        id: adminDetails?.id,
+        profile_image_url: file,
       })
     }
   };
@@ -107,11 +107,11 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
                   </NavLink>
                 </li>
               ))}
-
-            </ul>
               {isAuthenticated && <div className="flex gap-3 cursor-pointer py-4 pl-5" onClick={logout}>
                 <LogOut size={20} color="#D74B42" /> <span className="font-light text-[#D74B42]">Logout</span>
               </div>}
+            </ul>
+
           </motion.div>
         )}
       </AnimatePresence>
