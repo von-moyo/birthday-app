@@ -4,7 +4,7 @@ import { Lock, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { adminNavLinks, guestNavLinks } from "../../constants/nav-items";
 import { useAuth } from "../../context/authContext";
-import { useLogout } from "../../hooks";
+import { useLogout, useUpdateStaffDetails } from "../../hooks";
 import ProfilePicture from "../profile-image";
 import { useAdminDetails } from "@/context";
 
@@ -18,11 +18,16 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
   const { isAuthenticated } = useAuth();
   const logout = useLogout();
   const { adminDetails } = useAdminDetails();
+  const { updateStaffDetails } = useUpdateStaffDetails();
   const userNavLinks = isAuthenticated ? adminNavLinks : guestNavLinks;
 
   const handleImageUpload = (file: any) => {
-    // updateUserDetails(userDetails?.id, { image_1920: file });
-    console.log(file);
+    if (adminDetails) {
+      updateStaffDetails({
+       id: adminDetails?.id,
+       profile_image_url: file,
+      })
+    }
   };
 
   return (
