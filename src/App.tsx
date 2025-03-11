@@ -9,7 +9,7 @@ const App = () => {
       <AuthProvider>
         <AdminDetailsProvider>
           <RouterProvider router={router} />
-          <Toaster richColors className='text-center' position='bottom-center' />
+          <Toaster richColors className='text-left' position='bottom-center' />
         </AdminDetailsProvider>
       </AuthProvider>
     </>
