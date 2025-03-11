@@ -44,7 +44,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
   return (
     <div className="w-full">
       {/* Mobile layout: single column */}
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 grid-rows-auto sm:grid-cols-12 gap-4">
         {/* Search input - full width on mobile, 4 columns on desktop */}
         <div className="sm:col-span-4 relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -52,7 +52,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
           </div>
           <input
             type="text"
-            className="w-full py-2 pl-10 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full py-2 pl-10 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:placeholder:text-sm placeholder:text-xs"
             placeholder="Search by name..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
@@ -60,42 +60,45 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         </div>
 
         {/* Department filter - 3 columns on desktop */}
-        <div className="sm:col-span-3 relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <Filter size={16} className="text-gray-400" />
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-6 col-span-1 sm:col-span-6">
+          <div className="sm:col-span-3 relative">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <Filter size={16} className="text-gray-400 sm:w-[16px] w-[13px]" />
+            </div>
+            <select
+              className="w-full py-2 pl-10 pr-4 sm:text-sm text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+              value={selectedDepartment}
+              onChange={(e) => onDepartmentChange(e.target.value)}
+            >
+              <option value="">All Departments</option>
+              {departments.map((department) => (
+                <option key={department} value={department}>
+                  {formatDepartment(department)}
+                </option>
+              ))}
+            </select>
           </div>
-          <select
-            className="w-full py-2 pl-10 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
-            value={selectedDepartment}
-            onChange={(e) => onDepartmentChange(e.target.value)}
-          >
-            <option value="">All Departments</option>
-            {departments.map((department) => (
-              <option key={department} value={department}>
-                {formatDepartment(department)}
-              </option>
-            ))}
-          </select>
+
+          {/* Staff type filter - 3 columns on desktop */}
+          <div className="sm:col-span-3 relative">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <Filter size={16} className="text-gray-400 sm:w-[16px] w-[13px]" />
+            </div>
+            <select
+              className="w-full py-2 pl-10 pr-4 sm:text-sm text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+              value={selectedStaffType}
+              onChange={(e) => onStaffTypeChange(e.target.value)}
+            >
+              <option value="">All Staff Types</option>
+              {staffTypes.map((staffType) => (
+                <option key={staffType} value={staffType}>
+                  {formatDepartment(staffType)}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        {/* Staff type filter - 3 columns on desktop */}
-        <div className="sm:col-span-3 relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <Filter size={16} className="text-gray-400" />
-          </div>
-          <select
-            className="w-full py-2 pl-10 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
-            value={selectedStaffType}
-            onChange={(e) => onStaffTypeChange(e.target.value)}
-          >
-            <option value="">All Staff Types</option>
-            {staffTypes.map((staffType) => (
-              <option key={staffType} value={staffType}>
-                {formatDepartment(staffType)}
-              </option>
-            ))}
-          </select>
-        </div>
 
         {/* Add new staff button - 2 columns on desktop */}
         <div className="sm:col-span-2">
@@ -106,7 +109,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
             trigger={
               <Button
                 type="button"
-                className="w-full py-2 px-4 text-sm font-medium text-white border border-gray-300 rounded-lg cursor-pointer bg-green-600"
+                className="text-left w-full py-2 px-4 sm:text-sm text-xs font-medium text-white border border-gray-300 rounded-lg cursor-pointer bg-green-600"
               >
                 Add New Staff
               </Button>

@@ -210,7 +210,7 @@ const StaffManagementTable = () => {
 
   return (
     <div className="grid gap-6">
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mt-6">
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 sm:mt-6">
         Staff Management
       </h1>
 

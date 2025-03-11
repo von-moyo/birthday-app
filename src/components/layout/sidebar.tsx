@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Lock, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { adminNavLinks, guestNavLinks } from "../../constants/nav-items";
 import { useAuth } from "../../context/authContext";
-import { useLogout, useUpdateStaffDetails } from "../../hooks";
+import { useClickOutside, useLogout, useUpdateStaffDetails } from "../../hooks";
 import ProfilePicture from "../profile-image";
 import { useAdminDetails } from "@/context";
 
@@ -20,6 +20,10 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
   const { adminDetails } = useAdminDetails();
   const { updateStaffDetails } = useUpdateStaffDetails();
   const userNavLinks = isAuthenticated ? adminNavLinks : guestNavLinks;
+  const sideBarRef = useRef(null);
+  useClickOutside(sideBarRef, sideBarRef, () =>
+    setIsMobileMenuOpen(false)
+  );
 
   const handleImageUpload = (file: any) => {
     if (adminDetails) {
@@ -32,7 +36,7 @@ export const SideBar: React.FC<SideBarProps> = ({ className = "", isMobileMenuOp
 
   return (
     <>
-      <div className={`hidden lg:flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 fixed sm:top-[90px] top-[69px] z-50 sm:h-[calc(100vh-88px)] h-[calc(100vh-85px)] lg:px-7 ${className}`}>
+      <div ref={sideBarRef} className={`hidden lg:flex flex-col justify-between bg-white px-4 py-4 md:px-7 md:py-6 fixed sm:top-[90px] top-[69px] z-50 sm:h-[calc(100vh-88px)] h-[calc(100vh-85px)] lg:px-7 ${className}`}>
         <ul className="flex-1 space-y-0 overflow-y-auto">
           {userNavLinks.map((n) => (
             <li key={n.name}>
