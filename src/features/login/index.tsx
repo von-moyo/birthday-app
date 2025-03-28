@@ -6,9 +6,10 @@ import { LoginForm } from '../../components/login-form'
 interface LoginUIProps {
   isLoading: boolean;
   onSubmit: (data: { email: string; password: string }) => void;
+  homeRoute: () => void;
 }
 
-const LoginUI: React.FC<LoginUIProps> = ({ isLoading, onSubmit }) => {
+const LoginUI: React.FC<LoginUIProps> = ({ isLoading, onSubmit, homeRoute }) => {
 
 
   return (
@@ -26,7 +27,7 @@ const LoginUI: React.FC<LoginUIProps> = ({ isLoading, onSubmit }) => {
       </div>
       <div
         className="min-h-screen relative flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center cursor-pointer sm:absolute top-5 left-5 sm:mb-0 mb-4">
+        <div onClick={homeRoute} className="flex items-center cursor-pointer sm:absolute top-5 left-5 sm:mb-0 mb-4">
           <img src={LogoIcon} alt="birthday-icon" className="sm:w-16 sm:h-16 w-12 h-12 sm:block hidden" />
           <img src={MobileLogoIcon} alt="birthday-icon" className="sm:hidden w-12 h-12" />
           <div className="sm:-mt-1 text-start sm:w-auto w-[100px] sm:block hidden">

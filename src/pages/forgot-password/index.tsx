@@ -21,6 +21,10 @@ const ForgotPassword: React.FC = () => {
     runForgotPassword(forgotPasswordService(data));
   };
 
+  const homeRoute = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     if (forgotPasswordResponse?.status === 200) {
       toast.success('Password reset email sent');
@@ -35,7 +39,7 @@ const ForgotPassword: React.FC = () => {
 
   return (
     <>
-      <ForgotPasswordUI isLoading={requestStatus.isPending} onSubmit={onSubmit} />
+      <ForgotPasswordUI isLoading={requestStatus.isPending} onSubmit={onSubmit} homeRoute={homeRoute}/>
     </>
   )
 }

@@ -28,6 +28,10 @@ const ResetPassword: React.FC = () => {
     }));
   };
 
+  const homeRoute = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     if (ResetPasswordResponse?.status === 200) {
       toast.success('Password reset successfully');
@@ -40,7 +44,7 @@ const ResetPassword: React.FC = () => {
 
   return (
     <>
-      <ResetPasswordUI isLoading={requestStatus.isPending} onSubmit={onSubmit} />
+      <ResetPasswordUI isLoading={requestStatus.isPending} onSubmit={onSubmit} homeRoute={homeRoute}/>
     </>
   )
 }

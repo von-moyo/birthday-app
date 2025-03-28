@@ -26,6 +26,10 @@ const Login: React.FC = () => {
     runLogin(loginService(data));
   };
 
+  const homeRoute = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     if (loginResponse?.status === 200) {
       toast.success('Login successful');
@@ -43,7 +47,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <LoginUI isLoading={requestStatus.isPending} onSubmit={onSubmit} />
+      <LoginUI isLoading={requestStatus.isPending} onSubmit={onSubmit} homeRoute={homeRoute} />
     </>
 
   )
