@@ -28,9 +28,6 @@ const ForgotPassword: React.FC = () => {
   useEffect(() => {
     if (forgotPasswordResponse?.status === 200) {
       toast.success('Password reset email sent');
-      setTimeout(() =>{
-        navigate('/reset-password');
-      }, 2000);
     } else if (error) {
       toast.error(error?.response?.data?.email[0])
       
