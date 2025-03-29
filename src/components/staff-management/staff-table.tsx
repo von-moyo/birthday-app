@@ -252,7 +252,7 @@ export const StaffTable: React.FC<StaffTableProps> = ({
             // Handle actions column
             if (header.key === "name") {
               return (
-                <div className="flex items-center gap-2">
+                <div  key={`div-name-${header.key}-${item.id}`} className="flex items-center gap-2">
                   <div
                     className={`grid h-[27px] w-[27px] place-content-center rounded-[15px] ${
                       noPfp && "border"

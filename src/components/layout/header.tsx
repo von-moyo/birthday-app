@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { MenuIcon, XIcon, Lock } from "lucide-react";
 import { Search } from "../search";
 import { LogoIcon } from "../../assets/icons";
@@ -21,11 +22,14 @@ export const Header: React.FC<HeaderProps> = ({
   const { isAuthenticated } = useAuth();
   const { fetchAdminDetails } = useFetchAdminDetails();
 
+  const location = useLocation();
+  const path = location.pathname;
+
   useEffect(() => {
     if (isAuthenticated && localStorage.getItem("staffID")) {
-      fetchAdminDetails(localStorage.getItem("staffID") || '');
+      fetchAdminDetails(localStorage.getItem("staffID") || "");
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated]);
 
   return (
     <>
@@ -36,26 +40,48 @@ export const Header: React.FC<HeaderProps> = ({
         `}
       >
         <Link to="/" className="mr-6">
-          <div className='flex items-center cursor-pointer'>
-            <img src={LogoIcon} alt="birthday-icon" className=' sm:w-16 sm:h-16 w-12 h-12' />
+          <div className="flex items-center cursor-pointer">
+            <img
+              src={LogoIcon}
+              alt="birthday-icon"
+              className=" sm:w-16 sm:h-16 w-12 h-12"
+            />
             <div className="sm:-mt-1 text-start sm:w-auto w-[100px]">
-              <h2 className="sm:text-[20px] text-[16px] font-semibold text-[#4162FF] leading-[0.5]">Birthday</h2>
-              <p className="sm:text-[15px] text-[12px] font-medium text-[#8396f6]">Tracker</p>
+              <h2 className="sm:text-[20px] text-[16px] font-semibold text-[#4162FF] leading-[0.5]">
+                Birthday
+              </h2>
+              <p className="sm:text-[15px] text-[12px] font-medium text-[#8396f6]">
+                Tracker
+              </p>
             </div>
-
           </div>
         </Link>
-        <Search className="sm:w-[425px] w-full sm:h-[46px] h-[36px] !rounded-full" placeholder={"Search by name and department..."} setIsSearchExpanded={setIsSearchExpanded} />
+        {path !== "/staff-management" ? (
+          <Search
+            className="sm:w-[425px] w-full sm:h-[46px] h-[36px] !rounded-full"
+            placeholder={"Search by name and department..."}
+            setIsSearchExpanded={setIsSearchExpanded}
+          />
+        ) : null}
         <div className="flex items-center gap-8">
           {isAuthenticated ? (
             <>
-              <p className="lg:text-[18px] text-[16px] font-medium text-[#1E272F] hidden md:block">Welcome Admin</p>
+              <p className="lg:text-[18px] text-[16px] font-medium text-[#1E272F] hidden md:block">
+                Welcome Admin
+              </p>
               <AnimatedDropdown />
             </>
           ) : (
             <>
-              <p className="lg:text-[18px] text-[16px] font-medium text-[#1E272F] hidden lg:block">Welcome Guest</p>
-              <Link to="/login" className="lg:flex hidden justify-center py-2 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"><Lock className="w-4 h-4 mr-2" /> Login as Admin</Link>
+              <p className="lg:text-[18px] text-[16px] font-medium text-[#1E272F] hidden lg:block">
+                Welcome Guest
+              </p>
+              <Link
+                to="/login"
+                className="lg:flex hidden justify-center py-2 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+              >
+                <Lock className="w-4 h-4 mr-2" /> Login as Admin
+              </Link>
             </>
           )}
 

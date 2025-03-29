@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from "react";
-import axios from "axios";
 import { useApiRequest, usePagination } from "../../hooks";
 import { Table } from "../table";
 import { StaffDB, StaffFormValues } from "../../types";
@@ -9,6 +8,7 @@ import {
   patchRequest,
   getRequest,
   deleteRequest,
+  postRequest,
 } from "@/api/requestProcessor";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -196,8 +196,29 @@ const StaffManagementTable = () => {
     deleteStaffStatus();
   }
 
-  async function addNewStaffHandler(data: StaffFormValues) {
-    await run(axios.post(STAFF_ENDPOINT, data));
+  function addNewStaffHandler(data: StaffFormValues) {
+    const addNewStaff = async () => {
+      try {
+        await run(
+          postRequest({
+            url: STAFF_ENDPOINT,
+            data,
+          })
+        );
+
+        await run(
+          getRequest({
+            url: `${STAFF_ENDPOINT}?format=json`,
+          })
+        );
+
+        toast.success("Staff added successfully!");
+      } catch {
+        toast.error("Failed to add new staff");
+      }
+    };
+
+    addNewStaff();
   }
 
   if (requestStatus.isPending) {
