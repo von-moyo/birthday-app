@@ -27,7 +27,7 @@ interface FilterSectionProps {
   onSearchChange: (value: string) => void;
   onDepartmentChange: (value: string) => void;
   onStaffTypeChange: (value: string) => void;
-  addNewStaffHandler: (data: StaffFormValues) => Promise<void>;
+  addNewStaffHandler: (data: StaffFormValues) => void;
 }
 
 export const FilterSection: React.FC<FilterSectionProps> = ({
@@ -63,7 +63,10 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-6 col-span-1 sm:col-span-6">
           <div className="sm:col-span-3 relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <Filter size={16} className="text-gray-400 sm:w-[16px] w-[13px]" />
+              <Filter
+                size={16}
+                className="text-gray-400 sm:w-[16px] w-[13px]"
+              />
             </div>
             <select
               className="w-full py-2 pl-10 pr-4 sm:text-sm text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
@@ -82,7 +85,10 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
           {/* Staff type filter - 3 columns on desktop */}
           <div className="sm:col-span-3 relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <Filter size={16} className="text-gray-400 sm:w-[16px] w-[13px]" />
+              <Filter
+                size={16}
+                className="text-gray-400 sm:w-[16px] w-[13px]"
+              />
             </div>
             <select
               className="w-full py-2 pl-10 pr-4 sm:text-sm text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
@@ -98,7 +104,6 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
             </select>
           </div>
         </div>
-
 
         {/* Add new staff button - 2 columns on desktop */}
         <div className="sm:col-span-2">
